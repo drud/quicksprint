@@ -5,6 +5,7 @@ set -e
 
 STAGING_DIR=~/tmp/stuff
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
+D8DB_URL=https://github.com/drud/quicksprint/raw/master/databases/d8_installed_db.sql.gz
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
 	echo -n "The staging directory already has files. Do you want to continue (y/n)? "
@@ -91,8 +92,8 @@ composer install
 ddev config --docroot="" --sitename=drupal8 --apptype=drupal8
 
 # Grab a database for them to install to avoid the install process
-mkdir .db_dumps
-cp databases/d8_installed_db.sql.gz .db_dumps
+mkdir -p .db_dumps
+curl --fail -sSL $D8DB_URL -o .db_dumps/$(basename $D8DB_URL)
 popd
 
 
