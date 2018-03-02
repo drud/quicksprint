@@ -1,16 +1,13 @@
 
 echo "Installing ddev"
 
-if ! docker --version >/dev/null 2>&1; then
-    printf "${YELLOW}Docker is required for ddev. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
-fi
-
 echo "Installing docker images for ddev to use..."
 cd ddev_tarballs
-../bin/7za x ddev_docker_images*.gz
-docker load -i ddev_docker_images*.tar
+set /p LATEST_VERSION=<..\.latest_version.txt
+..\bin\7za x ddev_docker_images.%LATEST_VERSION%.tar.gz
+docker load -i ddev_docker_images.%LATEST_VERSION%.tar
 
-../bin/7za x ddev_windows*.zip
+..\bin\7za x ddev_windows.%LATEST_VERSION%.zip
 copy ddev.exe %HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
 

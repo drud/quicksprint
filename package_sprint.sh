@@ -30,16 +30,19 @@ if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
 	fi
 fi
 
-# Install the beginning items we need in the kit.
-mkdir -p $STAGING_DIR
-cp -r bin SPRINTUSER_README.md install_ddev.* start_ddev.* $STAGING_DIR
-
 SHACMD=""
 FILEBASE=""
 LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/drud/ddev/releases/latest)
 # The releases are returned in the format {"id":3622206,"tag_name":"hello-1.0.0.11",...}, we have to extract the tag_name.
 LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
 RELEASE_URL="https://github.com/drud/ddev/releases/download/$LATEST_VERSION"
+
+echo "$LATEST_VERSION" >.latest_version.txt
+
+# Install the beginning items we need in the kit.
+mkdir -p $STAGING_DIR
+cp -r .latest_version.txt bin SPRINTUSER_README.md install_ddev.* start_ddev.* $STAGING_DIR
+
 
 if [[ "$OS" == "Darwin" ]]; then
     SHACMD="shasum -a 256"
