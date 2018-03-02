@@ -32,7 +32,7 @@ fi
 
 # Install the beginning items we need in the kit.
 mkdir -p $STAGING_DIR
-cp SPRINTUSER_README.md install_ddev.sh start_ddev.sh $STAGING_DIR
+cp -r bin SPRINTUSER_README.md install_ddev.* start_ddev.* $STAGING_DIR
 
 SHACMD=""
 FILEBASE=""

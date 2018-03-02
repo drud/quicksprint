@@ -1,4 +1,3 @@
-#!/bin/bash -x
 
 echo "This simple script just starts drupal running in ddev and imports a starter database."
 
