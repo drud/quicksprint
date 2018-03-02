@@ -2,10 +2,21 @@
 set -e
 
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
+# It assumes it's being run in teh repository root.
 
 STAGING_DIR=~/tmp/stuff
+REPO_DIR=$PWD
+
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
 D8DB_URL=https://github.com/drud/quicksprint/raw/master/databases/d8_installed_db.sql.gz
+
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+RESET='\033[0m'
+OS=$(uname)
+BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
+USER=$(whoami)
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
 	echo -n "The staging directory already has files. Do you want to continue (y/n)? "
@@ -17,13 +28,10 @@ if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
 	fi
 fi
 
-RED='\033[31m'
-GREEN='\033[32m'
-YELLOW='\033[33m'
-RESET='\033[0m'
-OS=$(uname)
-BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
-USER=$(whoami)
+# Install the beginning items we need in the kit.
+mkdir -p $STAGING_DIR
+cp SPRINTUSER_README.md install_ddev.sh start_ddev.sh $STAGING_DIR
+
 SHACMD=""
 FILEBASE=""
 LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/drud/ddev/releases/latest)
@@ -46,17 +54,21 @@ if ! docker --version >/dev/null 2>&1; then
     printf "${YELLOW}Docker is required to use this package. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
 fi
 
-mkdir -p $STAGING_DIR && cd $STAGING_DIR
+cd $STAGING_DIR
+mkdir -p ddev_tarballs
 TARBALL="ddev_docker_images.$LATEST_VERSION.tar.gz"
 SHAFILE="$TARBALL.sha256.txt"
-if [ ! -f $TARBALL ] ; then
-    curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "$TARBALL"
-    curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "$SHAFILE"
+if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
+    curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
+    curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
 fi
+pushd ddev_tarballs
 $SHACMD -c "$SHAFILE"
+popd
 
 # Download the ddev tarball/zipball
 for os in macos linux windows; do
+	pwd
     SUFFIX=tar.gz
     if [ $os == "windows" ] ; then
         SUFFIX=zip
@@ -64,18 +76,21 @@ for os in macos linux windows; do
     TARBALL="ddev_$os.$LATEST_VERSION.$SUFFIX"
     SHAFILE="$TARBALL.sha256.txt"
 
-    if [ ! -f $TARBALL ] ; then
-        curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "$TARBALL"
-        curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "$SHAFILE"
+    if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
+        curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
+        curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
     fi
-    $SHACMD -c "$SHAFILE"
+    pushd ddev_tarballs
+    $SHACMD -c $(basename "$SHAFILE")
+    popd
 done
 
 # Download current docker installs
+mkdir -p docker_installs
 for dockerurl in $DOCKER_URLS; do
     fname=$(basename $dockerurl)
-    if [ ! -f $fname ] ; then
-        curl -sSL -o $fname $dockerurl
+    if [ ! -f "docker_installs/$fname" ] ; then
+        curl -sSL -o "docker_installs/$fname" $dockerurl
     fi
 done
 
@@ -93,8 +108,7 @@ ddev config --docroot="" --sitename=drupal8 --apptype=drupal8
 
 # Grab a database for them to install to avoid the install process
 mkdir -p .db_dumps
-curl --fail -sSL $D8DB_URL -o .db_dumps/$(basename $D8DB_URL)
+cp $REPO_DIR/databases/d8_installed_db.sql.gz .db_dumps
 popd
 
-
-printf "${GREEN}Stuff has been done.${RESET}\n"
+printf "${GREEN}The sprint package has been created in $STAGING_DIR.${RESET}\n"
