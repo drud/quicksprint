@@ -6,13 +6,11 @@ This directory contains all the tools to get you going at a Drupal 8 sprint:
 * Docker (you must install it yourself)
 * DDEV-Local (ddev) development environment
 
-Here are the steps to get started:
-
 Prerequisites: 
 
 * You'll need git to be able to develop patches. [Helpful git setup info at github](https://help.github.com/articles/set-up-git/).
 
-Installation:
+Installation and Startup:
 
 1. Install docker-ce if you don't already have it. Working installs for macOS and Windows are in the docker_installs directory. If you're running Linux, check Docker's website for install instructions. ([Ubuntu instructions](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
 2. (macOS/Linux): Install DDEV-Local by running install_ddev.sh in this directory: `./install_ddev.sh` - (Windows): run install_ddev.cmd
