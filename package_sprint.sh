@@ -4,7 +4,9 @@ set -e
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in teh repository root.
 
-STAGING_DIR=~/tmp/quicksprint_builder
+STAGING_DIR_NAME=drupal_sprint_package
+STAGING_DIR_BASE=~/tmp
+STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
 
@@ -116,7 +118,7 @@ mkdir -p .db_dumps
 cp $REPO_DIR/databases/d8_installed_db.sql.gz .db_dumps
 popd
 
-
-tar -czf /tmp/drupal_sprint_package.tar.gz .
-zip -r -q /tmp/drupal_sprint_package.zip .
+cd $STAGING_DIR_BASE
+tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
+zip -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
 printf "${GREEN}The sprint tarballs and zipballs are in $(ls $FINAL_TARGET_DIR/drupal_sprint_package*).${RESET}\n"
