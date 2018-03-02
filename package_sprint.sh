@@ -4,8 +4,10 @@ set -e
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in teh repository root.
 
-STAGING_DIR=~/tmp/stuff
+STAGING_DIR=~/tmp/quicksprint_builder
+FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
+
 
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
 D8DB_URL=https://github.com/drud/quicksprint/raw/master/databases/d8_installed_db.sql.gz
@@ -111,4 +113,7 @@ mkdir -p .db_dumps
 cp $REPO_DIR/databases/d8_installed_db.sql.gz .db_dumps
 popd
 
-printf "${GREEN}The sprint package has been created in $STAGING_DIR.${RESET}\n"
+
+tar -czf /tmp/drupal_sprint_package.tar.gz .
+zip -r -q /tmp/drupal_sprint_package.zip .
+printf "${GREEN}The sprint tarballs and zipballs are in $(ls $FINAL_TARGET_DIR/drupal_sprint_package*).${RESET}\n"

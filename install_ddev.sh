@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "Installing ddev"
+
 # Install latest ddev release
 
 RED='\033[31m'
@@ -30,7 +32,8 @@ if ! docker-compose --version >/dev/null 2>&1; then
     printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
 fi
 
-gzip -dc ddev_tarballs/
+echo "Installing docker images for ddev to use..."
+gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.gz) | docker load
 TARBALL="$(ls ddev_tarballs/$FILEBASE*.tar.gz)"
 
 tar -xzf $TARBALL -C /tmp
@@ -51,7 +54,5 @@ if which brew &&  [ -f `brew --prefix`/etc/bash_completion ]; then
     printf "${GREEN}Installed ddev bash completions in $bash_completion_dir${RESET}\n"
     rm /tmp/ddev_bash_completion.sh
 fi
-
-rm /tmp/$TARBALL /tmp/$SHAFILE
 
 printf "${GREEN}ddev is now installed. Run \"ddev\" to verify your installation and see usage.${RESET}\n"
