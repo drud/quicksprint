@@ -113,6 +113,10 @@ pushd $STAGING_DIR/drupal8
 composer install
 ddev config --docroot="" --sitename=drupal8 --apptype=drupal8
 
+# Copy licenses and COPYING notice.
+cp -r $REPO_DIR/licenses $STAGING_DIR/
+cp $REPO_DIR/COPYING $STAGING_DIR/
+
 # Grab a database for them to install to avoid the install process
 mkdir -p .db_dumps
 cp $REPO_DIR/databases/d8_installed_db.sql.gz .db_dumps
