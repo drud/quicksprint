@@ -14,22 +14,34 @@ BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 SHACMD=""
 FILEBASE=""
+CURRENT_DIR=$PWD
 
 if [[ "$OS" == "Darwin" ]]; then
     FILEBASE="ddev_macos"
+
+    if ! docker --version >/dev/null 2>&1; then
+        # Install and open Docker
+        hdiutil attach -nobrowse "${CURRENT_DIR}/docker_installs/Docker.dmg"
+        sleep 10
+        cp /Volumes/Docker/Docker.app /Applications/
+        open -a /Applications/Docker.app
+        hdiutil detach /Volumes/Docker
+    fi
+
 elif [[ "$OS" == "Linux" ]]; then
     FILEBASE="ddev_linux"
+
+    if ! docker --version >/dev/null 2>&1; then
+        printf "${YELLOW}Docker is required for ddev. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
+    fi
+
+    if ! docker-compose --version >/dev/null 2>&1; then
+        printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
+    fi
+    
 else
     printf "${RED}Sorry, this installer does not support your platform at this time.${RESET}\n"
     exit 1
-fi
-
-if ! docker --version >/dev/null 2>&1; then
-    printf "${YELLOW}Docker is required for ddev. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
-fi
-
-if ! docker-compose --version >/dev/null 2>&1; then
-    printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
 fi
 
 echo "Installing docker images for ddev to use..."
