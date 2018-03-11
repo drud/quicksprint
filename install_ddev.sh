@@ -23,7 +23,8 @@ if [[ "$OS" == "Darwin" ]]; then
         # Install and open Docker
         hdiutil attach -nobrowse "${CURRENT_DIR}/docker_installs/Docker.dmg"
         sleep 10
-        cp /Volumes/Docker/Docker.app /Applications/
+        cp -rp /Volumes/Docker/Docker.app /Applications/
+        wait
         open -a /Applications/Docker.app
         hdiutil detach /Volumes/Docker
     fi
