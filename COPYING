@@ -1,0 +1,30 @@
+This Software is distributed in a compressed archive with the following third-party software and Docker images under other copyright notices.
+
+  ddev is included in the distributable release as a software artifact, and is distributed under the Apache 2.0 license:
+
+    ddev - (c) Copyright 2016 DRUD Technology, LLC
+
+  Docker™ images are included in the distributable release as software artifacts and distributed according to the provisions of the MIT license:
+
+    mailhog/mailhog - (c) Copyright 2014 - 2017 Ian Kent (http://iankent.uk)
+
+  Docker images are included in the distributable release as software artifacts and distributed according to the provisions of the Apache 2.0 license:
+
+    drud/ddev-router - (c) Copyright 2016 DRUD Technology, LLC
+    drud/docker-phpmyadmin - (c) Copyright 2017 DRUD Technology, LLC
+    drud/mariadb-local - (c) Copyright 2016 DRUD Technology, LLC
+    drud/nginx-php-fpm-local - (c) Copyright 2017 DRUD Technology, LLC
+
+ Drupal™ is included in the distributable release as a software artifact, and is distributed under the GPL license:
+
+    Drupal - (c) Copyright 2001 - 2013 by the original authors
+      See drupal/core/COPYRIGHT.txt for more details.
+    The trademark "Drupal" belongs to Dries Buytaert.
+
+This Software may be distributed alongside the following third-party software under other copyright notices.
+
+  Docker Community Edition, or otherwise known as "Docker open source", is distributed under the Apache 2.0 license under the following copyright:
+
+    Docker open source - (c) 2013 - 2017 Docker, Inc.
+      See https://www.docker.com/components-licenses for more details.
+      The trademark "Docker" belongs to Docker, Inc.
