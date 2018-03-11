@@ -45,7 +45,7 @@ else
 fi
 
 echo "Installing docker images for ddev to use..."
-gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.gz) | docker load
+tar -xOpvf $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
 TARBALL="$(ls ddev_tarballs/$FILEBASE*.tar.gz)"
 
 tar -xzf $TARBALL -C /tmp
