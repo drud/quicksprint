@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  ide:
+    container_name: ddev-${DDEV_SITENAME}-ide # This is the name of the container. It is recommended to follow the same name convention used in the main docker-compose.yml file.
+    image: briangilbert/cloud9-alpine
+    ports:
+    - 8000 # Coud9 is served from this port inside the container
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME # This defines the host name the service should be accessible from. This will be sitename.ddev.local
+      - HTTP_EXPOSE=8000 # This defines the port the service should be accessible from at sitename.ddev.local
+    volumes:
+      - ../drupal8:/workspace:rw
+    labels:
+    # These labels ensure this service is discoverable by ddev
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+      com.ddev.app-url: $DDEV_URL
+  # This links the Cloud9 service to the web service defined in the main docker-compose.yml, allowing applications running in the web service to access the IDE service at sitename.ddev.local:8000
+  web:
+    links:
+      - ide:$DDEV_HOSTNAME
+
+  irc:
+    container_name: ddev-${DDEV_SITENAME}-irc # This is the name of the container. It is recommended to follow the same name convention used in the main docker-compose.yml file.
+    hostname: thelounge
+    image: linuxserver/thelounge
+    ports:
+    - 9000 # Thelounge is served from this port inside the container
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME # This defines the host name the service should be accessible from. This will be sitename.ddev.local
+      - HTTP_EXPOSE=9000 # This defines the port the service should be accessible from at sitename.ddev.local
+    volumes:
+      - ./.thelounge:/config:rw
+    labels:
+    # These labels ensure this service is discoverable by ddev
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+      com.ddev.app-url: $DDEV_URL
+  # This links Thelounge service to the web service defined in the main docker-compose.yml, allowing applications running in the web service to access the IRC service at sitename.ddev.local:9000
+  web:
+    links:
+      - irc:$DDEV_HOSTNAME
