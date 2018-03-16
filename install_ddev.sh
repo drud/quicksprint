@@ -124,7 +124,7 @@ elif [[ "$OS" == "Linux" ]]; then
         printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
     fi
 
-    if ! docker-compose --version >/dev/null 2>&1; then
+    if ! command -v docker-compose >/dev/null 2>&1; then
         printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
         printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
     fi
