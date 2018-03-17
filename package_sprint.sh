@@ -9,6 +9,7 @@ STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
+DRUPAL_BRANCH=8.6.x
 
 
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
@@ -103,7 +104,7 @@ done
 
 # clone or refresh d8 clone
 if [ ! -d drupal8/.git ] ; then
-    git clone git://git.drupal.org/project/drupal.git drupal8
+    git clone --branch $DRUPAL_BRANCH git://git.drupal.org/project/drupal.git drupal8
 else
     pushd $STAGING_DIR/drupal8
     git pull
@@ -113,9 +114,14 @@ pushd $STAGING_DIR/drupal8
 composer install
 ddev config --docroot="" --sitename=drupal8 --apptype=drupal8
 
+# Start ddev.
+cd $STAGING_DIR/drupal8
+ddev start
+
 # Grab a database for them to install to avoid the install process
-mkdir -p .db_dumps
-cp $REPO_DIR/databases/d8_installed_db.sql.gz .db_dumps
+mkdir -p $STAGING_DIR/.db_dumps
+ddev exec drush si standard
+ddev exec drush sql-dump --gzip --result-file='.db_dumps/d8_installed_db.sql'
 popd
 
 cd $STAGING_DIR_BASE
