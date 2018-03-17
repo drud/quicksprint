@@ -73,6 +73,22 @@ if [[ "$OS" == "Darwin" ]]; then
         wait
         open -a /Applications/Docker.app
         hdiutil detach /Volumes/Docker
+
+        printf "
+        ${GREEN}
+        ####
+        # Please open Docker preferences and set Memory to 3.0 GiB on the Advanced tab.
+        #
+        # Press y once this is done.
+        # !!You don't need to hit enter!!.
+        #
+        ####
+        ${RESET}"
+        read -n1 DOCKMEM
+        if [[ ! $DOCKMEM =~ ^[Yy]$ ]]
+        then
+            exit 1
+        fi
     fi
 
 elif [[ "$OS" == "Linux" ]]; then
