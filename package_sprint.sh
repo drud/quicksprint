@@ -13,7 +13,6 @@ DRUPAL_BRANCH=8.6.x
 
 
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
-D8DB_URL=https://github.com/drud/quicksprint/raw/master/databases/d8_installed_db.sql.gz
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -119,8 +118,8 @@ cd $STAGING_DIR/drupal8
 ddev start
 
 # Grab a database for them to install to avoid the install process
-mkdir -p $STAGING_DIR/.db_dumps
-ddev exec drush si standard
+mkdir -p $STAGING_DIR/drupal8/.db_dumps
+ddev exec drush si standard --db-url=mysql://db:db@db:3306/db
 ddev exec drush sql-dump --gzip --result-file='.db_dumps/d8_installed_db.sql'
 popd
 
