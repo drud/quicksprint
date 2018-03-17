@@ -49,27 +49,7 @@ clear
 if [[ "$OS" == "Darwin" ]]; then
     FILEBASE="ddev_macos"
 
-    if ! 7z --version >/dev/null 2>&1; then
-        printf "
-        ${GREEN}
-        ####
-        # Installing 7zip so that we can extract archives.
-        #
-        # Press y to continue
-        # !!You don't need to hit enter!!.
-        #
-        ####
-        ${RESET}"
-        read -n1 SEVEN
-        if [[ ! $SEVEN =~ ^[Yy]$ ]]
-        then
-            exit 1
-        fi
-
-        cp ${CURRENT_DIR}/bin/$OS/7z /usr/bin
-    fi
-
-    if ! docker --version >/dev/null 2>&1; then
+    if ! command -v docker >/dev/null 2>&1; then
         printf "
         ${GREEN}
         ####
@@ -98,33 +78,12 @@ if [[ "$OS" == "Darwin" ]]; then
 elif [[ "$OS" == "Linux" ]]; then
     FILEBASE="ddev_linux"
 
-    if ! command -v 7z >/dev/null 2>&1; then
-        printf "
-        ${GREEN}
-        ####
-        # Installing 7zip so that we can extract archives.
-        #
-        # Press y to continue
-        # !!You don't need to hit enter!!.
-        #
-        ####
-        ${RESET}"
-        read -n1 SEVEN
-        if [[ ! $SEVEN =~ ^[Yy]$ ]]
-        then
-            exit 1
-        fi
-
-        cp ${CURRENT_DIR}/bin/$OS/7z /usr/local/bin
-        cp ${CURRENT_DIR}/bin/$OS/7z.so /usr/local/bin
-    fi
-
-    if ! command -v docker >/dev/null 2>&1; then
+    if ! docker --version >/dev/null 2>&1; then
         printf "${YELLOW}Docker is required for ddev. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
         printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
     fi
 
-    if ! command -v docker-compose >/dev/null 2>&1; then
+    if ! docker-compose --version >/dev/null 2>&1; then
         printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
         printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
     fi
@@ -135,10 +94,10 @@ else
 fi
 
 echo "Installing docker images for ddev to use..."
-bin/$OS/7z -xc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) -so | docker load
+gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
 
 if [ -f ddev_tarballs/docker_additions.tar.xz ]; then
-    bin/$OS/7z -xc $(ls ddev_tarballs/docker_additions.tar.xz) -so | docker load
+    gzip -dc $(ls ddev_tarballs/docker_additions.tar.xz) | docker load
 fi
 
 TARBALL="$(ls ddev_tarballs/$FILEBASE*.tar.gz)"
