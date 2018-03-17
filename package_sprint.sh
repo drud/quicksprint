@@ -11,7 +11,6 @@ FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
 
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
-D8DB_URL=https://github.com/drud/quicksprint/raw/master/databases/d8_installed_db.sql.gz
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -118,10 +117,6 @@ composer install
 # Copy licenses and COPYING notice.
 cp -r $REPO_DIR/licenses $STAGING_DIR/
 cp $REPO_DIR/COPYING $STAGING_DIR/
-
-# Grab a database for them to install to avoid the install process
-mkdir -p $STAGING_DIR/sprint/.ddev/.db_dumps
-cp $REPO_DIR/databases/d8_installed_db.sql.gz $STAGING_DIR/sprint/.ddev/.db_dumps
 popd
 
 cd $STAGING_DIR
