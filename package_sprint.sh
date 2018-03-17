@@ -10,7 +10,6 @@ set -o nounset
 STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
-FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
 
 
@@ -128,4 +127,4 @@ popd
 cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
 zip -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
-printf "${GREEN}The sprint tarballs and zipballs are in $(ls $FINAL_TARGET_DIR/drupal_sprint_package*).${RESET}\n"
+printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package.*).${RESET}\n"
