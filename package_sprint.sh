@@ -22,7 +22,7 @@ OS=$(uname)
 BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
-if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
+if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
 	echo -n "The staging directory already has files. Do you want to continue (y/n)? "
 	read answer
 	if echo "$answer" | grep -iq "^y"; then
