@@ -1,5 +1,8 @@
 #!/bin/bash
-set -e
+
+set -o errexit
+set -o pipefail
+set -o nounset
 
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in teh repository root.
@@ -7,7 +10,6 @@ set -e
 STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
-FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
 
 
@@ -22,7 +24,7 @@ OS=$(uname)
 BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
-if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
+if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
 	echo -n "The staging directory already has files. Do you want to continue (y/n)? "
 	read answer
 	if echo "$answer" | grep -iq "^y"; then
@@ -125,4 +127,4 @@ popd
 cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
 zip -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
-printf "${GREEN}The sprint tarballs and zipballs are in $(ls $FINAL_TARGET_DIR/drupal_sprint_package*).${RESET}\n"
+printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package.*).${RESET}\n"
