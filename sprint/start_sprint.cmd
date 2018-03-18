@@ -11,7 +11,7 @@ set TIMESTAMP=%date:~10,4%%date:~7,2%%date:~4,2%-%SANEHOUR%%time:~3,2%
 
 REM Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
 MKDIR sprint-%TIMESTAMP%
-bin\7za.exe x sprint.tar.xz -so | 7z x -aoa -si -ttar -o"sprint-%TIMESTAMP%"
+bin\7za.exe x sprint.tar.xz -so | bin\7za.exe x -aoa -si -ttar -o"sprint-%TIMESTAMP%"
 
 REM Update ddev project name
 bin\sed.exe -i '' 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\.ddev\config.yaml
