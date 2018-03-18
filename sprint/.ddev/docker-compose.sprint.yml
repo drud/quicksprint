@@ -3,7 +3,7 @@ version: "3"
 services:
   ide:
     container_name: ddev-${DDEV_SITENAME}-ide # This is the name of the container. It is recommended to follow the same name convention used in the main docker-compose.yml file.
-    image: briangilbert/cloud9-alpine
+    image: briangilbert/cloud9-alpine:20180318
     ports:
     - 8000 # Coud9 is served from this port inside the container
     environment:
@@ -24,7 +24,7 @@ services:
   irc:
     container_name: ddev-${DDEV_SITENAME}-irc # This is the name of the container. It is recommended to follow the same name convention used in the main docker-compose.yml file.
     hostname: thelounge
-    image: linuxserver/thelounge
+    image: linuxserver/thelounge:94
     ports:
     - 9000 # Thelounge is served from this port inside the container
     environment:
