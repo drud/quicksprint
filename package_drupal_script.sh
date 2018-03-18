@@ -133,4 +133,5 @@ fi
 cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
 zip -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
+wait
 printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package*).${RESET}\n"
