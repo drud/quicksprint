@@ -1,5 +1,4 @@
-#!/bin/bash
-clear
+@echo off
 
 REM This script creatse a new drupal 8 instance in the current directory ready to sprint on an issue.
 

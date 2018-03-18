@@ -1,3 +1,4 @@
+@echo off
 
 ECHO ####
 ECHO # This simple script starts a clean instance of drupal 
