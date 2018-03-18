@@ -1,5 +1,8 @@
 #!/bin/bash
-set -e
+
+set -o errexit
+set -o pipefail
+set -o nounset
 
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in teh repository root.
@@ -7,7 +10,6 @@ set -e
 STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
-FINAL_TARGET_DIR=/tmp
 REPO_DIR=$PWD
 
 DOCKER_URLS="https://download.docker.com/mac/stable/21090/Docker.dmg https://download.docker.com/win/stable/13620/Docker%20for%20Windows%20Installer.exe"
@@ -20,14 +22,14 @@ OS=$(uname)
 BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
-if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A \"$STAGING_DIR\")" ] ; then
-	echo -n "The staging directory already has files. Do you want to continue (y/n)? "
-	read answer
-	if echo "$answer" | grep -iq "^y"; then
-    	echo "Continuing with downloads, existing files will be respected, mostly."
-	else
-		exit 1
-	fi
+if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
+    echo -n "The staging directory already has files. Do you want to continue (y/n)? "
+    read answer
+    if echo "$answer" | grep -iq "^y"; then
+        echo "Continuing with downloads, existing files will be respected, mostly."
+    else
+        exit 1
+    fi
 fi
 
 SHACMD=""
@@ -73,7 +75,7 @@ popd
 
 # Download the ddev tarball/zipball
 for os in macos linux windows; do
-	pwd
+    pwd
     SUFFIX=tar.gz
     if [ $os == "windows" ] ; then
         SUFFIX=zip
@@ -124,11 +126,11 @@ tar cfJ sprint.tar.xz -C sprint .
 rm -rf $STAGING_DIR/sprint
 
 if [ -f ${REPO_DIR}/package_additions.sh ]; then
+    # Package images for any additions.
     source ${REPO_DIR}/package_additions.sh
 fi
 
 cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
 zip -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
-printf "${GREEN}The sprint tarballs and zipballs are in $(ls $FINAL_TARGET_DIR/drupal_sprint_package*).${RESET}\n"
-
+printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package*).${RESET}\n"

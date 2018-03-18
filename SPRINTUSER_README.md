@@ -12,9 +12,7 @@ Prerequisites:
 
 Installation and Startup:
 
-1. Install docker-ce if you don't already have it. Working installs for macOS and Windows are in the docker_installs directory. If you're running Linux, check Docker's website for install instructions. ([Ubuntu instructions](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
+1. (Linux) Install docker-ce if you don't already have it. ([Linux instructions](See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server))
 2. (macOS/Linux): Install DDEV-Local by running install_ddev.sh in this directory: `./install_ddev.sh` - (Windows): run install_ddev.cmd
-3. (macOS/Linux): Start ddev with start_ddev.sh in this directory: `./start_ddev.sh` - (Windows): run start_ddev.cmd
-4. _Windows users must run an additional command_: In an administrative shell or cmd window they must run the command 
-`ddev hostname drupal8.ddev.local 127.0.0.1`
-
+3. (macOS/Linux): After installed you can start up an instance by cd'ing to `~/Sites/sprint` and running `start_sprint.sh` - (Windows): run `start_sprint.cmd` from `%userprofile%\Sites\sprint`
+4. _Windows users must run an additional command_: the start_clean command will tell you what the command is.

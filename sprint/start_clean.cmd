@@ -21,6 +21,10 @@ ddev exec drush cr
 ddev describe
  
 ECHO ####
+ECHO # run the following command:
+ECHO # 
+ECHO #   ddev hostname sprint-[ts].ddev.local 127.0.0.1
+ECHO #
 ECHO # Mailhog: 		http://sprint-[ts].ddev.local:8025/
 ECHO #
 ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
