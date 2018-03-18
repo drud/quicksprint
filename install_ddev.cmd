@@ -33,7 +33,8 @@ IF %docker% == y (
   REM Install Docker for Windows.
   "docker_installs\Docker%20for%20Windows%20Installer.exe" /SILENT
   ECHO Once Docker installation is complete, 
-  ECHO Open Docker preferances and increase memory allocation to 3.0GiB before continusing.
+  ECHO Open Docker preferances and increase memory allocation to 3.0GiB.
+  ECHO Wait for Docker to restart before continuing.
   ECHO Hit any key once complete.
   PAUSE
 )

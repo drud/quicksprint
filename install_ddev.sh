@@ -78,6 +78,7 @@ if [[ "$OS" == "Darwin" ]]; then
         ${GREEN}
         ####
         # Please open Docker preferences and set Memory to 3.0 GiB on the Advanced tab.
+        # Wait for Docker to restart before continuing.
         #
         # Press y once this is done.
         # !!You don't need to hit enter!!.
