@@ -140,6 +140,7 @@ fi
 mkdir -p ~/Sites/sprint
 cp start_sprint.sh ~/Sites/sprint/
 cp sprint.tar.xz ~/Sites/sprint/
+wait
 
 printf "
 ${GREEN}
