@@ -111,10 +111,18 @@ else
 fi
 
 echo "Installing docker images for ddev to use..."
-gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
+if [[ "$OS" == "Darwin" ]]; then
+    gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
+elif [[ "$OS" == "Linux" ]]; then
+    xzcat $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
+fi
 
 if [ -f ddev_tarballs/docker_additions.tar.xz ]; then
-    gzip -dc $(ls ddev_tarballs/docker_additions.tar.xz) | docker load
+    if [[ "$OS" == "Darwin" ]]; then
+        gzip -dc $(ls ddev_tarballs/docker_additions.tar.xz) | docker load
+    elif [[ "$OS" == "Linux" ]]; then
+        xzcat $(ls ddev_tarballs/docker_additions.tar.xz) | docker load
+    fi
 fi
 
 TARBALL="$(ls ddev_tarballs/$FILEBASE*.tar.gz)"
