@@ -13,10 +13,10 @@ MKDIR sprint-%TIMESTAMP%
 bin\7za.exe x sprint.tar.xz -so | bin\7za.exe x -aoa -si -ttar -o"sprint-%TIMESTAMP%"
 
 REM Update ddev project name
-bin\sed.exe -i '' 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\.ddev\config.yaml
-bin\sed.exe -i '' 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\Readme.txt
-bin\sed.exe -i '' 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\start_clean.sh
-bin\sed.exe -i '' 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\start_clean.cmd
+bin\sed.exe -i 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\.ddev\config.yaml
+bin\sed.exe -i 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\Readme.txt
+bin\sed.exe -i 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\start_clean.sh
+bin\sed.exe -i 's/\[ts\]/'%TIMESTAMP%'/' sprint-%TIMESTAMP%\start_clean.cmd
 
 ECHO ######
 ECHO #
