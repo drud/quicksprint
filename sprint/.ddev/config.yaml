@@ -1,0 +1,20 @@
+APIVersion: "1"
+name: sprint-[ts]
+type: drupal8
+docroot: drupal8
+php_version: "7.2"
+webimage: drud/nginx-php-fpm-local:v1.1.0
+dbimage: drud/mariadb-local:v0.8.0
+dbaimage: drud/phpmyadmin:v0.2.0
+router_http_port: "80"
+router_https_port: "443"
+provider: default
+
+# Certain ddev commands can be extended to run tasks before or after the ddev
+# command is executed.
+# See https://ddev.readthedocs.io/en/latest/users/extending-commands/ for more
+# information on the commands that can be extended and the tasks you can define
+# for them.
+# hooks:
+#   post-import-db:
+#     - exec: "drush cr"
