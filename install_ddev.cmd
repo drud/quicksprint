@@ -31,7 +31,7 @@ cd %~dp0
 SET /p docker="Do you need to install Docker for Windows? [y/n]: " %=%
 IF %docker% == y (
   REM Install Docker for Windows.
-  "docker_installs\Docker%20for%20Windows%20Installer.exe" /SILENT
+  "docker_installs\Docker^%20for^%20Windows^%20Installer.exe" 
   ECHO Once Docker installation is complete, 
   ECHO Open Docker preferances and increase memory allocation to 3.0GiB.
   ECHO Wait for Docker to restart before continuing.
@@ -42,11 +42,11 @@ IF %docker% == y (
 ECHO "Installing docker images for ddev to use..."
 cd ddev_tarballs
 set /p LATEST_VERSION=<..\.latest_version.txt
-..\bin\windows\7za x ddev_docker_images.%LATEST_VERSION%.tar.gz
+..\bin\windows\7za x ddev_docker_images.%LATEST_VERSION%.tar.xz
 docker load -i ddev_docker_images.%LATEST_VERSION%.tar
 
 if exist docker_additions.tar.xz (
-	..\bin\windows\7za x docker_additions.tar.gz
+	..\bin\windows\7za x docker_additions.tar.xz
 	docker load -i docker_additions.tar
 )
 
@@ -54,11 +54,13 @@ ECHO "Installing ddev..."
 ..\bin\windows\7za x ddev_windows.%LATEST_VERSION%.zip
 copy ddev.exe %HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
-
 MKDIR "%userprofile%\Sites\sprint"
 MKDIR "%userprofile%\Sites\sprint\bin"
 COPY "%CURRENT_DIR%\bin\windows\7za.exe" "%userprofile%\Sites\sprint\bin"
 COPY "%CURRENT_DIR%\bin\windows\sed.exe" "%userprofile%\Sites\sprint\bin"
+COPY "%CURRENT_DIR%\bin\windows\regex2.dll" "%userprofile%\Sites\sprint\bin"
+COPY "%CURRENT_DIR%\bin\windows\libintl3.dll" "%userprofile%\Sites\sprint\bin"
+COPY "%CURRENT_DIR%\bin\windows\libiconv2.dll" "%userprofile%\Sites\sprint\bin"
 COPY "%CURRENT_DIR%\start_sprint.cmd" "%userprofile%\Sites\sprint\"
 COPY "%CURRENT_DIR%\sprint.tar.xz" "%userprofile%\Sites\sprint\"
 
@@ -71,4 +73,3 @@ ECHO # cd %userprofile%\Sites\sprint
 ECHO # start_sprint.cmd
 ECHO #
 ECHO ######
-
