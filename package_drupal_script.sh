@@ -114,7 +114,7 @@ else
     popd
 fi
 pushd $STAGING_DIR/sprint/drupal8
-cp $REPO_DIR/example.gitignore $STAGING_DIR/drupal8/.gitignore
+cp $REPO_DIR/example.gitignore $STAGING_DIR/sprint/drupal8/.gitignore
 
 composer install
 
