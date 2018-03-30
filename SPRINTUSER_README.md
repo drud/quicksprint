@@ -8,6 +8,7 @@ This directory contains all the tools to get you going at a Drupal 8 sprint:
 
 Prerequisites: 
 
+* For Windows you need version 10 Pro, with Virtualization additions enabled in your BIOS.
 * You'll need git to be able to develop patches. [Helpful git setup info at github](https://help.github.com/articles/set-up-git/).
 
 Installation and Startup:

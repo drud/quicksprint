@@ -2,6 +2,8 @@
 
 A basic toolkit to get people started with ddev and a Drupal codebase. This is intended for code sprints where lots of people need to get started with the same environment in a short period of time.
 
+* Windows users need version 10 Pro, with Virtualization additions enabled in  BIOS.
+
 It uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal8 repository to provide the tools to get people going quickly at a sprint.
 
 * To create a sprint package, run the script package_drupal_script.sh. (You can also retrieve a tarball or zipball of the results at https://github.com/drud/quicksprint/releases instead of doing this step.)
