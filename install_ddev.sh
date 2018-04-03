@@ -31,7 +31,7 @@ ${GREEN}
 #  -Pre-load docker images for the sprint toolkit:
 #    -Drupal 8
 #    -phpmyadmin
-#    -Coud9 IDE
+#    -Cloud9 IDE
 #    -Thelounge IRC client
 #
 # Press y to continue
