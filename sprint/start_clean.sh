@@ -14,7 +14,7 @@ ${GREEN}
 # This simple script starts a clean instance of drupal 
 # running in ddev and imports a starter database.
 #
-# Make sure you've uploaded any patchs from last issue 
+# Make sure you've uploaded any patches from last issue 
 # you worked on before continuing.
 #
 # Press y to continue
@@ -28,6 +28,8 @@ then
     exit 1
 fi
 
+printf "
+"
 ddev remove
 ddev start
 wait

@@ -4,7 +4,7 @@ ECHO ####
 ECHO # This simple script starts a clean instance of drupal 
 ECHO # running in ddev and imports a starter database.
 ECHO #
-ECHO # Make sure you've uploaded any patchs from last issue 
+ECHO # Make sure you've uploaded any patches from last issue 
 ECHO # you worked on before continuing.
 ECHO #
 ECHO # Press y to continue
@@ -25,13 +25,13 @@ ECHO # run the following command:
 ECHO # 
 ECHO #   ddev hostname sprint-[ts].ddev.local 127.0.0.1
 ECHO #
-ECHO # Mailhog: 		http://sprint-[ts].ddev.local:8025/
+ECHO # Mailhog: 	http://sprint-[ts].ddev.local:8025/
 ECHO #
 ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
 ECHO #
-ECHO # IRC: 			http://sprint-[ts].ddev.local:9000/
+ECHO # IRC: 		http://sprint-[ts].ddev.local:9000/
 ECHO #
-ECHO # IDE: 			http://sprint-[ts].ddev.local:8000/  
+ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/  
 ECHO #				(U:username  P:password)
 ECHO #
 ECHO # For more info see README.txt
