@@ -14,8 +14,7 @@ ECHO # It does the following:
 ECHO #  -Install Docker for your OS if you don't have it already
 ECHO #  -Install ddev by Drud Technology
 ECHO #  -Copy required components to ~/Sites/sprint/
-ECHO #  -Do a git pull to ensure you have latest commits for core
-ECHO #  -Pre-load docker images for the sprint toolkit:
+ECHO #  -Pre-loaded docker images for the sprint toolkit:
 ECHO #    -Drupal 8
 ECHO #    -phpmyadmin
 ECHO #    -Coud9 IDE

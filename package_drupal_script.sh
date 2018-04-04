@@ -4,8 +4,12 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Maximise compression
+export XZ_OPT=-9e
+export GZIP=-9e
+
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
-# It assumes it's being run in teh repository root.
+# It assumes it's being run in the repository root.
 
 STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
@@ -111,6 +115,7 @@ else
     rm sprint.tar.xz
     cd $STAGING_DIR/sprint/drupal8
     git pull
+    composer install
     popd
 fi
 pushd $STAGING_DIR/sprint/drupal8
@@ -134,6 +139,6 @@ fi
 
 cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
-zip -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
 wait
 printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package*).${RESET}\n"

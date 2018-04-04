@@ -29,7 +29,7 @@ elif [[ "$OS" == "Linux" ]]; then
 	sed -i 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/start_clean.cmd
 fi
 
-printf "
+printf "${GREEN}
 ######
 #
 # Your Drupal 8 instance is now ready to use, 

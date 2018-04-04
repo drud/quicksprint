@@ -27,8 +27,7 @@ ${GREEN}
 #  -Install Docker for your OS if you don't have it already
 #  -Install ddev by Drud Technology
 #  -Copy required components to ~/Sites/sprint/
-#  -Do a git pull to ensure you have latest commits for core
-#  -Pre-load docker images for the sprint toolkit:
+#  -Pre-loaded docker images for the sprint toolkit:
 #    -Drupal 8
 #    -phpmyadmin
 #    -Cloud9 IDE
@@ -66,6 +65,7 @@ if [[ "$OS" == "Darwin" ]]; then
             exit 1
         fi
 
+        echo ""
         # Install and open Docker
         hdiutil attach -nobrowse "${CURRENT_DIR}/docker_installs/Docker.dmg"
         sleep 10
@@ -110,6 +110,7 @@ else
     exit 1
 fi
 
+echo ""
 echo "Installing docker images for ddev to use..."
 if [[ "$OS" == "Darwin" ]]; then
     gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
