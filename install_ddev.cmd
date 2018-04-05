@@ -17,7 +17,7 @@ ECHO #  -Copy required components to ~/Sites/sprint/
 ECHO #  -Pre-loaded docker images for the sprint toolkit:
 ECHO #    -Drupal 8
 ECHO #    -phpmyadmin
-ECHO #    -Coud9 IDE
+ECHO #    -Cloud9 IDE
 ECHO #    -Thelounge IRC client
 ECHO #
 ECHO # Press y to continue
