@@ -3,7 +3,7 @@
 This directory contains all the tools to get you going at a Drupal 8 sprint:
 
 * Drupal 8, already cloned with git (`git clone git://git.drupal.org/project/drupal.git`)
-* Docker (you must install it yourself)
+* Docker (you must install it yourself; install images are provided)
 * DDEV-Local (ddev) development environment
 
 Prerequisites: 
