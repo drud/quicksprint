@@ -1,4 +1,9 @@
 @echo off
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
 CLS
 
 goto check_Permissions

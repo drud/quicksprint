@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -o errexit
+set -o pipefail
+set -o nounset
+
 #Clear terminal screen so the about text can be read
 clear
 

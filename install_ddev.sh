@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -o errexit
+set -o pipefail
+set -o nounset
+
 clear
 
 # Install provided ddev release
