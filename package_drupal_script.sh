@@ -15,6 +15,7 @@ STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 REPO_DIR=$PWD
+QUICKSPRINT_RELEASE=v0.0.6
 
 # The version lines on the following few lines need to get changed any time the url are changed on the line below.
 DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
@@ -152,7 +153,7 @@ if [ -f ${REPO_DIR}/package_additions.sh ]; then
 fi
 
 cd $STAGING_DIR_BASE
-tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
-zip -9 -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
+tar -czf drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
 wait
 printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package*).${RESET}\n"
