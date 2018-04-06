@@ -27,15 +27,26 @@ PAUSE
 
 cd %~dp0
 
-SET /p docker="Do you need to install Docker for Windows? [y/n]: " %=%
-IF %docker% == y (
-  REM Install Docker for Windows.
-  "docker_installs\Docker^%20for^%20Windows^%20Installer.exe" 
-  ECHO Once Docker installation is complete, 
-  ECHO Open Docker preferances and increase memory allocation to 3.0GiB.
-  ECHO Wait for Docker to restart before continuing.
-  ECHO Hit any key once complete.
+FOR %%X in (docker.exe) do (set FOUND=%%~$PATH:X)
+IF defined FOUND 
+  ECHO ######
+  ECHO # Docker found!
+  ECHO #
+  ECHO # Open Docker preferences, confirm the memory allocation is set to 3.0 GiB
+  ECHO # on the Advanced tab, and that docker has fully restarted before continuing.
+  ECHO #
+  ECHO # Hit any key once Docker has restarted.
+  ECHO ######
   PAUSE
+) ELSE (
+  ECHO ######
+  ECHO # You need to install Docker and have it running before executing this script.
+  ECHO #
+  ECHO # The installer is likely provided in a docker_installs directory with this package.
+  ECHO # Otherwise get it at https://docs.docker.com/docker-for-windows/release-notes/
+  ECHO #
+  ECHO ######
+  EXIT
 )
 
 ECHO "Installing docker images for ddev to use..."
