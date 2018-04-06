@@ -102,6 +102,13 @@ ${RESET}"
             curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
         fi
     done
+else
+        printf "
+${GREEN}
+####
+# Continuing script without downloading Docker installers.
+###
+${RESET}"
 fi
 
 mkdir -p ddev_tarballs
