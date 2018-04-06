@@ -67,7 +67,7 @@ if [[ "$OS" == "Darwin" ]]; then
         printf "
         ${GREEN}
         ####
-        # ${YELLOW}Open Docker preferences, confirm the memory allocation is set to 3.0 GiB${GREEN}
+        # ${YELLOW}Open Docker preferences, confirm its version 18.03.0 and the memory allocation is set to 3.0 GiB${GREEN}
         # ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
         #
         # Press y once Docker has restarted, or any other key to exit the script.
