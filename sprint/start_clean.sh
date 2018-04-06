@@ -34,8 +34,7 @@ then
     exit 1
 fi
 
-printf "
-"
+printf "\n"
 ddev remove
 ddev start
 wait
