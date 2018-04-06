@@ -5,12 +5,13 @@ ECHO # This simple script starts a clean instance of drupal
 ECHO # running in ddev and imports a starter database.
 ECHO #
 ECHO # Make sure you've uploaded any patches from last issue 
-ECHO # you worked on before continuing.
+ECHO # you worked on before continuing, as this blow away
+ECHO # local changes.
 ECHO #
-ECHO # Press y to continue
-ECHO # !!You don't need to hit enter!!.
+ECHO # Press any key to continue
 ECHO #
 ECHO ####
+PAUSE
 
 ddev start
 ddev exec git fetch

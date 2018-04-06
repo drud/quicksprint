@@ -15,11 +15,12 @@ RESET='\033[0m'
 printf "
 ${GREEN}
 ####
-# This simple script starts a clean instance of drupal
+# This simple script starts a clean Drupal 8 instance
 # running in ddev and imports a starter database.
 #
 # Make sure you've uploaded any patches from last issue
-# you worked on before continuing.
+# you worked on before continuing, as this blow away
+# local changes.
 #
 # Press y to continue, or any other key to exit the script.
 # !!You don't need to hit enter!!.
