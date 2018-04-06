@@ -15,13 +15,13 @@ RESET='\033[0m'
 printf "
 ${GREEN}
 ####
-# This simple script starts a clean instance of drupal 
+# This simple script starts a clean instance of drupal
 # running in ddev and imports a starter database.
 #
-# Make sure you've uploaded any patches from last issue 
+# Make sure you've uploaded any patches from last issue
 # you worked on before continuing.
 #
-# Press y to continue
+# Press y to continue, or any other key to exit the script.
 # !!You don't need to hit enter!!.
 #
 ####
@@ -29,6 +29,7 @@ ${RESET}"
 read -n1 INSTALL
 if [[ ! $INSTALL =~ ^[Yy]$ ]]
 then
+    printf "${RED}You didn't hit y or Y, exiting script${RESET}"
     exit 1
 fi
 
