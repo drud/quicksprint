@@ -50,37 +50,22 @@ if [[ "$OS" == "Darwin" ]]; then
 
     if ! command -v docker >/dev/null 2>&1; then
         printf "
-        ${GREEN}
+        ${RED}
         ####
-        # Installing docker so that ddev will work.
-        #
-        # Press y to continue
-        # !!You don't need to hit enter!!.
-        #
+        # You need to install Docker and have it running before executing this script.
+        # The installer is likely provided in a docker_installs directory with this package.
+        # Otherwise get it at https://docs.docker.com/docker-for-mac/release-notes/
         ####
         ${RESET}"
-        read -n1 SEVEN
-        if [[ ! $SEVEN =~ ^[Yy]$ ]]
-        then
-            exit 1
-        fi
-
-        echo ""
-        # Install and open Docker
-        hdiutil attach -nobrowse "${CURRENT_DIR}/docker_installs/Docker.dmg"
-        sleep 10
-        cp -rp /Volumes/Docker/Docker.app /Applications/
-        wait
-        open -a /Applications/Docker.app
-        hdiutil detach /Volumes/Docker
-
+        exit 1
+    else
         printf "
         ${GREEN}
         ####
-        # Please open Docker preferences and set Memory to 3.0 GiB on the Advanced tab.
-        # Wait for Docker to restart before continuing.
+        # ${YELLOW}Open Docker preferences, confirm the memory allocation is set to 3.0 GiB${GREEN}
+        # ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
         #
-        # Press y once this is done.
+        # Press y once Docker has restarted.
         # !!You don't need to hit enter!!.
         #
         ####
@@ -104,9 +89,9 @@ elif [[ "$OS" == "Linux" ]]; then
         printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
         printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
     fi
-    
+
 else
-    printf "${RED}Sorry, this installer does not support your platform at this time.${RESET}\n"    
+    printf "${RED}Sorry, this installer does not support your platform at this time.${RESET}\n"
     exit 1
 fi
 
