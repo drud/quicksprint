@@ -31,8 +31,14 @@ BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
-    echo -n "The staging directory already has files. Deleting them and recreating everything."
+    printf "${RED}The staging directory already has files. Deleting them and recreating everything.${RESET}"
     rm -rf $STAGING_DIR
+    if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz ] ; then
+        rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz
+    fi
+    if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip ]; then
+        rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip
+    fi
 fi
 
 SHACMD=""
@@ -64,6 +70,8 @@ if ! docker --version >/dev/null 2>&1; then
     printf "${YELLOW}Docker is required to use this package. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
 fi
 
+cd $STAGING_DIR
+
 printf "
 ${GREEN}
 ####
@@ -72,24 +80,25 @@ ${GREEN}
 ####
 ${RESET}"
 read -n1 INSTALL
-if [[ ! $INSTALL =~ ^[Yy]$ ]]
+if [[ $INSTALL =~ ^[Yy]$ ]] ; then
     # Download current docker installs
+    printf "
+${GREEN}
+####
+# Downloading docker installers.
+###
+${RESET}"
     mkdir -p docker_installs
     for dockerurl in $DOCKER_URLS; do
         fname=$(basename $dockerurl)
-        if [ ! -f "docker_installs/$fname" ] ; then
-            if [[ $fname = *"dmg"* ]]; then
-                curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
-            elif [[ $fname = *"exe"* ]]; then
-                curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
-            fi
+        if [[ $fname = *"dmg"* ]]; then
+            curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
+        elif [[ $fname = *"exe"* ]] ; then
+            curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
         fi
     done
-then
-    exit 1
 fi
 
-cd $STAGING_DIR
 mkdir -p ddev_tarballs
 TARBALL="ddev_docker_images.$LATEST_VERSION.tar.xz"
 SHAFILE="$TARBALL.sha256.txt"
