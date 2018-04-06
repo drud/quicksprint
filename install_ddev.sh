@@ -18,6 +18,16 @@ SHACMD=""
 FILEBASE=""
 CURRENT_DIR=$PWD
 
+# Check Docker is running
+SERVICE='docker'
+if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+then
+    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+else
+    printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
+    exit 1
+fi
+
 #Explain what the script does
 printf "
 ${GREEN}

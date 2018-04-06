@@ -32,6 +32,16 @@ USER=$(whoami)
 
 # Ensure XZ is installed
 command -v xz >/dev/null 2>&1 || { echo >&2 "${RED}I require xz command but it's not installed. Aborting.${RESET}"; exit 1; }
+# Check Docker is running
+SERVICE='docker'
+if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+then
+    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+else
+    printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
+    exit 1
+fi
+
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
     printf "${RED}The staging directory already has files. Deleting them and recreating everything.${RESET}"
