@@ -30,13 +30,8 @@ BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
-    echo -n "The staging directory already has files. Do you want to continue (y/n)? "
-    read answer
-    if echo "$answer" | grep -iq "^y"; then
-        echo "Continuing with downloads, existing files will be respected, mostly."
-    else
-        exit 1
-    fi
+    echo -n "The staging directory already has files. Deleting them and recreating everything."
+    rm -rf $STAGING_DIR
 fi
 
 SHACMD=""
