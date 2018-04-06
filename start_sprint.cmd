@@ -35,7 +35,7 @@ set SANEHOUR=%HOUR: =0%
 set TIMESTAMP=%date:~10,4%%date:~7,2%%date:~4,2%-%SANEHOUR%%time:~3,2%
 
 REM #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-bin\7za.exe x sprint.tar.xz -so | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP%
+bin\7za.exe x sprint.tar.xz -so > nul | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% > nul
 
 REM #Update ddevproject name
 bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml

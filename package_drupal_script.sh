@@ -15,7 +15,7 @@ STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 REPO_DIR=$PWD
-QUICKSPRINT_RELEASE=v0.0.6
+QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
 # The version lines on the following few lines need to get changed any time the url are changed on the line below.
 DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
@@ -29,6 +29,9 @@ RESET='\033[0m'
 OS=$(uname)
 BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
+
+# Ensure XZ is installed
+command -v xz >/dev/null 2>&1 || { echo >&2 "${RED}I require xz command but it's not installed. Aborting.${RESET}"; exit 1; }
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
     printf "${RED}The staging directory already has files. Deleting them and recreating everything.${RESET}"
@@ -76,6 +79,8 @@ printf "
 ${GREEN}
 ####
 # Shall we package docker installers for mac and windows with the archive?
+#
+# Press y to include installers, or any other key to continue.
 # !!You don't need to hit enter!!.
 ####
 ${RESET}"
@@ -165,4 +170,4 @@ cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
 zip -9 -r -q drupal_sprint_package$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
 wait
-printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package*).${RESET}\n"
+printf "${GREEN}The sprint tarballs and zipballs are in $STAGING_DIR_BASE.${RESET}\n"

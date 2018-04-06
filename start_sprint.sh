@@ -13,7 +13,7 @@ TIMESTAMP=$(date +"%Y%m%d-%H%M")
 
 #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
 mkdir -p sprint-$TIMESTAMP
-tar xpvf sprint.tar.xz -C sprint-$TIMESTAMP
+tar xpf sprint.tar.xz -C sprint-$TIMESTAMP
 wait
 
 #Update ddev project name
