@@ -28,9 +28,9 @@ PAUSE
 cd %~dp0
 
 FOR %%X in (docker.exe) do (set FOUND=%%~$PATH:X)
-IF defined FOUND 
+IF defined FOUND
   ECHO ######
-  ECHO # Docker found!
+  ECHO # Docker found! Make sure it's running before continuing.
   ECHO #
   ECHO # Open Docker preferences, confirm the memory allocation is set to 3.0 GiB
   ECHO # on the Advanced tab, and that docker has fully restarted before continuing.
