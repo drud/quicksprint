@@ -4,6 +4,15 @@ CLS
 
 set CURRENT_DIR=%CD%
 
+REM check processs is running, via https://stackoverflow.com/a/1329790
+tasklist /FI "IMAGENAME eq Docker.exe" 2>NUL | find /I /N "Docker.exe">NUL
+if %ERRORLEVEL%==0
+  ECHO Docker is running, lets continue.
+) ELSE (
+  ECHO Docker isn't running and is required for this script, exiting.
+  EXIT
+)
+
 ECHO ####
 ECHO # This script will install everything you need to participate in this sprint.
 ECHO #
