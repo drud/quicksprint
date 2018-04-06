@@ -16,7 +16,10 @@ STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 REPO_DIR=$PWD
 
+# The version lines on the following few lines need to get changed any time the url are changed on the line below.
 DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
+DOCKER_VERSION_MAC="18.03.0-ce-mac60"
+DOCKER_VERSION_WIN="18.03.0-ce-win59"
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -65,6 +68,31 @@ if ! docker --version >/dev/null 2>&1; then
     printf "${YELLOW}Docker is required to use this package. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
 fi
 
+printf "
+${GREEN}
+####
+# Shall we package docker installers for mac and windows with the archive?
+# !!You don't need to hit enter!!.
+####
+${RESET}"
+read -n1 INSTALL
+if [[ ! $INSTALL =~ ^[Yy]$ ]]
+    # Download current docker installs
+    mkdir -p docker_installs
+    for dockerurl in $DOCKER_URLS; do
+        fname=$(basename $dockerurl)
+        if [ ! -f "docker_installs/$fname" ] ; then
+            if [[ $fname = *"dmg"* ]]; then
+                curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
+            elif [[ $fname = *"exe"* ]]; then
+                curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
+            fi
+        fi
+    done
+then
+    exit 1
+fi
+
 cd $STAGING_DIR
 mkdir -p ddev_tarballs
 TARBALL="ddev_docker_images.$LATEST_VERSION.tar.xz"
@@ -94,15 +122,6 @@ for os in macos linux windows; do
     pushd ddev_tarballs
     $SHACMD -c $(basename "$SHAFILE")
     popd
-done
-
-# Download current docker installs
-mkdir -p docker_installs
-for dockerurl in $DOCKER_URLS; do
-    fname=$(basename $dockerurl)
-    if [ ! -f "docker_installs/$fname" ] ; then
-        curl -sSL -o "docker_installs/$fname" $dockerurl
-    fi
 done
 
 # clone or refresh d8 clone
