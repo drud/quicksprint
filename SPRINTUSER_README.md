@@ -13,8 +13,10 @@ Prerequisites:
 
 Installation and Startup:
 
-1. Install docker-ce if you don't already have it. (macOS and Windows): There are install images in the docker_installs directory of this folder.  (Linux) See [Linux instructions](https://docs.docker.com/install/#docker-ce)
+1. Install docker-ce if you don't already have it. (macOS and Windows): There may be a docker_installs directory in this folder with images.  (Linux) See [Linux instructions](https://docs.docker.com/install/#docker-ce)
 2. Start docker (it must be running to install ddev)
-3. Install DDEV-Local. (macOS/Linux): Run install_ddev.sh in the directory where this SPRINTUSER_README.md is with `./install_ddev.sh`; (Windows): run `install_ddev.cmd`.
-4. Start up Drupal 8: (macOS/Linux): cd to `~/Sites/sprint` and run `./start_sprint.sh` - (Windows): run `start_sprint.cmd` in `%userprofile%\Sites\sprint`
-5. _Windows users must run an additional command_: the start_clean command will tell you what the command is.
+3. Open docker preferences and set docker memory allocation to 3.0GB in the Advanced section (required for container to be started)
+3. Install DDEV-Local. (macOS/Linux): Run install_ddev.sh via terminal from the directory where this SPRINTUSER_README.md is with `./install_ddev.sh`; (Windows): run `install_ddev.cmd`.
+4. Create instance to use during sprint: (macOS/Linux): cd to `~/Sites/sprint` and run `./start_sprint.sh` - (Windows): run `start_sprint.cmd` in `%userprofile%\Sites\sprint`
+5. Follow prompts ffrom output of step 4 to start your Drupal 8 site.
+6. _Windows users must run an additional command_: the start_clean command will tell you what the command is.

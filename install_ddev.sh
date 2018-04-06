@@ -33,13 +33,14 @@ ${GREEN}
 #    -Cloud9 IDE
 #    -Thelounge IRC client
 #
-# Press y to continue
+# Press y to continue, or any other key to exit the script.
 # !!You don't need to hit enter!!.
 ####
 ${RESET}"
 read -n1 INSTALL
 if [[ ! $INSTALL =~ ^[Yy]$ ]]
 then
+    printf "${RED}You didn't hit y or Y, exiting script${RESET}"
     exit 1
 fi
 
@@ -65,7 +66,7 @@ if [[ "$OS" == "Darwin" ]]; then
         # ${YELLOW}Open Docker preferences, confirm the memory allocation is set to 3.0 GiB${GREEN}
         # ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
         #
-        # Press y once Docker has restarted.
+        # Press y once Docker has restarted, or any other key to exit the script.
         # !!You don't need to hit enter!!.
         #
         ####
@@ -73,6 +74,7 @@ if [[ "$OS" == "Darwin" ]]; then
         read -n1 DOCKMEM
         if [[ ! $DOCKMEM =~ ^[Yy]$ ]]
         then
+            printf "${RED}You didn't hit y or Y, exiting script${RESET}"
             exit 1
         fi
     fi
@@ -125,12 +127,13 @@ else
     sudo mv /tmp/ddev /usr/local/bin/
 fi
 
-if which brew &&  [ -f `brew --prefix`/etc/bash_completion ]; then
-    bash_completion_dir=$(brew --prefix)/etc/bash_completion.d
-    cp /tmp/ddev_bash_completion.sh $bash_completion_dir/ddev
-    printf "${GREEN}Installed ddev bash completions in $bash_completion_dir${RESET}\n"
-    rm /tmp/ddev_bash_completion.sh
+# Ensure ddev is in path
+if [[ ! $PATH = *"usr/local/bin"* ]]; then
+    echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
+    echo "export PATH=/usr/local/bin:$PATH" >> ~/.zshrc
+    source ~/.bash_profile
 fi
+
 
 mkdir -p ~/Sites/sprint
 cp start_sprint.sh ~/Sites/sprint/
@@ -141,7 +144,7 @@ printf "
 ${GREEN}
 ######
 #
-# Your ddev and the sprint kit are now ready to use, 
+# Your ddev and the sprint kit are now ready to use,
 # execute the following commands now to start:
 #
 # ${YELLOW}cd ~/Sites/sprint${GREEN}
