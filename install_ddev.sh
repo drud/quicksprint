@@ -58,7 +58,7 @@ if [[ "$OS" == "Darwin" ]]; then
         ${RED}
         ####
         # You need to install Docker and have it running before executing this script.
-        # The installer is likely provided in a docker_installs directory with this package.
+        # The installer may be provided with this package.
         # Otherwise get it at https://docs.docker.com/docker-for-mac/release-notes/
         ####
         ${RESET}"

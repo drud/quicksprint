@@ -42,7 +42,7 @@ IF defined FOUND
   ECHO ######
   ECHO # You need to install Docker and have it running before executing this script.
   ECHO #
-  ECHO # The installer is likely provided in a docker_installs directory with this package.
+  ECHO # The installer may be provided with this package.
   ECHO # Otherwise get it at https://docs.docker.com/docker-for-windows/release-notes/
   ECHO #
   ECHO ######
