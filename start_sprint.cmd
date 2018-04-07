@@ -50,6 +50,6 @@ ECHO # execute the following commands in terminal
 ECHO # to start a Drupal 8 instance to sprint on:
 ECHO #
 ECHO # cd sprint-%TIMESTAMP%
-ECHO # start_clean.cmd
+ECHO # start_clean.cmd (don't run this as administrator)
 ECHO #
 ECHO ######

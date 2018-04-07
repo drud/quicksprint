@@ -89,6 +89,9 @@ ECHO # Your ddev and the sprint kit are now ready to use,
 ECHO # execute the following commands now to start:
 ECHO #
 ECHO # cd %userprofile%\Sites\sprint
+ECHO #
+ECHO # Right click and run the following as administrator from explorer.
+ECHO #
 ECHO # start_sprint.cmd
 ECHO #
 ECHO ######
