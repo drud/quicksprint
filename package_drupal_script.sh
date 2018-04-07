@@ -92,14 +92,11 @@ ${GREEN}
 #
 # Press y to include installers, or any other key to continue.
 # !!You don't need to hit enter!!.
-####
-${RESET}"
+####${RESET}"
 read -n1 INSTALL
 if [[ $INSTALL =~ ^[Yy]$ ]] ; then
     # Download current docker installs
-    printf "
-${GREEN}
-####
+    printf "${GREEN}
 # Downloading docker installers.
 ###
 ${RESET}"
@@ -113,10 +110,7 @@ ${RESET}"
         fi
     done
 else
-        printf "
-${GREEN}
-####
-# Continuing script without downloading Docker installers.
+    printf "${GREEN}# Continuing script without downloading Docker installers.
 ###
 ${RESET}"
 fi
@@ -153,17 +147,7 @@ done
 
 # clone or refresh d8 clone
 mkdir -p sprint
-if [ ! -d sprint.tar.xz ] ; then
-    git clone git://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
-else
-    pushd $STAGING_DIR
-    tar xpvf sprint.tar.xz -C sprint
-    rm sprint.tar.xz
-    cd $STAGING_DIR/sprint/drupal8
-    git pull
-    composer install
-    popd
-fi
+git clone git://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
 pushd $STAGING_DIR/sprint/drupal8
 cp $REPO_DIR/example.gitignore $STAGING_DIR/sprint/drupal8/.gitignore
 
@@ -188,19 +172,14 @@ tar -czf drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
 zip -9 -r -q drupal_sprint_package$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
 wait
 
-printf "
-${GREEN}
-####
+printf "${GREEN}####
 # The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}.
 #
 # Now deleting the staging directory.
-####
-${RESET}"
+####${RESET}"
 rm -rf $STAGING_DIR_NAME
 wait
-printf "
-${GREEN}
-####
+printf "${GREEN}
 # Finished
-####
-${RESET}"
+####${RESET}
+"

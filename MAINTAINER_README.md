@@ -9,7 +9,7 @@ There are two parts to this project:
 
 Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal8 repository to provide the tools to get people going quickly at a sprint.
 
-* To create a sprint package, run the script package_drupal_script.sh. (You can also retrieve a tarball or zipball of the results at https://github.com/drud/quicksprint/releases instead of doing this step.)
+* To create a sprint package you will need Docker running, then run the script package_drupal_script.sh. (You can also retrieve a tarball or zipball of the results at https://github.com/drud/quicksprint/releases instead of doing this step.)
 * Your users will then download and unarchive the tarball or zipball.
 * Linux and Mac users run install_ddev.sh, Windows users run install_ddev.cmd inside the directory created by the tarball.
 * After installation, Linux and Mac users can start up an instance by cd'ing to ~/Sites/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in Sites/sprint of their user folder.
