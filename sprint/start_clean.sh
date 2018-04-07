@@ -45,7 +45,8 @@ then
 fi
 
 printf "\n"
-ddev remove
+ddev remove >/dev/null 2>&1
+wait
 ddev start
 wait
 ddev exec git fetch

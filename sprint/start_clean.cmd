@@ -22,7 +22,8 @@ ECHO #
 ECHO ####
 PAUSE
 
-ddev start
+START /WAIT ddev remove >nul
+START /WAIT ddev start
 ddev exec git fetch
 ddev exec git reset --hard origin/8.6.x
 ddev exec composer install
