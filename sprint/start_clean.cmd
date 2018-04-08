@@ -1,25 +1,36 @@
 @echo off
 
+REM check processs is running, via https://stackoverflow.com/a/1329790
+tasklist /FI "IMAGENAME eq Docker.exe" 2>NUL | find /I /N "Docker.exe">NUL
+if %ERRORLEVEL%==0
+    ECHO Docker is running, lets continue.
+) ELSE (
+    ECHO Docker isn't running and is required for this script, exiting.
+    EXIT
+)
+
 ECHO ####
-ECHO # This simple script starts a clean instance of drupal 
-ECHO # running in ddev and imports a starter database.
+ECHO # This simple script starts a Drupal 8 checked out from head
+ECHO # running in ddev with a fresh database.
 ECHO #
 ECHO # Make sure you've uploaded any patches from last issue 
-ECHO # you worked on before continuing.
+ECHO # you worked on before continuing, as this blow away
+ECHO # local changes.
 ECHO #
-ECHO # Press y to continue
-ECHO # !!You don't need to hit enter!!.
+ECHO # Press any key to continue
 ECHO #
 ECHO ####
+PAUSE
 
-ddev start
+START /WAIT ddev remove >nul
+START /WAIT ddev start
 ddev exec git fetch
 ddev exec git reset --hard origin/8.6.x
 ddev exec composer install
 ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db:3306/db
 ddev exec drush cr
 ddev describe
- 
+
 ECHO ####
 ECHO # run the following command:
 ECHO # 

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -o errexit
+set -o pipefail
+set -o nounset
+
 clear
 
 # Install provided ddev release
@@ -13,6 +17,16 @@ USER=$(whoami)
 SHACMD=""
 FILEBASE=""
 CURRENT_DIR=$PWD
+
+# Check Docker is running
+SERVICE='docker'
+if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+then
+    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+else
+    printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
+    exit 1
+fi
 
 #Explain what the script does
 printf "
@@ -33,13 +47,14 @@ ${GREEN}
 #    -Cloud9 IDE
 #    -Thelounge IRC client
 #
-# Press y to continue
+# Press y to continue, or any other key to exit the script.
 # !!You don't need to hit enter!!.
 ####
 ${RESET}"
 read -n1 INSTALL
 if [[ ! $INSTALL =~ ^[Yy]$ ]]
 then
+    printf "${RED}You didn't hit y or Y, exiting script${RESET}"
     exit 1
 fi
 
@@ -50,37 +65,22 @@ if [[ "$OS" == "Darwin" ]]; then
 
     if ! command -v docker >/dev/null 2>&1; then
         printf "
-        ${GREEN}
+        ${RED}
         ####
-        # Installing docker so that ddev will work.
-        #
-        # Press y to continue
-        # !!You don't need to hit enter!!.
-        #
+        # You need to install Docker and have it running before executing this script.
+        # The installer may be provided with this package.
+        # Otherwise get it at https://docs.docker.com/docker-for-mac/release-notes/
         ####
         ${RESET}"
-        read -n1 SEVEN
-        if [[ ! $SEVEN =~ ^[Yy]$ ]]
-        then
-            exit 1
-        fi
-
-        echo ""
-        # Install and open Docker
-        hdiutil attach -nobrowse "${CURRENT_DIR}/docker_installs/Docker.dmg"
-        sleep 10
-        cp -rp /Volumes/Docker/Docker.app /Applications/
-        wait
-        open -a /Applications/Docker.app
-        hdiutil detach /Volumes/Docker
-
+        exit 1
+    else
         printf "
         ${GREEN}
         ####
-        # Please open Docker preferences and set Memory to 3.0 GiB on the Advanced tab.
-        # Wait for Docker to restart before continuing.
+        # ${YELLOW}Open Docker preferences, confirm its version 18.03.0 and the memory allocation is set to 3.0 GiB${GREEN}
+        # ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
         #
-        # Press y once this is done.
+        # Press y once Docker has restarted, or any other key to exit the script.
         # !!You don't need to hit enter!!.
         #
         ####
@@ -88,6 +88,7 @@ if [[ "$OS" == "Darwin" ]]; then
         read -n1 DOCKMEM
         if [[ ! $DOCKMEM =~ ^[Yy]$ ]]
         then
+            printf "${RED}You didn't hit y or Y, exiting script${RESET}"
             exit 1
         fi
     fi
@@ -104,9 +105,9 @@ elif [[ "$OS" == "Linux" ]]; then
         printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
         printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
     fi
-    
+
 else
-    printf "${RED}Sorry, this installer does not support your platform at this time.${RESET}\n"    
+    printf "${RED}Sorry, this installer does not support your platform at this time.${RESET}\n"
     exit 1
 fi
 
@@ -140,12 +141,13 @@ else
     sudo mv /tmp/ddev /usr/local/bin/
 fi
 
-if which brew &&  [ -f `brew --prefix`/etc/bash_completion ]; then
-    bash_completion_dir=$(brew --prefix)/etc/bash_completion.d
-    cp /tmp/ddev_bash_completion.sh $bash_completion_dir/ddev
-    printf "${GREEN}Installed ddev bash completions in $bash_completion_dir${RESET}\n"
-    rm /tmp/ddev_bash_completion.sh
+# Ensure ddev is in path
+if [[ ! $PATH = *"usr/local/bin"* ]]; then
+    echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
+    echo "export PATH=/usr/local/bin:$PATH" >> ~/.zshrc
+    source ~/.bash_profile
 fi
+
 
 mkdir -p ~/Sites/sprint
 cp start_sprint.sh ~/Sites/sprint/
@@ -156,7 +158,7 @@ printf "
 ${GREEN}
 ######
 #
-# Your ddev and the sprint kit are now ready to use, 
+# Your ddev and the sprint kit are now ready to use,
 # execute the following commands now to start:
 #
 # ${YELLOW}cd ~/Sites/sprint${GREEN}

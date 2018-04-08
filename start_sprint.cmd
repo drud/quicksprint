@@ -1,4 +1,9 @@
 @echo off
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
 CLS
 
 goto check_Permissions
@@ -30,7 +35,7 @@ set SANEHOUR=%HOUR: =0%
 set TIMESTAMP=%date:~10,4%%date:~7,2%%date:~4,2%-%SANEHOUR%%time:~3,2%
 
 REM #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-bin\7za.exe x sprint.tar.xz -so | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP%
+bin\7za.exe x sprint.tar.xz -so > nul | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% > nul
 
 REM #Update ddevproject name
 bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml
@@ -45,6 +50,6 @@ ECHO # execute the following commands in terminal
 ECHO # to start a Drupal 8 instance to sprint on:
 ECHO #
 ECHO # cd sprint-%TIMESTAMP%
-ECHO # start_clean.cmd
+ECHO # start_clean.cmd (don't run this as administrator)
 ECHO #
 ECHO ######

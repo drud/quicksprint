@@ -15,8 +15,12 @@ STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 REPO_DIR=$PWD
+QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
+# The version lines on the following few lines need to get changed any time the url are changed on the line below.
 DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
+DOCKER_VERSION_MAC="18.03.0-ce-mac60"
+DOCKER_VERSION_WIN="18.03.0-ce-win59"
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -26,13 +30,27 @@ OS=$(uname)
 BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
+# Ensure XZ is installed
+command -v xz >/dev/null 2>&1 || { echo >&2 "${RED}I require xz command but it's not installed. Aborting.${RESET}"; exit 1; }
+# Check Docker is running
+SERVICE='docker'
+if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+then
+    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+else
+    printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
+    exit 1
+fi
+
+
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
-    echo -n "The staging directory already has files. Do you want to continue (y/n)? "
-    read answer
-    if echo "$answer" | grep -iq "^y"; then
-        echo "Continuing with downloads, existing files will be respected, mostly."
-    else
-        exit 1
+    printf "${RED}The staging directory already has files. Deleting them and recreating everything.${RESET}"
+    rm -rf $STAGING_DIR
+    if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz ] ; then
+        rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz
+    fi
+    if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip ]; then
+        rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip
     fi
 fi
 
@@ -66,6 +84,37 @@ if ! docker --version >/dev/null 2>&1; then
 fi
 
 cd $STAGING_DIR
+
+printf "
+${GREEN}
+####
+# Shall we package docker installers for mac and windows with the archive?
+#
+# Press y to include installers, or any other key to continue.
+# !!You don't need to hit enter!!.
+####${RESET}"
+read -n1 INSTALL
+if [[ $INSTALL =~ ^[Yy]$ ]] ; then
+    # Download current docker installs
+    printf "${GREEN}
+# Downloading docker installers.
+###
+${RESET}"
+    mkdir -p docker_installs
+    for dockerurl in $DOCKER_URLS; do
+        fname=$(basename $dockerurl)
+        if [[ $fname = *"dmg"* ]]; then
+            curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
+        elif [[ $fname = *"exe"* ]] ; then
+            curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
+        fi
+    done
+else
+    printf "${GREEN}# Continuing script without downloading Docker installers.
+###
+${RESET}"
+fi
+
 mkdir -p ddev_tarballs
 TARBALL="ddev_docker_images.$LATEST_VERSION.tar.xz"
 SHAFILE="$TARBALL.sha256.txt"
@@ -96,28 +145,9 @@ for os in macos linux windows; do
     popd
 done
 
-# Download current docker installs
-mkdir -p docker_installs
-for dockerurl in $DOCKER_URLS; do
-    fname=$(basename $dockerurl)
-    if [ ! -f "docker_installs/$fname" ] ; then
-        curl -sSL -o "docker_installs/$fname" $dockerurl
-    fi
-done
-
 # clone or refresh d8 clone
 mkdir -p sprint
-if [ ! -d sprint.tar.xz ] ; then
-    git clone git://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
-else
-    pushd $STAGING_DIR
-    tar xpvf sprint.tar.xz -C sprint
-    rm sprint.tar.xz
-    cd $STAGING_DIR/sprint/drupal8
-    git pull
-    composer install
-    popd
-fi
+git clone git://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
 pushd $STAGING_DIR/sprint/drupal8
 cp $REPO_DIR/example.gitignore $STAGING_DIR/sprint/drupal8/.gitignore
 
@@ -138,7 +168,18 @@ if [ -f ${REPO_DIR}/package_additions.sh ]; then
 fi
 
 cd $STAGING_DIR_BASE
-tar -czf drupal_sprint_package.tar.gz $STAGING_DIR_NAME
-zip -9 -r -q drupal_sprint_package.zip $STAGING_DIR_NAME
+tar -czf drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
 wait
-printf "${GREEN}The sprint tarballs and zipballs are in $(ls $STAGING_DIR_BASE/drupal_sprint_package*).${RESET}\n"
+
+printf "${GREEN}####
+# The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}.
+#
+# Now deleting the staging directory.
+####${RESET}"
+rm -rf $STAGING_DIR_NAME
+wait
+printf "${GREEN}
+# Finished
+####${RESET}
+"
