@@ -10,8 +10,8 @@ if %ERRORLEVEL%==0
 )
 
 ECHO ####
-ECHO # This simple script starts a clean instance of drupal 
-ECHO # running in ddev and imports a starter database.
+ECHO # This simple script starts a Drupal 8 checked out from head
+ECHO # running in ddev with a fresh database.
 ECHO #
 ECHO # Make sure you've uploaded any patches from last issue 
 ECHO # you worked on before continuing, as this blow away

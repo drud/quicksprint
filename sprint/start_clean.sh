@@ -25,8 +25,8 @@ fi
 printf "
 ${GREEN}
 ####
-# This simple script starts a clean Drupal 8 instance
-# running in ddev and imports a starter database.
+# This simple script starts a Drupal 8 checked out from head
+# running in ddev with a fresh database.
 #
 # Make sure you've uploaded any patches from last issue
 # you worked on before continuing, as this blow away
