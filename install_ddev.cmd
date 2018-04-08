@@ -4,15 +4,6 @@ CLS
 
 set CURRENT_DIR=%CD%
 
-REM check processs is running, via https://stackoverflow.com/a/1329790
-tasklist /FI "IMAGENAME eq Docker.exe" 2>NUL | find /I /N "Docker.exe">NUL
-if %ERRORLEVEL%==0
-  ECHO Docker is running, lets continue.
-) ELSE (
-  ECHO Docker isn't running and is required for this script, exiting.
-  EXIT
-)
-
 ECHO ####
 ECHO # This script will install everything you need to participate in this sprint.
 ECHO #
@@ -41,8 +32,11 @@ IF defined FOUND
   ECHO ######
   ECHO # Docker found! Make sure it's version 18.03.0 and running before continuing.
   ECHO #
-  ECHO # Open Docker preferences, confirm the memory allocation is set to 3.0 GiB
-  ECHO # on the Advanced tab, and that docker has fully restarted before continuing.
+  ECHO # Open Docker preferences, on the Shared Drives tab share all of your
+  ECHO # local drives, on the Advanced tab set the memory allocation to 3.0 GiB
+  ECHO # then click apply.
+  ECHO #
+  ECHO # Ensure that docker has fully restarted before continuing.
   ECHO #
   ECHO # Hit any key once Docker has restarted.
   ECHO ######
