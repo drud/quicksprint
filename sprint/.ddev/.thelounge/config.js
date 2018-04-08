@@ -252,7 +252,7 @@ module.exports = {
 		// @type     string
 		// @default  "The Lounge User"
 		//
-		realname: "The Lounge User",
+		realname: "replace-with-username",
 
 		//
 		// Channels
