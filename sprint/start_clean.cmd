@@ -1,21 +1,14 @@
 @echo off
 
-REM check processs is running, via https://stackoverflow.com/a/1329790
-tasklist /FI "IMAGENAME eq Docker.exe" 2>NUL | find /I /N "Docker.exe">NUL
-if %ERRORLEVEL%==0
-    ECHO Docker is running, lets continue.
-) ELSE (
-    ECHO Docker isn't running and is required for this script, exiting.
-    EXIT
-)
-
 ECHO ####
 ECHO # This simple script starts a Drupal 8 checked out from head
 ECHO # running in ddev with a fresh database.
 ECHO #
-ECHO # Make sure you've uploaded any patches from last issue 
+ECHO # Make sure you've uploaded any patches from last issue
 ECHO # you worked on before continuing, as this blow away
 ECHO # local changes.
+ECHO #
+ECHO # Docker must be currently running.
 ECHO #
 ECHO # Press any key to continue
 ECHO #
@@ -33,7 +26,7 @@ ddev describe
 
 ECHO ####
 ECHO # run the following command:
-ECHO # 
+ECHO #
 ECHO #   ddev hostname sprint-[ts].ddev.local 127.0.0.1
 ECHO #
 ECHO # Mailhog: 	http://sprint-[ts].ddev.local:8025/
@@ -42,7 +35,7 @@ ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
 ECHO #
 ECHO # IRC: 		http://sprint-[ts].ddev.local:9000/
 ECHO #
-ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/  
+ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/
 ECHO #				(U:username  P:password)
 ECHO #
 ECHO # For more info see README.txt
