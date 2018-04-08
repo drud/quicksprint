@@ -64,11 +64,11 @@ ${GREEN}
 ####
 # Use the following URL's to access your site:
 #
-# Website:   ${YELLOW}http://sprint-[ts].ddev.local/${GREEN}
+# Website:   ${YELLOW}http://sprint-[ts].ddev.local/
 #            (U:admin  P:admin)
-# IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/${GREEN}
+# ${GREEN}IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/
 #            (U:username  P:password)
-# Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
+# ${GREEN}Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
 # DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
 # IRC:       ${YELLOW}http://sprint-[ts].ddev.local:9000/${GREEN}
 # 
