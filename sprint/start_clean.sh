@@ -54,6 +54,7 @@ ddev exec git reset --hard origin/8.6.x
 ddev exec composer install
 ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db:3306/db
 ddev exec drush cr
+ddev describe
 
 printf "
 ${GREEN}

@@ -30,7 +30,7 @@ ddev exec composer install
 ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db:3306/db
 ddev exec drush cr
 ddev describe
- 
+
 ECHO ####
 ECHO # run the following command:
 ECHO # 
