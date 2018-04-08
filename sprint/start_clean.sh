@@ -40,12 +40,15 @@ ${RESET}"
 read -n1 INSTALL
 if [[ ! $INSTALL =~ ^[Yy]$ ]]
 then
-    printf "${RED}You didn't hit y or Y, exiting script${RESET}"
+	printf "${RED}You didn't hit y or Y, exiting script${RESET}"
     exit 1
+else
+	printf "${GREEN}# Continuing
+####${RESET}"
 fi
 
 printf "\n"
-ddev remove >/dev/null 2>&1
+ddev remove || echo "No existing project to remove"
 wait
 ddev start
 wait
