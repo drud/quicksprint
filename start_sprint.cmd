@@ -23,7 +23,9 @@ IF %ERRORLEVEL% == 0 (
 ) ELSE (
     ECHO # Failure: You need to run this as Administrator. Exiting...
     ECHO #
+    ECHO # Press any key to exit
     ECHO ######
+    PAUSE
     EXIT /B 1
 )
 
