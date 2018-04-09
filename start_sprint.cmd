@@ -1,47 +1,37 @@
-@echo off
-
-set -o errexit
-set -o pipefail
-set -o nounset
+@echo on
 
 CLS
 
-goto check_Permissions
-
-:check_Permissions
-ECHO ######
-ECHO #
-ECHO # Administrative permissions required. Detecting permissions...
-ECHO #
-
-net session >nul 2>&1
-IF %ERRORLEVEL% == 0 (
-    ECHO # Success: Administrator permissions confirmed.
-    ECHO #
-    ECHO ######
-
-) ELSE (
-    ECHO # Failure: You need to run this as Administrator. Exiting...
-    ECHO #
-    ECHO ######
-    EXIT /B 1
-)
 
 REM # This script creates a new drupal 8 instance in the current directory ready to sprint on an issue.
 REM #Create a timestamp
-set HOUR=%time:~0,2%
-set SANEHOUR=%HOUR: 0=24%
-set SANEHOUR=%HOUR: =0%
-set TIMESTAMP=%date:~10,4%%date:~7,2%%date:~4,2%-%SANEHOUR%%time:~3,2%
+for /F "skip=1 delims=" %%F in ('
+    wmic PATH Win32_LocalTime GET Day^,Month^,Year^,Hour^,Minute /FORMAT:TABLE
+') do (
+    for /F "tokens=1-5" %%L in ("%%F") do (
+        set DAY=0%%L
+        set HOUR=0%%M
+        set MINUTE=0%%N
+        set MONTH=0%%O
+        set YEAR=%%P
+    )
+)
+
+set DAY=%DAY:~-2%
+set HOUR=%HOUR:~-2%
+set MINUTE=%MINUTE:~-2%
+set MONTH=%MONTH:~-2%
+
+set TIMESTAMP=%YEAR%%MONTH%%DAY%-%HOUR%%MINUTE%
 
 REM #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-bin\7za.exe x sprint.tar.xz -so > nul | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% > nul
+bin\windows\7za.exe x sprint.tar.xz -so > nul | bin\windows\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% > nul
 
 REM #Update ddevproject name
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/Readme.txt
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.sh
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.cmd
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/Readme.txt
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.sh
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.cmd
 
 ECHO ######
 ECHO #
@@ -50,6 +40,6 @@ ECHO # execute the following commands in terminal
 ECHO # to start a Drupal 8 instance to sprint on:
 ECHO #
 ECHO # cd sprint-%TIMESTAMP%
-ECHO # start_clean.cmd (don't run this as administrator)
+ECHO # start_clean.cmd
 ECHO #
 ECHO ######

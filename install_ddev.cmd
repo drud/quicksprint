@@ -2,8 +2,6 @@
 
 CLS
 
-set CURRENT_DIR=%CD%
-
 ECHO ####
 ECHO # This script will install everything you need to participate in this sprint.
 ECHO #
@@ -53,29 +51,24 @@ IF DEFINED FOUND (
 )
 
 ECHO "Installing docker images for ddev to use..."
-cd ddev_tarballs
-set /p LATEST_VERSION=<..\.latest_version.txt
-..\bin\windows\7za x ddev_docker_images.%LATEST_VERSION%.tar.xz
-docker load -i ddev_docker_images.%LATEST_VERSION%.tar
+set /p LATEST_VERSION=<.latest_version.txt
+bin\windows\7za x ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar.xz
+docker load -i ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar
 
-if exist docker_additions.tar.xz (
-	..\bin\windows\7za x docker_additions.tar.xz
-	docker load -i docker_additions.tar
+if exist ddev_tarballs\docker_additions.tar.xz (
+	bin\windows\7za x ddev_tarballs\docker_additions.tar.xz
+	docker load -i ddev_tarballs\docker_additions.tar
 )
 
 ECHO "Installing ddev..."
-..\bin\windows\7za x ddev_windows.%LATEST_VERSION%.zip
+bin\windows\7za x ddev_tarballs\ddev_windows.%LATEST_VERSION%.zip
 copy ddev.exe %HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
 MKDIR "%userprofile%\Sites\sprint"
 MKDIR "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\7za.exe" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\sed.exe" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\regex2.dll" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\libintl3.dll" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\libiconv2.dll" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\start_sprint.cmd" "%userprofile%\Sites\sprint\"
-COPY "%CURRENT_DIR%\sprint.tar.xz" "%userprofile%\Sites\sprint\"
+COPY bin\windows\*.* "%userprofile%\Sites\sprint\bin"
+COPY start_sprint.cmd "%userprofile%\Sites\sprint\"
+COPY sprint.tar.xz "%userprofile%\Sites\sprint\"
 
 ECHO ######
 ECHO #
