@@ -34,17 +34,15 @@ ${GREEN}
 #
 ####
 ${RESET}"
-read -p "Continue? (y/n): " INSTALL
-if [[ ! $INSTALL =~ ^[Yy]$ ]]
-then
-	printf "${RED}You didn't hit y or Y, exiting script \n${RESET}"
-    exit 1
-else
-	printf "${GREEN}# Continuing
-####${RESET}"
-fi
+while true; do
+    read -p "Continue? (y/n): " INSTALL
+    case $INSTALL in
+        [Yy]* ) printf "${GREEN}# Continuing \n#### \n${RESET}"; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
 
-printf "\n"
 ddev remove || echo "No existing project to remove"
 wait
 ddev start

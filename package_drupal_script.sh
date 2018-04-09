@@ -89,17 +89,15 @@ printf "
 ${GREEN}
 ####
 # Shall we package docker installers for mac and windows with the archive?
-#
-# Press y to include installers, or any other key to continue.
-# !!You don't need to hit enter!!.
 ####${RESET}"
-read -n1 INSTALL
-if [[ $INSTALL =~ ^[Yy]$ ]] ; then
-    # Download current docker installs
-    printf "${GREEN}
-# Downloading docker installers.
-###
-${RESET}"
+while true; do
+    read -p "Include installers? (y/n): " INSTALL
+    case $INSTALL in
+        [Yy]* ) printf "${GREEN}# Downloading docker installers. \n#### \n${RESET}"; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
     mkdir -p docker_installs
     for dockerurl in $DOCKER_URLS; do
         fname=$(basename $dockerurl)

@@ -47,16 +47,16 @@ ${GREEN}
 #    -Cloud9 IDE
 #    -Thelounge IRC client
 #
-# Press y to continue, or any other key to exit the script.
-# !!You don't need to hit enter!!.
 ####
 ${RESET}"
-read -n1 INSTALL
-if [[ ! $INSTALL =~ ^[Yy]$ ]]
-then
-    printf "${RED}You didn't hit y or Y, exiting script${RESET}"
-    exit 1
-fi
+while true; do
+    read -p "Continue? (y/n): " INSTALL
+    case $INSTALL in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
 
 clear
 
@@ -80,17 +80,17 @@ if [[ "$OS" == "Darwin" ]]; then
         # ${YELLOW}Open Docker preferences, confirm its version 18.03.0 and the memory allocation is set to 3.0 GiB${GREEN}
         # ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
         #
-        # Press y once Docker has restarted, or any other key to exit the script.
-        # !!You don't need to hit enter!!.
         #
         ####
         ${RESET}"
-        read -n1 DOCKMEM
-        if [[ ! $DOCKMEM =~ ^[Yy]$ ]]
-        then
-            printf "${RED}You didn't hit y or Y, exiting script${RESET}"
-            exit 1
-        fi
+        while true; do
+            read -p "Has docker restarted? (y/n): " DOCKMEM
+            case $DOCKMEM in
+                [Yy]* ) break;;
+                [Nn]* ) exit;;
+                * ) echo "Please answer y or n.";;
+            esac
+        done
     fi
 
 elif [[ "$OS" == "Linux" ]]; then
