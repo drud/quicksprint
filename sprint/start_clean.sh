@@ -32,15 +32,12 @@ ${GREEN}
 # you worked on before continuing, as this blow away
 # local changes.
 #
-# Press y to continue, or any other key to exit the script.
-# !!You don't need to hit enter!!.
-#
 ####
 ${RESET}"
-read -n1 INSTALL
+read -p "Continue? (y/n): " INSTALL
 if [[ ! $INSTALL =~ ^[Yy]$ ]]
 then
-	printf "${RED}You didn't hit y or Y, exiting script${RESET}"
+	printf "${RED}You didn't hit y or Y, exiting script \n${RESET}"
     exit 1
 else
 	printf "${GREEN}# Continuing
@@ -64,10 +61,10 @@ ${GREEN}
 ####
 # Use the following URL's to access your site:
 #
-# Website:   ${YELLOW}http://sprint-[ts].ddev.local/
-#            (U:admin  P:admin)
-# ${GREEN}IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/
-#            (U:username  P:password)
+# Website:   ${YELLOW}http://sprint-[ts].ddev.local/${GREEN}
+#            ${YELLOW}(U:admin  P:admin)${GREEN}
+# ${GREEN}IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/${GREEN}
+#            ${YELLOW}(U:username  P:password)${GREEN}
 # ${GREEN}Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
 # DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
 # IRC:       ${YELLOW}http://sprint-[ts].ddev.local:9000/${GREEN}
