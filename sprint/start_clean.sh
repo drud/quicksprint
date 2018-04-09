@@ -29,8 +29,8 @@ ${GREEN}
 # running in ddev with a fresh database.
 #
 # Make sure you've uploaded any patches from last issue
-# you worked on before continuing, as this blow away
-# local changes.
+# you worked on before continuing. This will revert all
+# local code and database changes.
 #
 ####
 ${RESET}"
