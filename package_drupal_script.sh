@@ -89,31 +89,30 @@ printf "
 ${GREEN}
 ####
 # Shall we package docker installers for mac and windows with the archive?
-#
-# Press y to include installers, or any other key to continue.
-# !!You don't need to hit enter!!.
-####${RESET}"
-read -n1 INSTALL
-if [[ $INSTALL =~ ^[Yy]$ ]] ; then
-    # Download current docker installs
-    printf "${GREEN}
-# Downloading docker installers.
-###
-${RESET}"
-    mkdir -p docker_installs
-    for dockerurl in $DOCKER_URLS; do
-        fname=$(basename $dockerurl)
-        if [[ $fname = *"dmg"* ]]; then
-            curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
-        elif [[ $fname = *"exe"* ]] ; then
-            curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
-        fi
-    done
-else
-    printf "${GREEN}# Continuing script without downloading Docker installers.
-###
-${RESET}"
-fi
+#### \n${RESET}"
+
+while true; do
+    read -p "Include installers? (y/n): " INSTALL
+    case $INSTALL in
+        [Yy]* ) printf "${GREEN}# Downloading docker installers. \n#### \n${RESET}";
+                mkdir -p docker_installs
+                for dockerurl in $DOCKER_URLS; do
+                    fname=$(basename $dockerurl)
+                    if [[ $fname = *"dmg"* ]]; then
+                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
+                    elif [[ $fname = *"exe"* ]] ; then
+                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
+                    fi
+                done
+                break;;
+
+        [Nn]* ) printf "${GREEN}# Continuing script without downloading Docker installers. \n### \n${RESET}"; 
+                break;;
+
+        * ) echo "Please answer y or n.";;
+
+    esac
+done
 
 mkdir -p ddev_tarballs
 TARBALL="ddev_docker_images.$LATEST_VERSION.tar.xz"
