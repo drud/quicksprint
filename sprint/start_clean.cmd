@@ -47,7 +47,7 @@ ECHO # Mailhog: 	http://sprint-[ts].ddev.local:8025/
 ECHO #
 ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
 ECHO #
-ECHO # IRC: 		http://sprint-[ts].ddev.local:9000/
+ECHO # IRC: 		http://sprint-[ts].ddev.local:8999/
 ECHO #
 ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/
 ECHO #				(U:username  P:password)
