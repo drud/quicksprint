@@ -89,7 +89,7 @@ printf "
 ${GREEN}
 ####
 # Shall we package docker installers for mac and windows with the archive?
-####${RESET}"
+#### \n${RESET}"
 
 while true; do
     read -p "Include installers? (y/n): " INSTALL
@@ -106,7 +106,8 @@ while true; do
                 done
                 break;;
 
-        [Nn]* ) printf "${GREEN}# Continuing script without downloading Docker installers. \n### \n${RESET}";;
+        [Nn]* ) printf "${GREEN}# Continuing script without downloading Docker installers. \n### \n${RESET}"; 
+                break;;
 
         * ) echo "Please answer y or n.";;
 
