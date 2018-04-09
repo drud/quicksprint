@@ -74,15 +74,14 @@ if [[ "$OS" == "Darwin" ]]; then
         ${RESET}"
         exit 1
     else
-        printf "
-        ${GREEN}
-        ####
-        # ${YELLOW}Open Docker preferences, confirm its version 18.03.0 and the memory allocation is set to 3.0 GiB${GREEN}
-        # ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
-        #
-        #
-        ####
-        ${RESET}"
+        printf "${GREEN}
+####
+# ${YELLOW}Open Docker preferences, confirm its version 18.03.0 and the memory allocation is set to 3.0 GiB${GREEN}
+# ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
+#
+#
+####
+${RESET}"
         while true; do
             read -p "Has docker restarted? (y/n): " DOCKMEM
             case $DOCKMEM in
