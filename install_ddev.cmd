@@ -27,8 +27,8 @@ PAUSE
 
 cd %~dp0
 
-FOR %%X in (docker.exe) do (set FOUND=%%~$PATH:X)
-IF defined FOUND
+FOR /f "delims=" %%a in ('WHERE docker') do @set FOUND=%%a
+IF DEFINED FOUND (
   ECHO ######
   ECHO # Docker found! Make sure it's version 18.03.0 and running before continuing.
   ECHO #
