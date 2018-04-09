@@ -1,8 +1,6 @@
 @echo off
 
-REM check processs is running, via https://stackoverflow.com/a/1329790
-
-
+REM check docker is running, via https://stackoverflow.com/a/1329790
 tasklist /FI "IMAGENAME eq com.docker.service" | findstr /i /c:"com.docker.service"
 if %ERRORLEVEL%==0 (
     ECHO Docker is running, continuing.
@@ -10,7 +8,6 @@ if %ERRORLEVEL%==0 (
     ECHO Docker is not running and is required for this script, exiting.
     EXIT
 )
-
 
 ECHO ####
 ECHO # This simple script starts a Drupal 8 checked out from head
@@ -25,7 +22,6 @@ ECHO #
 ECHO ####
 PAUSE
 
-ddev remove >nul
 ddev start
 ddev exec git fetch
 ddev exec git reset --hard origin/8.6.x

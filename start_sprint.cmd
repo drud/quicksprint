@@ -1,7 +1,6 @@
-@echo on
+@echo off
 
 CLS
-
 
 REM # This script creates a new drupal 8 instance in the current directory ready to sprint on an issue.
 REM #Create a timestamp

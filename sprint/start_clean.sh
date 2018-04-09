@@ -43,10 +43,7 @@ while true; do
     esac
 done
 
-ddev remove || echo "No existing project to remove"
-wait
 ddev start
-wait
 ddev exec git fetch
 ddev exec git reset --hard origin/8.6.x
 ddev exec composer install
