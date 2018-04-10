@@ -22,6 +22,11 @@ jobs:
           name: Run the package_drupal_script.sh
           no_output_timeout: "20m"
       - run:
+          command: |
+            cd ~/tmp && tar -C /tmp -zxf drupal_sprint_package*.tar.gz
+            cd /tmp/drupal_sprint_package && ./install_ddev.sh
+          name: Test install_ddev.sh
+      - run:
           command: ./.circleci/generate_artifacts.sh $ARTIFACTS
           name: tar/zip up artifacts and make hashes
           no_output_timeout: "20m"
