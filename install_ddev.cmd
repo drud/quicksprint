@@ -64,9 +64,9 @@ move /y ddev.exe %HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
 MKDIR "%userprofile%\Sites\sprint"
 MKDIR "%userprofile%\Sites\sprint\bin"
-COPY bin\windows\*.* "%userprofile%\Sites\sprint\bin"
-COPY start_sprint.cmd "%userprofile%\Sites\sprint\"
-COPY sprint.tar.xz "%userprofile%\Sites\sprint\"
+COPY /Y bin\windows\*.* "%userprofile%\Sites\sprint\bin"
+COPY /Y start_sprint.cmd "%userprofile%\Sites\sprint\"
+COPY /Y sprint.tar.xz "%userprofile%\Sites\sprint\"
 
 ECHO ######
 ECHO #
