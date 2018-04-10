@@ -49,8 +49,5 @@ ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
 ECHO #
 ECHO # IRC: 		http://sprint-[ts].ddev.local:8999/
 ECHO #
-ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/
-ECHO #				(U:username  P:password)
-ECHO #
 ECHO # For more info see Readme.txt
 ECHO ####
