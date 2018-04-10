@@ -2,8 +2,6 @@
 
 CLS
 
-set CURRENT_DIR=%CD%
-
 ECHO ####
 ECHO # This script will install everything you need to participate in this sprint.
 ECHO #
@@ -27,8 +25,8 @@ PAUSE
 
 cd %~dp0
 
-FOR %%X in (docker.exe) do (set FOUND=%%~$PATH:X)
-IF defined FOUND
+FOR /f "delims=" %%a in ('WHERE docker') do @set FOUND=%%a
+IF DEFINED FOUND (
   ECHO ######
   ECHO # Docker found! Make sure it's version 18.03.0 and running before continuing.
   ECHO #
@@ -53,29 +51,22 @@ IF defined FOUND
 )
 
 ECHO "Installing docker images for ddev to use..."
-cd ddev_tarballs
-set /p LATEST_VERSION=<..\.latest_version.txt
-..\bin\windows\7za x ddev_docker_images.%LATEST_VERSION%.tar.xz
-docker load -i ddev_docker_images.%LATEST_VERSION%.tar
+set /p LATEST_VERSION=<.latest_version.txt
+bin\windows\7za -so x ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar.xz | docker load
 
-if exist docker_additions.tar.xz (
-	..\bin\windows\7za x docker_additions.tar.xz
-	docker load -i docker_additions.tar
+IF EXIST .\ddev_tarballs\docker_additions.tar.xz (
+	bin\windows\7za -so x .\ddev_tarballs\docker_additions.tar.xz | docker load
 )
 
 ECHO "Installing ddev..."
-..\bin\windows\7za x ddev_windows.%LATEST_VERSION%.zip
-copy ddev.exe %HOMEPATH%\AppData\Local\Microsoft\WindowsApps
+bin\windows\7za -y x ddev_tarballs\ddev_windows.%LATEST_VERSION%.zip
+move /y ddev.exe %HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
 MKDIR "%userprofile%\Sites\sprint"
 MKDIR "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\7za.exe" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\sed.exe" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\regex2.dll" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\libintl3.dll" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\bin\windows\libiconv2.dll" "%userprofile%\Sites\sprint\bin"
-COPY "%CURRENT_DIR%\start_sprint.cmd" "%userprofile%\Sites\sprint\"
-COPY "%CURRENT_DIR%\sprint.tar.xz" "%userprofile%\Sites\sprint\"
+COPY /Y bin\windows\*.* "%userprofile%\Sites\sprint\bin"
+COPY /Y start_sprint.cmd "%userprofile%\Sites\sprint\"
+COPY /Y sprint.tar.xz "%userprofile%\Sites\sprint\"
 
 ECHO ######
 ECHO #
