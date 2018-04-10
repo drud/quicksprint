@@ -59,14 +59,19 @@ ${GREEN}
 ####
 # Use the following URL's to access your site:
 #
-# Website:   ${YELLOW}http://sprint-[ts].ddev.local/${GREEN}
+# Website:   ${YELLOW}http://sprint-[ts].ddev.local:8080/${GREEN}
+#            ${YELLOW}https://sprint-[ts].ddev.local:8443/${GREEN}
 #            ${YELLOW}(U:admin  P:admin)${GREEN}
+#
 # ${GREEN}IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/${GREEN}
 #            ${YELLOW}(U:username  P:password)${GREEN}
+#
 # ${GREEN}Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
+#
 # DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
+#
 # IRC:       ${YELLOW}http://sprint-[ts].ddev.local:9000/${GREEN}
-# 
+#
 # See ${YELLOW}Readme.txt${GREEN} for more information.
 ####
 ${RESET}

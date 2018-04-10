@@ -3,8 +3,8 @@ name: sprint-[ts]
 type: drupal8
 docroot: drupal8
 php_version: "7.2"
-router_http_port: "80"
-router_https_port: "443"
+router_http_port: "8080"
+router_https_port: "8443"
 provider: default
 
 # Certain ddev commands can be extended to run tasks before or after the ddev
