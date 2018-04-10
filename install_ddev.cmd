@@ -52,12 +52,10 @@ IF DEFINED FOUND (
 
 ECHO "Installing docker images for ddev to use..."
 set /p LATEST_VERSION=<.latest_version.txt
-bin\windows\7za x ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar.xz
-docker load -i ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar
+bin\windows\7za -so x ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar.xz | docker load
 
 if exist ddev_tarballs\docker_additions.tar.xz (
-	bin\windows\7za x ddev_tarballs\docker_additions.tar.xz
-	docker load -i ddev_tarballs\docker_additions.tar
+	bin\windows\7za -so x ddev_tarballs\docker_additions.tar.xz | docker load
 )
 
 ECHO "Installing ddev..."
