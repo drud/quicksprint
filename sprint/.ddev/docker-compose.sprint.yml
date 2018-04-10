@@ -26,10 +26,10 @@ services:
     hostname: thelounge
     image: linuxserver/thelounge:94
     ports:
-    - 9999 # Thelounge is served from this port inside the container
+    - 8999 # Thelounge is served from this port inside the container
     environment:
       - VIRTUAL_HOST=$DDEV_HOSTNAME # This defines the host name the service should be accessible from. This will be sitename.ddev.local
-      - HTTP_EXPOSE=9999 # This defines the port the service should be accessible from at sitename.ddev.local
+      - HTTP_EXPOSE=8999 # This defines the port the service should be accessible from at sitename.ddev.local
     volumes:
       - ./.thelounge:/config:rw
     labels:
