@@ -8,8 +8,6 @@ jobs:
     environment:
       ARTIFACTS: /artifacts
     steps:
-      - run: mkdir -p quicksprint
-
       - checkout
 
       - run:
@@ -19,43 +17,10 @@ jobs:
       - run:
           command: printf "docker version=$(docker --version)\ndocker-compose version=$(docker-compose --version)\nHOME=$HOME USER=$(whoami) PWD=$PWD"
           name: Installed tool versions
-
       - run:
-          command: ./.circleci/generate_artifacts.sh $ARTIFACTS
-          name: tar/zip up artifacts and make hashes
+          command: echo "y" | ./package_drupal_script.sh
+          name: Run the package_drupal_script.sh
           no_output_timeout: "20m"
-
-      - store_artifacts:
-          path: /artifacts
-          name: Artifact storage
-
-  # 'tag_build' is used to build a tag for release.
-  tag_build:
-    machine:
-      image: circleci/classic:201711-01
-    working_directory: ~/go/src/github.com/drud/ddev
-    environment:
-      DRUD_DEBUG: "true"
-      GOPATH: /home/circleci/go
-      ARTIFACTS: /artifacts
-    steps:
-      - run: mkdir -p ~/go/{lib,pkg,src/github.com/drud/ddev}
-
-      - checkout
-
-      - run:
-          command: ./.circleci/circle_vm_setup.sh
-          name: TAG BUILD Circle VM setup - tools, docker, golang
-
-      # Now build using the regular ddev-only technique - this results in a fully clean set of executables.
-      - run:
-          command: make -s clean linux darwin windows
-          name: Build the ddev executables
-
-      - run:
-          command: bin/linux/ddev version
-          name: ddev version information
-
       - run:
           command: ./.circleci/generate_artifacts.sh $ARTIFACTS
           name: tar/zip up artifacts and make hashes
