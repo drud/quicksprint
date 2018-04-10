@@ -27,6 +27,14 @@ jobs:
             cd /tmp/drupal_sprint_package && ./install_ddev.sh
           name: Test install_ddev.sh
       - run:
+          command: |
+            cd ~/Sites/sprint && ./start_site.sh
+          name: Test start_site.sh
+      - run:
+          command: |
+            cd ~/Sites/sprint/sprint-2* && ./start_clean.sh
+          name: Test start_clean.sh
+      - run:
           command: ./.circleci/generate_artifacts.sh $ARTIFACTS
           name: tar/zip up artifacts and make hashes
           no_output_timeout: "20m"
