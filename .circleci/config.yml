@@ -1,0 +1,92 @@
+version: 2
+jobs:
+  # 'build' is the default build, the only one triggered automatically by github or anything else.
+  normal_build_and_test:
+    machine:
+      image: circleci/classic:201711-01
+    working_directory: ~/quicksprint
+    environment:
+      ARTIFACTS: /artifacts
+    steps:
+      - run: mkdir -p quicksprint
+
+      - checkout
+
+      - run:
+          command: ./.circleci/circle_vm_setup.sh
+          name: NORMAL Circle VM setup - tools, docker
+
+      - run:
+          command: printf "docker version=$(docker --version)\ndocker-compose version=$(docker-compose --version)\nHOME=$HOME USER=$(whoami) PWD=$PWD"
+          name: Installed tool versions
+
+      - run:
+          command: ./.circleci/generate_artifacts.sh $ARTIFACTS
+          name: tar/zip up artifacts and make hashes
+          no_output_timeout: "20m"
+
+      - store_artifacts:
+          path: /artifacts
+          name: Artifact storage
+
+  # 'tag_build' is used to build a tag for release.
+  tag_build:
+    machine:
+      image: circleci/classic:201711-01
+    working_directory: ~/go/src/github.com/drud/ddev
+    environment:
+      DRUD_DEBUG: "true"
+      GOPATH: /home/circleci/go
+      ARTIFACTS: /artifacts
+    steps:
+      - run: mkdir -p ~/go/{lib,pkg,src/github.com/drud/ddev}
+
+      - checkout
+
+      - run:
+          command: ./.circleci/circle_vm_setup.sh
+          name: TAG BUILD Circle VM setup - tools, docker, golang
+
+      # Now build using the regular ddev-only technique - this results in a fully clean set of executables.
+      - run:
+          command: make -s clean linux darwin windows
+          name: Build the ddev executables
+
+      - run:
+          command: bin/linux/ddev version
+          name: ddev version information
+
+      - run:
+          command: ./.circleci/generate_artifacts.sh $ARTIFACTS
+          name: tar/zip up artifacts and make hashes
+          no_output_timeout: "20m"
+
+      - store_artifacts:
+          path: /artifacts
+          name: Artifact storage
+
+workflows:
+  version: 2
+  normal_build_and_test:
+    jobs:
+      - normal_build_and_test
+  nightly_build:
+    triggers:
+      - schedule:
+          cron: "0 3 * * 1-5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - normal_build_and_test
+  tag_build:
+    jobs:
+      - normal_build_and_test:
+          filters:
+            tags:
+              only:
+                - "/.*/"
+            branches:
+              ignore: /.*/
+
