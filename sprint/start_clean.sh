@@ -67,7 +67,7 @@ ${GREEN}
 #
 # DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
 #
-# IRC:       ${YELLOW}http://sprint-[ts].ddev.local:9000/${GREEN}
+# IRC:       ${YELLOW}http://sprint-[ts].ddev.local:8999/${GREEN}
 #
 # See ${YELLOW}Readme.txt${GREEN} for more information.
 ####
