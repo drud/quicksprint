@@ -31,7 +31,7 @@ ddev exec drush cr
 ddev describe
 
 ECHO ####
-ECHO # run the following command:
+ECHO # Please run the following command in an admin cmd or powershell window:
 ECHO # 
 ECHO #   ddev hostname sprint-[ts].ddev.local 127.0.0.1
 ECHO #
@@ -51,5 +51,5 @@ ECHO #
 ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/
 ECHO #				(U:username  P:password)
 ECHO #
-ECHO # For more info see README.txt
+ECHO # For more info see Readme.txt
 ECHO ####
