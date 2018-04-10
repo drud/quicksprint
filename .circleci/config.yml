@@ -36,8 +36,8 @@ jobs:
           name: Test install_ddev.sh
       - run:
           command: |
-            cd ~/Sites/sprint && ./start_site.sh
-          name: Test start_site.sh
+            cd ~/Sites/sprint && ./start_sprint.sh
+          name: Test start_sprint.sh
       - run:
           command: |
             cd ~/Sites/sprint/sprint-2* && ./start_clean.sh
