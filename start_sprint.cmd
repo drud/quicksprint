@@ -1,7 +1,5 @@
 @echo off
 
-CLS
-
 REM # This script creates a new drupal 8 instance in the current directory ready to sprint on an issue.
 REM #Create a timestamp
 for /F "skip=1 delims=" %%F in ('
@@ -24,7 +22,7 @@ set MONTH=%MONTH:~-2%
 set TIMESTAMP=%YEAR%%MONTH%%DAY%-%HOUR%%MINUTE%
 
 REM #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-bin\7za.exe x sprint.tar.xz -so > nul | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% > nul
+bin\7za.exe x sprint.tar.xz -so | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% 2> nul
 
 REM #Update ddevproject name
 bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml
