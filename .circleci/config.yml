@@ -7,6 +7,7 @@ jobs:
     working_directory: ~/quicksprint
     environment:
       ARTIFACTS: /artifacts
+      TERM: vt100
     steps:
       - checkout
 
@@ -18,13 +19,20 @@ jobs:
           command: printf "docker version=$(docker --version)\ndocker-compose version=$(docker-compose --version)\nHOME=$HOME USER=$(whoami) PWD=$PWD"
           name: Installed tool versions
       - run:
-          command: echo "y" | ./package_drupal_script.sh
+          command: echo "y" | time bash -x ./package_drupal_script.sh
           name: Run the package_drupal_script.sh
           no_output_timeout: "20m"
       - run:
+          command: sudo mkdir $ARTIFACTS && sudo cp ~/tmp/drupal_sprint_package* $ARTIFACTS
+          name: make artifacts tarball downloads
+          no_output_timeout: "20m"
+      - store_artifacts:
+          path: /artifacts
+          name: Artifact storage
+      - run:
           command: |
             cd ~/tmp && tar -C /tmp -zxf drupal_sprint_package*.tar.gz
-            cd /tmp/drupal_sprint_package && ./install_ddev.sh
+            cd /tmp/drupal_sprint_package && echo y | ./install_ddev.sh
           name: Test install_ddev.sh
       - run:
           command: |
@@ -34,14 +42,6 @@ jobs:
           command: |
             cd ~/Sites/sprint/sprint-2* && ./start_clean.sh
           name: Test start_clean.sh
-      - run:
-          command: ./.circleci/generate_artifacts.sh $ARTIFACTS
-          name: tar/zip up artifacts and make hashes
-          no_output_timeout: "20m"
-
-      - store_artifacts:
-          path: /artifacts
-          name: Artifact storage
 
 workflows:
   version: 2
