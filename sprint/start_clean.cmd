@@ -29,14 +29,18 @@ ECHO # run the following command:
 ECHO #
 ECHO #   ddev hostname sprint-[ts].ddev.local 127.0.0.1
 ECHO #
+ECHO # Website:     http://sprint-[ts].ddev.local:8080/
+ECHO #              https://sprint-[ts].ddev.local:8443/
+ECHO #              (U:admin  P:admin)
+ECHO #
+ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/
+ECHO #				(U:username  P:password)
+ECHO #
 ECHO # Mailhog: 	http://sprint-[ts].ddev.local:8025/
 ECHO #
 ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
 ECHO #
 ECHO # IRC: 		http://sprint-[ts].ddev.local:9000/
-ECHO #
-ECHO # IDE: 		http://sprint-[ts].ddev.local:8000/
-ECHO #				(U:username  P:password)
 ECHO #
 ECHO # For more info see README.txt
 ECHO ####
