@@ -36,11 +36,11 @@ jobs:
           name: Test install_ddev.sh
       - run:
           command: |
-            cd ~/Sites/sprint && ./start_sprint.sh
+            cd ~/Sites/sprint && echo y | ./start_sprint.sh
           name: Test start_sprint.sh
       - run:
           command: |
-            cd ~/Sites/sprint/sprint-2* && ./start_clean.sh
+            cd ~/Sites/sprint/sprint-2* && echo y | ./start_clean.sh
           name: Test start_clean.sh
 
 workflows:
