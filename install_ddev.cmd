@@ -59,7 +59,7 @@ IF EXIST .\ddev_tarballs\docker_additions.tar.xz (
 )
 
 ECHO "Installing ddev..."
-bin\windows\7za x ddev_tarballs\ddev_windows.%LATEST_VERSION%.zip
+bin\windows\7za -y x ddev_tarballs\ddev_windows.%LATEST_VERSION%.zip
 move /y ddev.exe %HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
 MKDIR "%userprofile%\Sites\sprint"
