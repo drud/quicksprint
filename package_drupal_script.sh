@@ -6,7 +6,7 @@ set -o nounset
 
 # Maximise compression
 export XZ_OPT=-9e
-export GZIP=-9e
+export GZIP=-9
 
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in the repository root.
