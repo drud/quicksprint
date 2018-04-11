@@ -23,25 +23,18 @@ jobs:
           name: Run the package_drupal_script.sh
           no_output_timeout: "20m"
       - run:
-          command: sudo mkdir $ARTIFACTS && sudo cp ~/tmp/drupal_sprint_package* $ARTIFACTS
+          command: |
+            sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package* $ARTIFACTS
+            cd $ARTIFACTS
+            for item in *.tar.gz *.zip; do
+              sha256sum $item > $item.sha256.txt
+            done
           name: make artifacts tarball downloads
           no_output_timeout: "20m"
       - store_artifacts:
           path: /artifacts
           name: Artifact storage
-      - run:
-          command: |
-            cd ~/tmp && tar -C /tmp -zxf drupal_sprint_package*.tar.gz
-            cd /tmp/drupal_sprint_package && echo y | ./install_ddev.sh
-          name: Test install_ddev.sh
-      - run:
-          command: |
-            cd ~/Sites/sprint && echo y | ./start_sprint.sh
-          name: Test start_sprint.sh
-      - run:
-          command: |
-            cd ~/Sites/sprint/sprint-2* && echo y | ./start_clean.sh
-          name: Test start_clean.sh
+      - run: ./test_drupal_quicksprint.sh
 
 workflows:
   version: 2

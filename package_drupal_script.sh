@@ -17,6 +17,8 @@ STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
 REPO_DIR=$PWD
 QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
+echo $QUICKSPRINT_RELEASE >.quicksprint_release.txt
+
 # The version lines on the following few lines need to get changed any time the url are changed on the line below.
 DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
 DOCKER_VERSION_MAC="18.03.0-ce-mac60"
@@ -61,11 +63,11 @@ LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/dru
 LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
 RELEASE_URL="https://github.com/drud/ddev/releases/download/$LATEST_VERSION"
 
-echo "$LATEST_VERSION" >.latest_version.txt
+echo "$LATEST_VERSION" >.ddev_version.txt
 
 # Install the beginning items we need in the kit.
 mkdir -p $STAGING_DIR
-cp -r .latest_version.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* $STAGING_DIR
+cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* $STAGING_DIR
 
 
 if [[ "$OS" == "Darwin" ]]; then
@@ -167,8 +169,12 @@ if [ -f ${REPO_DIR}/package_additions.sh ]; then
 fi
 
 cd $STAGING_DIR_BASE
-tar -czf drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
-zip -9 -r -q drupal_sprint_package$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+tar -czf drupal_sprint_package.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+rm -rf $STAGING_DIR_NAME/docker_installs
+tar -czf drupal_sprint_package.no_docker.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package.no_docker.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+
 wait
 
 printf "${GREEN}####

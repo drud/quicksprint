@@ -1,7 +1,10 @@
 #!/bin/bash
-clear
 
-# This script creatse a new drupal 8 instance in the current directory ready to sprint on an issue.
+# This script creates a new drupal 8 instance in the current directory ready to sprint on an issue.
+
+set -o errexit
+set -o pipefail
+set -o nounset
 
 RED='\033[31m'
 GREEN='\033[32m'
