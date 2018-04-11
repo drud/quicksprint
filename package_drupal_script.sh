@@ -169,8 +169,12 @@ if [ -f ${REPO_DIR}/package_additions.sh ]; then
 fi
 
 cd $STAGING_DIR_BASE
-tar -czf drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
-zip -9 -r -q drupal_sprint_package$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+tar -czf drupal_sprint_package.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+rm -rf $STAGING_DIR_NAME/docker_installs
+tar -czf drupal_sprint_package.no_docker.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
+zip -9 -r -q drupal_sprint_package.no_docker.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+
 wait
 
 printf "${GREEN}####

@@ -23,7 +23,12 @@ jobs:
           name: Run the package_drupal_script.sh
           no_output_timeout: "20m"
       - run:
-          command: sudo mkdir $ARTIFACTS && sudo cp ~/tmp/drupal_sprint_package* $ARTIFACTS
+          command: |
+            sudo mkdir $ARTIFACTS && sudo cp ~/tmp/drupal_sprint_package* $ARTIFACTS
+            cd $ARTIFACTS
+            for item in *.tar.gz *.zip; do
+              sha256sum $item > $item.sha256.txt
+            done
           name: make artifacts tarball downloads
           no_output_timeout: "20m"
       - store_artifacts:
