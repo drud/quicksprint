@@ -16,3 +16,17 @@ Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a clone
 * _Windows users must run an additional command_: the start_clean command will tell you what the command is.
 
 At this point the plain vanilla git-checked-out drupal8 HEAD version should be running at http://drupal8.ddev.local.
+
+# Sources for additions
+
+**7za.exe**
+https://www.7-zip.org/download.html
+
+**sed.exe and dependencies (libiconv2.dll, libintl3.dll, regex2.dll)**
+http://gnuwin32.sourceforge.net/packages/sed.htm
+
+**Cloud 9 IDE Docker image**
+https://github.com/BrianGilbert/docker-cloud9/tree/20180318
+
+**TheLounge IRC client Docker image**
+https://github.com/linuxserver/docker-thelounge/tree/94
