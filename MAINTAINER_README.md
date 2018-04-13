@@ -27,6 +27,3 @@ http://gnuwin32.sourceforge.net/packages/sed.htm
 
 **Cloud 9 IDE Docker image**
 https://github.com/BrianGilbert/docker-cloud9/tree/20180318
-
-**TheLounge IRC client Docker image**
-https://github.com/linuxserver/docker-thelounge/tree/94
