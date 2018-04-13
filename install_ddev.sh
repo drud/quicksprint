@@ -45,7 +45,6 @@ ${GREEN}
 #    -Drupal 8
 #    -phpmyadmin
 #    -Cloud9 IDE
-#    -Thelounge IRC client
 #
 ####
 ${RESET}"
