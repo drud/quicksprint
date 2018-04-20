@@ -10,8 +10,6 @@ Mailhog:   http://sprint-[ts].ddev.local:8025/
 
 DB Admin:  http://sprint-[ts].ddev.local:8036/
 
-IRC:       http://sprint-[ts].ddev.local:8999/
-
 In IDE:
 Workspace maps to the drupal8 directory in this folder.
 

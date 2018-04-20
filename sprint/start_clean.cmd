@@ -47,7 +47,5 @@ ECHO # Mailhog: 	http://sprint-[ts].ddev.local:8025/
 ECHO #
 ECHO # DB Admin: 	http://sprint-[ts].ddev.local:8036/
 ECHO #
-ECHO # IRC: 		http://sprint-[ts].ddev.local:8999/
-ECHO #
 ECHO # For more info see Readme.txt
 ECHO ####
