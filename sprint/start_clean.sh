@@ -43,6 +43,10 @@ while true; do
     esac
 done
 
+
+# Attempts to reconfigure ddev to update config automagically.
+ddev config default --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
+
 ddev start
 ddev exec git fetch
 ddev exec git reset --hard origin/8.6.x
