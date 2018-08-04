@@ -25,12 +25,12 @@ echo y | ./start_sprint.sh
 cd ~/Sites/sprint/sprint-2* && echo y | ./start_clean.sh
 
 # Confirms web and router status.
-ddev describe | grep -q running || exit 1
-ddev describe | grep -q "DDEV ROUTER STATUS: healthy" || exit 1
+ddev describe | grep running || { echo "ERROR: ddev web is not running correctly?"; exit 1; }
+ddev describe | grep "DDEV ROUTER STATUS: healthy" || { echo "ERROR: ddev router status is not healthy?" ; exit 1; }
 
 # Confirms site is responding with 200.
 SITE_URL=`ddev describe | grep -o -m 1 "https://sprint-[0-9\-]\+\.ddev\.local"`
-curl -k -L -I --silent ${SITE_URL}:8443 | head -n 1 | grep -q 200 || echo "ERROR: Could not connect to ${SITE_URL}:8443!"; exit 1
+curl -k -L -I ${SITE_URL}:8443 | head -n 1 | grep -q 200 || { echo "ERROR: Could not connect to ${SITE_URL}:8443!"; exit 1; }
 
 rm -r /tmp/drupal_sprint_package
 
