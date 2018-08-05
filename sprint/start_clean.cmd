@@ -24,7 +24,7 @@ PAUSE
 
 ddev start
 ddev exec git fetch
-ddev exec git reset --hard origin/8.6.x
+ddev exec git reset --hard origin/8.7.x
 ddev exec rm -rf vendor/bin
 ddev exec composer install
 ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db:3306/db --site-name="Drupal Sprinting"
