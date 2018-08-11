@@ -4,6 +4,10 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+TEST_FAIL_ROUTER=9000
+TEST_FAIL_WEB=9001
+TEST_FAIL_DRUPAL=9002
+
 # Initial setup: Make sure we have no ddev
 if which ddev; then
   echo "ddev is already on this system"
@@ -25,12 +29,12 @@ echo y | ./start_sprint.sh
 cd ~/Sites/sprint/sprint-2* && echo y | ./start_clean.sh
 
 # Confirms web and router status.
-ddev describe | grep running || { echo "ERROR: ddev web is not running correctly?"; exit 1; }
-ddev describe | grep "DDEV ROUTER STATUS: healthy" || { echo "ERROR: ddev router status is not healthy?" ; exit 1; }
+ddev describe | grep running || { echo "FAIL ${TEST_FAIL_WEB}: ddev web container is not running."; exit $TEST_FAIL_WEB; }
+ddev describe | grep "DDEV ROUTER STATUS: healthy" || { echo "FAIL ${TEST_FAIL_ROUTER}: ddev router status is not healthy." ; exit $TEST_FAIL_ROUTER; }
 
 # Confirms site is responding with 200.
 SITE_URL=`ddev describe | grep -o -m 1 "https://sprint-[0-9\-]\+\.ddev\.local"`
-curl -k -L -I ${SITE_URL}:8443 | head -n 1 | grep -q 200 || { echo "ERROR: Could not connect to ${SITE_URL}:8443!"; exit 1; }
+curl -k -L -I ${SITE_URL}:8443 | head -n 1 | grep -q 200 || { echo "FAIL ${TEST_FAIL_DRUPAL}: Request to ${SITE_URL}:8443 did not return 200"; exit $TEST_FAIL_DRUPAL; }
 
 rm -r /tmp/drupal_sprint_package
 
