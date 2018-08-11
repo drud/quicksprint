@@ -148,7 +148,7 @@ done
 
 # clone or refresh d8 clone
 mkdir -p sprint
-git clone git://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
+git clone https://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
 pushd $STAGING_DIR/sprint/drupal8
 cp $REPO_DIR/example.gitignore $STAGING_DIR/sprint/drupal8/.gitignore
 
