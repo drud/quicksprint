@@ -4,9 +4,9 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-TEST_FAIL_ROUTER=9000
-TEST_FAIL_WEB=9001
-TEST_FAIL_DRUPAL=9002
+TEST_FAIL_ROUTER=50
+TEST_FAIL_WEB=51
+TEST_FAIL_DRUPAL=52
 
 # Initial setup: Make sure we have no ddev
 if which ddev; then
