@@ -45,7 +45,7 @@ done
 
 
 # Attempts to reconfigure ddev to update config automagically.
-ddev config default --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
+ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
 
 ddev start
 ddev exec git fetch
