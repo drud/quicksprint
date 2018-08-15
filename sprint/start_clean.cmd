@@ -22,6 +22,9 @@ ECHO #
 ECHO ####
 PAUSE
 
+REM Attempts to reconfigure ddev to update config automagically.
+ddev config --docroot drupal8 --projecttype drupal8 --projectname sprint-[ts]
+
 ddev start
 ddev exec git fetch
 ddev exec git reset --hard origin/8.7.x

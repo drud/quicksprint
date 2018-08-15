@@ -22,13 +22,13 @@ set MONTH=%MONTH:~-2%
 set TIMESTAMP=%YEAR%%MONTH%%DAY%-%HOUR%%MINUTE%
 
 REM #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-bin\7za.exe x sprint.tar.xz -so | bin\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% 2> nul
+bin\windows\7za.exe x sprint.tar.xz -so | bin\windows\7za.exe x -aoa -si -ttar -osprint-%TIMESTAMP% 2> nul
 
 REM #Update ddevproject name
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/Readme.txt
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.sh
-bin\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.cmd
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/.ddev/config.yaml
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/Readme.txt
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.sh
+bin\windows\sed.exe -i s/\[ts\]/%TIMESTAMP%/ sprint-%TIMESTAMP%/start_clean.cmd
 
 ECHO ######
 ECHO #
