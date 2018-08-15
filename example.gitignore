@@ -61,6 +61,5 @@ sites/simpletest
 # Sprint tools
 .ddev/
 .db_dumps/
-.thelounge/
 .phantomjs/
 

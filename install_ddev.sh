@@ -44,7 +44,6 @@ ${GREEN}
 #  -Pre-loaded docker images for the sprint toolkit:
 #    -Drupal 8
 #    -phpmyadmin
-#    -Cloud9 IDE
 #
 ####
 ${RESET}"

@@ -163,11 +163,6 @@ cd $STAGING_DIR
 tar cfJ sprint.tar.xz -C sprint .
 rm -rf $STAGING_DIR/sprint
 
-if [ -f ${REPO_DIR}/package_additions.sh ]; then
-    # Package images for any additions.
-    source ${REPO_DIR}/package_additions.sh
-fi
-
 cd $STAGING_DIR_BASE
 tar -czf drupal_sprint_package.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
 zip -9 -r -q drupal_sprint_package.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME

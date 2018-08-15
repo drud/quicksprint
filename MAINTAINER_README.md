@@ -62,6 +62,3 @@ https://www.7-zip.org/download.html
 
 **sed.exe and dependencies (libiconv2.dll, libintl3.dll, regex2.dll)**
 http://gnuwin32.sourceforge.net/packages/sed.htm
-
-**Cloud 9 IDE Docker image**
-https://github.com/BrianGilbert/docker-cloud9/tree/20180318
