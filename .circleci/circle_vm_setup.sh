@@ -32,3 +32,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 curl -sS https://getcomposer.org/installer -o composer-setup.php
     sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+# install recent bats bash testing framework
+BATS_TAG=v1.1.0
+sudo rm -f /usr/local/bin/bats
+cd /tmp && git clone https://github.com/bats-core/bats-core.git && cd bats-core && git checkout $BATS_TAG && sudo ./install.sh /usr/local
