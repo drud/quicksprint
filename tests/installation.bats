@@ -13,6 +13,7 @@ function setup {
 # choco install -y jq 7zip composer
 # apt-get install jq p7zip-full
 # git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
+# Passwordless sudo required.
 @test "check for prereqs (docker etc)" {
     run command -v curl
     [ "$status" -eq 0 ]
@@ -22,6 +23,10 @@ function setup {
     [ "$status" -eq 0 ]
     run command -v composer
     [ "$status" -eq 0 ]
+    # Make sure passwordless sudo is available
+    run echo junk | sudo -S ls
+    [ "$status" -eq 0 ]
+
     run docker run -t -v "$HOME:/tmp/home" -p 80:8088 busybox ls
     [ "$status" -eq 0 ]
 }
@@ -42,9 +47,9 @@ function setup {
 
 @test "install_ddev.sh - and Sprint directories" {
     run bash -c "cd $UNTAR_LOCATION/drupal_sprint_package && printf 'y\ny\n' | ./install_ddev.sh"
-    echo "# status=$status lines=$lines" >&3
     if [ "$status" -ne 0 ]; then
         echo "# ERROR: status=$status lines=$lines" 3>&1
+        return 1
     fi
 }
 
