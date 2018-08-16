@@ -9,11 +9,13 @@ function setup {
     export SPRINTDIR=~/Sites/sprint
 }
 
-# brew install jq bats-core
+# brew install jq bats-core xz
 @test "check for prereqs (docker etc)" {
     run command -v curl
     [ "$status" -eq 0 ]
     run command -v jq
+    [ "$status" -eq 0 ]
+    run command -v xz
     [ "$status" -eq 0 ]
     run docker run -t -v "$HOME:/tmp/home" -p 80:8088 busybox ls
     [ "$status" -eq 0 ]
