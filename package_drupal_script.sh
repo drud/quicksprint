@@ -35,7 +35,7 @@ USER=$(whoami)
 # Ensure 7z is installed
 command -v 7z >/dev/null 2>&1 || { echo >&2 "${RED}I require 7z command but it's not installed. Aborting.${RESET}"; exit 1; }
 # Check Docker is running
-if docker run -t busybox:latest ls
+if docker run -t busybox:latest ls >/dev/null
 then
     echo "docker is running, continuing."
 else
@@ -45,7 +45,7 @@ fi
 
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
-    printf "${RED}The staging directory already has files. Deleting them and recreating everything.${RESET}"
+    printf "${RED}The staging directory $STAGING_DIR already has files. Deleting them and recreating everything.${RESET}"
     rm -rf $STAGING_DIR
     if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz ] ; then
         rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz

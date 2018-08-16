@@ -11,7 +11,7 @@ ECHO #
 ECHO # It does the following:
 ECHO #  -Install Docker for your OS if you don't have it already
 ECHO #  -Install ddev by Drud Technology
-ECHO #  -Copy required components to ~/Sites/sprint/
+ECHO #  -Copy required components to ~/3>&1sprint/
 ECHO #  -Pre-loaded docker images for the sprint toolkit:
 ECHO #    -Drupal 8
 ECHO #    -phpmyadmin
@@ -52,26 +52,22 @@ ECHO "Installing docker images for ddev to use..."
 set /p LATEST_VERSION=<.ddev_version.txt
 bin\windows\7za -so x ddev_tarballs\ddev_docker_images.%LATEST_VERSION%.tar.xz | docker load
 
-IF EXIST .\ddev_tarballs\docker_additions.tar.xz (
-	bin\windows\7za -so x .\ddev_tarballs\docker_additions.tar.xz | docker load
-)
-
 ECHO "Installing ddev..."
 bin\windows\7za -y x ddev_tarballs\ddev_windows.%LATEST_VERSION%.zip
 move /y ddev.exe %HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\WindowsApps
 
-MKDIR "%userprofile%\Sites\sprint"
-MKDIR "%userprofile%\Sites\sprint\bin"
-COPY /Y bin\windows\*.* "%userprofile%\Sites\sprint\bin"
-COPY /Y start_sprint.cmd "%userprofile%\Sites\sprint\"
-COPY /Y sprint.tar.xz "%userprofile%\Sites\sprint\"
+MKDIR "%userprofile%\sprint"
+MKDIR "%userprofile%\sprint\bin"
+COPY /Y bin\windows\*.* "%userprofile%\sprint\bin"
+COPY /Y start_sprint.cmd "%userprofile%\sprint\"
+COPY /Y sprint.tar.xz "%userprofile%\sprint\"
 
 ECHO ######
 ECHO #
 ECHO # Your ddev and the sprint kit are now ready to use, 
 ECHO # execute the following commands now to start:
 ECHO #
-ECHO # cd %userprofile%\Sites\sprint
+ECHO # cd %userprofile%\sprint
 ECHO #
 ECHO # Right click and run the following as administrator from explorer.
 ECHO #

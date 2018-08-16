@@ -22,8 +22,8 @@ Installation and Startup:
   - **macOS/Linux**: Run install_ddev.sh via terminal from the directory where this SPRINTUSER_README.md is with `./install_ddev.sh`
   - **Windows**: Run `install_ddev.cmd`
 4. Create Drupal 8 instance to use during sprint:
-  - **macOS/Linux**: cd to `~/Sites/sprint` and run `./start_sprint.sh`
-  - **Windows**: run `start_sprint.cmd` in `%userprofile%\Sites\sprint`
+  - **macOS/Linux**: cd to `~/sprint` and run `./start_sprint.sh`
+  - **Windows**: run `start_sprint.cmd` in `%userprofile%\sprint`
 5. There should be a new sprint folder named `sprint-YYYYMMDD-HHMM` (with today's date and the time you ran `start_sprint`). Start the Drupal environment using start_clean:
   - **macOS/Linux**: cd into the dated sprint folder, and run `./start_clean.sh`
   - **Windows**: run `start_clean.cmd` in the dated sprint folder

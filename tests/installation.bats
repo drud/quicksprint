@@ -6,7 +6,8 @@
 function setup {
     export UNTAR_LOCATION=/tmp
     export SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.$(cat .quicksprint_release.txt).tar.gz
-    export SPRINTDIR=~/Sites/sprint
+    export SPRINTDIR=~/3>&1sprint
+    export DRUD_NONINTERACTIVE=true
 }
 
 # brew install jq p7zip bats-core composer
@@ -33,11 +34,9 @@ function setup {
 
 
 @test "untar and run drupal_sprint_package" {
-#    echo "# rm -rf $UNTAR_LOCATION/drupal_sprint_package" >&3
     run rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
     [ "$status" -eq 0 ]
 
-#    echo "# tar -C $UNTAR_LOCATION -zxf $SOURCE_TARBALL_LOCATION" >&3
     run tar -C "$UNTAR_LOCATION" -zxf "$SOURCE_TARBALL_LOCATION"
     [ "$status" -eq 0 ]
 
@@ -46,7 +45,7 @@ function setup {
 }
 
 @test "install_ddev.sh - and Sprint directories" {
-    run bash -c "cd $UNTAR_LOCATION/drupal_sprint_package && printf 'y\ny\n' | ./install_ddev.sh"
+    run bash -c "cd $UNTAR_LOCATION/drupal_sprint_package && printf 'y\ny\n' | bash -x ./install_ddev.sh"
     if [ "$status" -ne 0 ]; then
         echo "# ERROR: status=$status lines=$lines" 3>&1
         return 1
@@ -86,7 +85,7 @@ function setup {
 }
 
 @test "check http status of project for 200" {
-    run curl --write-out %{http_code} --silent --output /dev/null $(bash -c "cd $SPRINTDIR/sprint-2* && ddev describe -j | jq -r .raw.httpurl")
+    run curl --write-out %{http_code} -H "Host: $(cd $SPRINTDIR && ddev describe -j | jq -r .raw.name).ddev.local" --silent --output /dev/null $(bash -c "cd $SPRINTDIR/sprint-2* && ddev describe -j | jq -r .raw.httpurl")
     [ "$status" -eq 0 ]
     [ "${lines[0]}" = "200" ]
 }

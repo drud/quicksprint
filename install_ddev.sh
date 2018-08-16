@@ -40,7 +40,7 @@ ${GREEN}
 # It does the following:
 #  -Install Docker for your OS if you don't have it already
 #  -Install ddev by Drud Technology
-#  -Copy required components to ~/Sites/sprint/
+#  -Copy required components to ~/3>&1sprint/
 #  -Pre-loaded docker images for the sprint toolkit:
 #    -Drupal 8
 #    -phpmyadmin
@@ -115,14 +115,6 @@ elif [[ "$OS" == "Linux" ]]; then
     xzcat $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
 fi
 
-if [ -f ddev_tarballs/docker_additions.tar.xz ]; then
-    if [[ "$OS" == "Darwin" ]]; then
-        gzip -dc $(ls ddev_tarballs/docker_additions.tar.xz) | docker load
-    elif [[ "$OS" == "Linux" ]]; then
-        xzcat $(ls ddev_tarballs/docker_additions.tar.xz) | docker load
-    fi
-fi
-
 TARBALL="$(ls ddev_tarballs/$FILEBASE*.tar.gz)"
 
 tar -xzf $TARBALL -C /tmp
@@ -137,18 +129,9 @@ else
     sudo mv /tmp/ddev /usr/local/bin/
 fi
 
-# Ensure ddev is in path
-if [[ ! $PATH = *"usr/local/bin"* ]]; then
-    echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
-    echo "export PATH=/usr/local/bin:$PATH" >> ~/.zshrc
-    source ~/.bash_profile
-fi
-
-
-mkdir -p ~/Sites/sprint
-cp start_sprint.sh ~/Sites/sprint/
-cp sprint.tar.xz ~/Sites/sprint/
-wait
+mkdir -p ~/sprint
+cp start_sprint.sh ~/sprint
+cp sprint.tar.xz ~/sprint
 
 printf "
 ${GREEN}
@@ -157,7 +140,7 @@ ${GREEN}
 # Your ddev and the sprint kit are now ready to use,
 # execute the following commands now to start:
 #
-# ${YELLOW}cd ~/Sites/sprint${GREEN}
+# ${YELLOW}cd ~/3>&1sprint${GREEN}
 # ${YELLOW}./start_sprint.sh${GREEN}
 #
 ######
