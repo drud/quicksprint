@@ -9,13 +9,16 @@ function setup {
     export SPRINTDIR=~/Sites/sprint
 }
 
-# brew install jq bats-core xz composer
+# brew install jq p7zip bats-core composer
+# choco install -y jq 7zip composer
+# apt-get install jq p7zip-full
+# git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
 @test "check for prereqs (docker etc)" {
     run command -v curl
     [ "$status" -eq 0 ]
     run command -v jq
     [ "$status" -eq 0 ]
-    run command -v xz
+    run command -v 7z
     [ "$status" -eq 0 ]
     run command -v composer
     [ "$status" -eq 0 ]

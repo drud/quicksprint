@@ -125,7 +125,7 @@ if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
 fi
 pushd ddev_tarballs
 $SHACMD -c "$SHAFILE"
-popd
+popd >/dev/null
 
 # Download the ddev tarball/zipball
 for os in macos linux windows; do
@@ -143,24 +143,28 @@ for os in macos linux windows; do
     fi
     pushd ddev_tarballs
     $SHACMD -c $(basename "$SHAFILE")
-    popd
+    popd >/dev/null
 done
 
 # clone or refresh d8 clone
 mkdir -p sprint
-git clone https://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
+git clone --quiet https://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
 pushd $STAGING_DIR/sprint/drupal8
 cp $REPO_DIR/example.gitignore $STAGING_DIR/sprint/drupal8/.gitignore
 
-composer install
+echo "Running composer install --quiet"
+composer install --quiet
 
 # Copy licenses and COPYING notice.
 cp -r $REPO_DIR/licenses $STAGING_DIR/
 cp $REPO_DIR/COPYING $STAGING_DIR/
-popd
+popd >/dev/null
 
 cd $STAGING_DIR
-tar cfJ sprint.tar.xz -C sprint .
+
+echo "Creating tar and zipballs"
+# Create tar.xz archive without using xz command, so we can work on all platforms
+pushd sprint && 7za a -ttar -so bogusfilename.tar . | 7za a -si -txz ../sprint.tar.xz && popd >/dev/null
 rm -rf $STAGING_DIR/sprint
 
 cd $STAGING_DIR_BASE
