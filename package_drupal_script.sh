@@ -32,15 +32,14 @@ OS=$(uname)
 BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
-# Ensure XZ is installed
-command -v xz >/dev/null 2>&1 || { echo >&2 "${RED}I require xz command but it's not installed. Aborting.${RESET}"; exit 1; }
+# Ensure 7z is installed
+command -v 7z >/dev/null 2>&1 || { echo >&2 "${RED}I require 7z command but it's not installed. Aborting.${RESET}"; exit 1; }
 # Check Docker is running
-SERVICE='docker'
-if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+if docker run -t busybox:latest ls
 then
-    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+    echo "docker is running, continuing."
 else
-    printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
+    echo "docker is not running and is required for this script, exiting."
     exit 1
 fi
 
