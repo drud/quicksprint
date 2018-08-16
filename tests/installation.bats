@@ -1,8 +1,11 @@
 #!/usr/bin/env bats
 
+# Run these tests from the repo root directory, for example
+# bats tests
+
 function setup {
     export UNTAR_LOCATION=/tmp
-    export SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.$(cat ../.quicksprint_release.txt).tar.gz
+    export SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.$(cat .quicksprint_release.txt).tar.gz
     export SPRINTDIR=~/Sites/sprint
 }
 
