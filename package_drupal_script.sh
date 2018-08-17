@@ -69,10 +69,10 @@ mkdir -p $STAGING_DIR
 cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* $STAGING_DIR
 
 
-if [[ "$OS" == "Darwin" ]]; then
+if [ "$OS" = "Darwin" ]; then
     SHACMD="shasum -a 256"
     FILEBASE="ddev_macos"
-elif [[ "$OS" == "Linux" -o "$OS" == "Windows_NT" ]]; then
+elif [ "$OS" = "Linux" -o "$OS" = "Windows_NT" ]; then
     SHACMD="sha256sum"
     FILEBASE="ddev_linux"
 else
