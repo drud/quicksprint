@@ -5,8 +5,8 @@ set -o pipefail
 set -o nounset
 
 # This should be run from the repo root
-
-bats tests
+echo "PATH=$PATH"
+/usr/local/bin/bats tests
 
 # rm -rf /tmp/drupal_sprint_package
 
