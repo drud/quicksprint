@@ -32,8 +32,9 @@ function setup {
 
 @test "untar and run drupal_sprint_package" {
     rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
+    echo "# UNTAR_LOCATION=$UNTAR_LOCATION SOURCE_TARBALL_LOCATION=$SOURCE_TARBALL_LOCATION" >&3
     tar -C "$UNTAR_LOCATION" -zxf "$SOURCE_TARBALL_LOCATION"
-    chmod -R ugo+w $SPRINTDIR/ && rm -rf $SPRINTDIR/sprint-2*
+    chmod -R ugo+w $SPRINTDIR/ && rm -rf $SPRINTDIR/sprint-2* || true
 }
 
 @test "install_ddev.sh - and Sprint directories" {
