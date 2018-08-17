@@ -50,7 +50,7 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 
 * Your users will then download and unarchive the tarball or zipball.
 * Linux and Mac users run install_ddev.sh, Windows users run install_ddev.cmd inside the directory created by the tarball.
-* After installation, Linux and Mac users can start up an instance by cd'ing to ~/3>&1sprint and running start_sprint.sh. Windows users run start_sprint.cmd in 3>&1sprint of their user folder.
+* After installation, Linux and Mac users can start up an instance by cd'ing to ~/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in /sprint of their user folder.
 * _Windows users must run an additional command_: the start_clean command will tell you what the command is.
 
 At this point the plain vanilla git-checked-out drupal8 HEAD version should be running at http://drupal8.ddev.local.

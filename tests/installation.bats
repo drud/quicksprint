@@ -6,8 +6,12 @@
 function setup {
     export UNTAR_LOCATION=/tmp
     export SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.$(cat .quicksprint_release.txt).tar.gz
-    export SPRINTDIR=~/3>&1sprint
+    export SPRINTDIR=~/sprint
+    # DRUD_NONINTERACTIVE causes ddev not to try to use sudo and add the hostname
     export DRUD_NONINTERACTIVE=true
+    # Provide DHOST to figure out the docker host addr for curl
+    DHOST=127.0.0.1
+    if [ ! -z "$DOCKER_HOST" ]; then DHOST=$DOCKER_HOST; fi
 }
 
 # brew install jq p7zip bats-core composer
@@ -16,76 +20,54 @@ function setup {
 # git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
 # Passwordless sudo required.
 @test "check for prereqs (docker etc)" {
-    run command -v curl
-    [ "$status" -eq 0 ]
-    run command -v jq
-    [ "$status" -eq 0 ]
-    run command -v 7z
-    [ "$status" -eq 0 ]
-    run command -v composer
-    [ "$status" -eq 0 ]
+    command -v curl
+    command -v jq
+    command -v 7z
+    command -v composer
     # Make sure passwordless sudo is available
-    run echo junk | sudo -S ls
-    [ "$status" -eq 0 ]
-
-    run docker run -t -v "$HOME:/tmp/home" -p 80:8088 busybox ls
-    [ "$status" -eq 0 ]
+    echo junk | sudo -S ls
+    docker run -t -v "$HOME:/tmp/home" -p 80:8088 busybox ls >/dev/null
 }
 
 
 @test "untar and run drupal_sprint_package" {
-    run rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
-    [ "$status" -eq 0 ]
-
-    run tar -C "$UNTAR_LOCATION" -zxf "$SOURCE_TARBALL_LOCATION"
-    [ "$status" -eq 0 ]
-
-    run bash -c "chmod -R ugo+w $SPRINTDIR/sprint-2* && rm -rf $SPRINTDIR/sprint-2*"
-    # Don't check the result of this one as it's not very important; not important if it's not there.
+    rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
+    tar -C "$UNTAR_LOCATION" -zxf "$SOURCE_TARBALL_LOCATION"
+    chmod -R ugo+w $SPRINTDIR/ && rm -rf $SPRINTDIR/sprint-2*
 }
 
 @test "install_ddev.sh - and Sprint directories" {
-    run bash -c "cd $UNTAR_LOCATION/drupal_sprint_package && printf 'y\ny\n' | bash -x ./install_ddev.sh"
-    if [ "$status" -ne 0 ]; then
-        echo "# ERROR: status=$status lines=$lines" 3>&1
-        return 1
-    fi
+    cd $UNTAR_LOCATION/drupal_sprint_package && printf 'y\ny\n' | bash -x ./install_ddev.sh
 }
 
-@test "make sure no ddev projects are running" {
-    run ddev rm -a
+@test "rm any ddev projects" {
+    ddev rm -a
 }
 
 @test "run start_sprint.sh" {
-    run bash -c "cd $SPRINTDIR && ./start_sprint.sh"
-    if [ "$status" -ne 0 ]; then
-        echo "# ERROR: status=$status lines=$lines" 3>&1
-        return 1
-    fi
-    echo "# SPRINTDIR CONTENTS=$(ls $SPRINTDIR)" 3>&1
+    cd $SPRINTDIR && bash -x ./start_sprint.sh
 }
 
 @test "run start_clean.sh" {
     # Run start_clean.sh in the (only) sprint directory
-    run bash -c "ls $SPRINTDIR && cd $SPRINTDIR/sprint-2* && echo y | ./start_clean.sh"
-    if [ "$status" -ne 0 ] ; then
-        echo "# ERROR: status=$status lines=$lines SPRINTDIR CONTENTS=$(ls $SPRINTDIR)" 3>&1
-        return 1
-    fi
+    cd $SPRINTDIR/sprint-2* && echo y | ./start_clean.sh
 }
 
-@test "check ddev site status" {
-    run bash -c "cd $SPRINTDIR/sprint-2* && ddev describe -j | jq -r .raw.router_status"
-    [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "healthy" ]
+@test "check ddev project status and router status" {
+    DESCRIBE=$(cd $SPRINTDIR/sprint-2* && ddev describe -j)
+    ROUTER_STATUS=$(echo $DESCRIBE | jq -r ".raw.router_status" )
+    [ "$ROUTER_STATUS" = "healthy" ]
 
-    run bash -c "cd $SPRINTDIR/sprint-2* && ddev describe -j | jq -r .raw.status"
-    [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "running" ]
+    STATUS=$(echo $DESCRIBE | jq -r ".raw.status")
+    [ "$STATUS" = "running" ]
 }
 
 @test "check http status of project for 200" {
-    run curl --write-out %{http_code} -H "Host: $(cd $SPRINTDIR && ddev describe -j | jq -r .raw.name).ddev.local" --silent --output /dev/null $(bash -c "cd $SPRINTDIR/sprint-2* && ddev describe -j | jq -r .raw.httpurl")
-    [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "200" ]
+    DESCRIBE=$(cd $SPRINTDIR/sprint-2* && ddev describe -j)
+    NAME=$(echo $DESCRIBE | jq -r ".raw.name")
+    HTTP_PORT=$(echo $DESCRIBE | jq -r ".raw.router_http_port")
+    URL="http://${DHOST}:${HTTP_PORT}"
+    CURL="curl --fail -H 'Host: ${NAME}.ddev.local' --silent --output /dev/null --url $URL"
+    echo "# curl: $CURL" >&3
+    $CURL
 }

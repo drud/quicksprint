@@ -11,7 +11,7 @@ ECHO #
 ECHO # It does the following:
 ECHO #  -Install Docker for your OS if you don't have it already
 ECHO #  -Install ddev by Drud Technology
-ECHO #  -Copy required components to ~/3>&1sprint/
+ECHO #  -Copy required components to ~/sprint/
 ECHO #  -Pre-loaded docker images for the sprint toolkit:
 ECHO #    -Drupal 8
 ECHO #    -phpmyadmin

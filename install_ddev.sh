@@ -40,7 +40,7 @@ ${GREEN}
 # It does the following:
 #  -Install Docker for your OS if you don't have it already
 #  -Install ddev by Drud Technology
-#  -Copy required components to ~/3>&1sprint/
+#  -Copy required components to ~/sprint/
 #  -Pre-loaded docker images for the sprint toolkit:
 #    -Drupal 8
 #    -phpmyadmin
@@ -140,7 +140,7 @@ ${GREEN}
 # Your ddev and the sprint kit are now ready to use,
 # execute the following commands now to start:
 #
-# ${YELLOW}cd ~/3>&1sprint${GREEN}
+# ${YELLOW}cd ~/sprint${GREEN}
 # ${YELLOW}./start_sprint.sh${GREEN}
 #
 ######
