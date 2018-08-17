@@ -4,9 +4,6 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-#Clear terminal screen so the about text can be read
-clear
-
 RED='\033[31m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
