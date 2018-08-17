@@ -19,7 +19,7 @@ jobs:
           command: printf "docker version=$(docker --version)\ndocker-compose version=$(docker-compose --version)\nbats version=$(bats --version)\nHOME=$HOME USER=$(whoami) PWD=$PWD"
           name: Installed tool versions
       - run:
-          command: echo "y" | time bash -x ./package_drupal_script.sh
+          command: echo "y" | time ./package_drupal_script.sh
           name: Run the package_drupal_script.sh
           no_output_timeout: "20m"
       - run:

@@ -4,8 +4,6 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-clear
-
 # Install provided ddev release
 RED='\033[31m'
 GREEN='\033[32m'
