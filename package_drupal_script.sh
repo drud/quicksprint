@@ -72,11 +72,11 @@ cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRIN
 if [[ "$OS" == "Darwin" ]]; then
     SHACMD="shasum -a 256"
     FILEBASE="ddev_macos"
-elif [[ "$OS" == "Linux" ]]; then
+elif [[ "$OS" == "Linux" -o "$OS" == "Windows_NT" ]]; then
     SHACMD="sha256sum"
     FILEBASE="ddev_linux"
 else
-    printf "${RED}Sorry, this packager only works on macOS and Linux currently.${RESET}\n"
+    printf "${RED}Sorry, this packager doesn't work on your OS ($OS) currently.${RESET}\n"
     exit 1
 fi
 
