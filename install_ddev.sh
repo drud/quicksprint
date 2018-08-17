@@ -118,7 +118,7 @@ chmod ugo+x /tmp/ddev
 printf "Ready to place ddev in your /usr/local/bin.\n"
 
 if [[ "$BINOWNER" == "$USER" ]]; then
-    mv /tmp/ddev /usr/local/bin/
+    mv -f /tmp/ddev /usr/local/bin/
 else
     printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
     sudo mv /tmp/ddev /usr/local/bin/
