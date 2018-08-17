@@ -121,7 +121,7 @@ if [[ "$BINOWNER" == "$USER" ]]; then
     mv -f /tmp/ddev /usr/local/bin/
 else
     printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
-    sudo mv /tmp/ddev /usr/local/bin/
+    sudo mv /tmp/ddev /usr/local/bin/ddev
 fi
 
 mkdir -p ~/sprint
