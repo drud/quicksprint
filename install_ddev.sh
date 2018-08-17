@@ -53,52 +53,18 @@ while true; do
     esac
 done
 
-if [[ "$OS" == "Darwin" ]]; then
-    FILEBASE="ddev_macos"
+https://ddev.readthedocs.io/en/latest/users/docker_installation/
 
-    if ! command -v docker >/dev/null 2>&1; then
-        printf "
-        ${RED}
-        ####
-        # You need to install Docker and have it running before executing this script.
-        # The installer may be provided with this package.
-        # Otherwise get it at https://docs.docker.com/docker-for-mac/release-notes/
-        ####
-        ${RESET}"
-        exit 1
-    else
-        printf "${GREEN}
-####
-# ${YELLOW}Open Docker preferences, confirm its version 18.03.0 and the memory allocation is set to 3.0 GiB${GREEN}
-# ${YELLOW}on the Advanced tab, and that docker has fully restarted before continuing.${GREEN}
-#
-####
-${RESET}"
-        while true; do
-            read -p "Has docker restarted? (y/n): " DOCKMEM
-            case $DOCKMEM in
-                [Yy]* ) break;;
-                [Nn]* ) exit;;
-                * ) echo "Please answer y or n.";;
-            esac
-        done
-    fi
-
-elif [[ "$OS" == "Linux" ]]; then
-    FILEBASE="ddev_linux"
-
-    if ! docker --version >/dev/null 2>&1; then
-        printf "${YELLOW}Docker is required for ddev. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
-        printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
-    fi
-
-    if ! docker-compose --version >/dev/null 2>&1; then
-        printf "${YELLOW}Docker Compose is required for ddev. Download and install docker-compose at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
-        printf "${YELLOW}See the Docker CE section at this page for linux installation instructions https://docs.docker.com/install/#server${RESET}\n"
-    fi
-
-else
-    printf "${RED}Sorry, this installer does not support your platform at this time.${RESET}\n"
+if ! docker run -t busybox:latest ls >/dev/null; then
+    printf "
+    ${RED}
+    ####
+    # You need to install Docker and have it running before executing this script.
+    # The installer may be provided with this package.
+    # Docker installation and troubleshooting information is at
+    # https://ddev.readthedocs.io/en/latest/users/docker_installation/
+    ####
+    ${RESET}"
     exit 1
 fi
 
