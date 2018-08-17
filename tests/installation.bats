@@ -15,7 +15,7 @@ function setup {
 }
 
 # brew install jq p7zip bats-core composer
-# choco install -y jq 7zip composer
+# choco install -y jq 7zip composer zip (gd and curl must be enabled in /c/tools/php72/php.ini)
 # apt-get install jq p7zip-full
 # git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
 # Passwordless sudo required.
@@ -24,8 +24,8 @@ function setup {
     command -v jq
     command -v 7z
     command -v composer
-    # Make sure passwordless sudo is available
-    echo junk | sudo -S ls
+    #  passwordless sudo ought to be available, but this command doesn't work on windows.
+    # echo junk | sudo -S ls
     docker run -t -v "$HOME:/tmp/home" -p 80:8088 busybox ls >/dev/null
 }
 
