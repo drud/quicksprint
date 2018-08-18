@@ -43,7 +43,19 @@ ${RESET}"
 
 echo ""
 echo "Installing docker images for ddev to use..."
-7z x ddev_tarballs/ddev_docker_images.*.tar.xz -so | docker load
+if [ $OS = "MINGW64_NT-10.0" ] ; then PATH="./bin/windows:$PATH"; fi
+
+
+if command -v 7z; then
+    7z x ddev_tarballs/ddev_docker_images.*.tar.xz -so | docker load
+elif command -v xzcat; then
+    xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+elif [[ "$OS" == "Darwin" ]]; then
+    gzip -dc ls ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+else
+    echo "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}"
+fi
+
 
 TARBALL=""
 case "$OS" in
