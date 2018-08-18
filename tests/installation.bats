@@ -19,6 +19,7 @@ function setup {
 # apt-get install jq p7zip-full
 # git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
 # Passwordless sudo required.
+# Developer mode enabled.
 @test "check for prereqs (docker etc)" {
     command -v curl
     command -v jq
@@ -27,6 +28,9 @@ function setup {
     #  passwordless sudo ought to be available, but this command doesn't work on windows.
     # echo junk | sudo -S ls
     docker run -t -v "$PWD:/tmp/pwd" -p 80:8088 busybox ls >//dev/null
+    cd /tmp && touch junk.txt && ln -s junk.txt junk.txt.link
+    # Make sure that we have symlink creation capability (Windows 10, developer mode enabled)
+    [ -L junk.txt.link ]
 }
 
 
