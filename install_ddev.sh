@@ -74,6 +74,7 @@ else
     gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
 fi
 
+TARBALL=""
 case "$OS" in
     Linux)
         TARBALL=ddev_tarballs/ddev_linux*.tar.gz
@@ -82,24 +83,26 @@ case "$OS" in
         TARBALL=ddev_tarballs/ddev_macos*.tar.gz
         ;;
     MINGW64_NT-10.0)
-        echo "PLease use the ddev_windows_installer provided with this package to install ddev"
-        TARBALL=ddev_tarballs/ddev_windows*.tar.gz
+        echo "${YELLOW}PLease use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
-        echo "No ddev binary seems to be available for $OS"
+        echo "${RED}No ddev binary is available for $OS${RESET}"
         ;;
 
 esac
-tar -xzf "$TARBALL" -C /tmp
-chmod ugo+x /tmp/ddev
 
-printf "Ready to place ddev in your /usr/local/bin.\n"
+if [ ! -z "$TARBALL" ] ; then
+    tar -xzf "$TARBALL" -C /tmp
+    chmod ugo+x /tmp/ddev
 
-if [[ "$BINOWNER" == "$USER" ]]; then
-    mv -f /tmp/ddev /usr/local/bin/
-else
-    printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
-    sudo mv /tmp/ddev /usr/local/bin/ddev
+    printf "Ready to place ddev in your /usr/local/bin.\n"
+
+    if [[ "$BINOWNER" == "$USER" ]]; then
+        mv -f /tmp/ddev /usr/local/bin/
+    else
+        printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
+        sudo mv /tmp/ddev /usr/local/bin/ddev
+    fi
 fi
 
 mkdir -p ~/sprint

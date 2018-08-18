@@ -49,7 +49,7 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 ### Using your Sprint Package
 
 * Your users will then download and unarchive the tarball or zipball.
-* Linux and Mac users run install_ddev.sh, Windows users run install_ddev.cmd inside the directory created by the tarball.
+* Run install_ddev.sh from the unarchived directory; (Windows users must work in git-bash).
 * After installation, Linux and Mac users can start up an instance by cd'ing to ~/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in /sprint of their user folder.
 * _Windows users must run an additional command_: the start_clean command will tell you what the command is.
 
