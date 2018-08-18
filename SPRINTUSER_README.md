@@ -3,7 +3,7 @@
 This directory contains tools to get you going at a Drupal 8 sprint:
 
 * Drupal 8, already cloned with git (`git clone git://git.drupal.org/project/drupal.git`)
-* Docker (you must install it yourself; install images are provided in the installs directory)
+* Docker (you must install it yourself; install images are provided in the installs directory). Instructions and troubleshooting information at https://ddev.readthedocs.io/en/latest/users/docker_installation/
 * Git For Windows (for Windows Users)
 * DDEV-Local (ddev) development environment
 
@@ -11,7 +11,7 @@ Prerequisites:
 
 **Windows Prerequisites:**
 * Windows 10 Professional/Enterprise: Please use Docker for Windows (bundled); Hyper-V must be enabled. If you don't have these, the Docker install process will typically prompt for the settings. 
-* Windows 10 Home: Please use Docker Toolbox (bundled).
+* Windows 10 Home (and other versions like Server): Please use Docker Toolbox (bundled). You must start up Docker Toolbox using the "Docker Toolbox Quickstart"
 * [Git for Windows](https://gitforwindows.org/): git-bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful git setup info at github](https://help.github.com/articles/set-up-git/). 
 * ddev Windows Installer (bundled)
 
