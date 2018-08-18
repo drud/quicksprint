@@ -36,7 +36,7 @@ USER=$(whoami)
 # Ensure 7z is installed
 command -v 7z >/dev/null 2>&1 || { echo >&2 "${RED}I require 7z command but it's not installed. Aborting.${RESET}"; exit 1; }
 # Check Docker is running
-if docker run -t busybox:latest ls >/dev/null
+if docker run --rm -t busybox:latest ls >/dev/null
 then
     echo "docker is running, continuing."
 else

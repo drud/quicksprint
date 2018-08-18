@@ -17,7 +17,7 @@ FILEBASE=""
 CURRENT_DIR=$PWD
 
 # Check Docker is running
-if docker run -t busybox:latest ls >/dev/null
+if docker run --rm -t busybox:latest ls >/dev/null
 then
     printf "docker service running, continuing."
 else
@@ -52,19 +52,6 @@ while true; do
         * ) echo "Please answer y or n.";;
     esac
 done
-
-if ! docker run -t busybox:latest ls >/dev/null; then
-    printf "
-    ${RED}
-    ####
-    # You need to install Docker and have it running before executing this script.
-    # The installer may be provided with this package.
-    # Docker installation and troubleshooting information is at
-    # https://ddev.readthedocs.io/en/latest/users/docker_installation/
-    ####
-    ${RESET}"
-    exit 1
-fi
 
 echo ""
 echo "Installing docker images for ddev to use..."
