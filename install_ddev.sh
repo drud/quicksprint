@@ -53,8 +53,6 @@ while true; do
     esac
 done
 
-https://ddev.readthedocs.io/en/latest/users/docker_installation/
-
 if ! docker run -t busybox:latest ls >/dev/null; then
     printf "
     ${RED}
