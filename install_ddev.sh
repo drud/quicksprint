@@ -68,10 +68,10 @@ fi
 
 echo ""
 echo "Installing docker images for ddev to use..."
-if [[ "$OS" == "Darwin" ]]; then
-    gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
-elif [[ "$OS" == "Linux" ]]; then
+if [[ "$OS" == "Linux" ]]; then
     xzcat $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
+else
+    gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
 fi
 
 case "$OS" in

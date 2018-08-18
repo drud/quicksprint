@@ -25,6 +25,7 @@ function setup {
     command -v jq
     command -v 7z
     command -v composer
+    command -v perl
     #  passwordless sudo ought to be available, but this command doesn't work on windows.
     # echo junk | sudo -S ls
     docker run -t -v "$PWD:/tmp/pwd" -p 80:8088 busybox ls >/dev/null
@@ -38,7 +39,7 @@ function setup {
     rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
     echo "# UNTAR_LOCATION=$UNTAR_LOCATION SOURCE_TARBALL_LOCATION=$SOURCE_TARBALL_LOCATION" >&3
     tar -C "$UNTAR_LOCATION" -zxf "$SOURCE_TARBALL_LOCATION"
-    chmod -R ugo+w $SPRINTDIR/ && rm -rf $SPRINTDIR/sprint-2* || true
+    chmod -R ugo+w "$SPRINTDIR/" && rm -rf $SPRINTDIR/sprint-2* || true
 }
 
 @test "install_ddev.sh - and Sprint directories" {

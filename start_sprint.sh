@@ -20,17 +20,7 @@ tar xpf sprint.tar.xz -C sprint-$TIMESTAMP
 wait
 
 #Update ddev project name
-if [[ "$OS" == "Darwin" ]]; then
-	sed -i '' 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/.ddev/config.yaml
-	sed -i '' 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/Readme.txt
-	sed -i '' 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/start_clean.sh
-	sed -i '' 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/start_clean.cmd
-elif [[ "$OS" == "Linux" ]]; then
-	sed -i 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/.ddev/config.yaml
-	sed -i 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/Readme.txt
-	sed -i 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/start_clean.sh
-	sed -i 's/\[ts\]/'${TIMESTAMP}'/' sprint-$TIMESTAMP/start_clean.cmd
-fi
+perl -pi -e "s/\[ts\]/${TIMESTAMP}/" sprint-$TIMESTAMP/* sprint-$TIMESTAMP/.ddev/config.yaml
 
 printf "${GREEN}
 ######
