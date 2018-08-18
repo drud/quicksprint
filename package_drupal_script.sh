@@ -23,7 +23,7 @@ QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
 echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 
-DOCKER_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe https://github.com/docker/toolbox/releases/download/v18.06.0-ce/DockerToolbox-18.06.0-ce.exe"
+DOWNLOAD_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe https://github.com/docker/toolbox/releases/download/v18.06.0-ce/DockerToolbox-18.06.0-ce.exe https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe"
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -83,16 +83,16 @@ cd ${STAGING_DIR}
 printf "
 ${GREEN}
 ####
-# Shall we package docker installers for mac and windows with the archive?
+# Shall we package docker and other installers (Git For Windows, etc) with the archive?
 #### \n${RESET}"
 
 while true; do
     read -p "Include installers? (y/n): " INSTALL
     case ${INSTALL} in
         [Yy]* ) printf "${GREEN}# Downloading docker installers. \n#### \n${RESET}";
-                mkdir -p docker_installs
-                pushd docker_installs >/dev/null
-                for dockerurl in ${DOCKER_URLS}; do
+                mkdir -p installs
+                pushd installs >/dev/null
+                for dockerurl in ${DOWNLOAD_URLS}; do
                     curl -sSL -O ${dockerurl}
                 done
                 popd >/dev/null
@@ -160,7 +160,7 @@ rm -rf ${STAGING_DIR}/sprint
 cd ${STAGING_DIR_BASE}
 tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
 zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
-rm -rf ${STAGING_DIR_NAME}/docker_installs
+rm -rf ${STAGING_DIR_NAME}/installs
 tar -czf drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
