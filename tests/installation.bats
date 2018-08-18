@@ -11,7 +11,8 @@ function setup {
     export DRUD_NONINTERACTIVE=true
     # Provide DHOST to figure out the docker host addr for curl
     DHOST=127.0.0.1
-    if [ ! -z "$DOCKER_HOST" ]; then DHOST=$DOCKER_HOST; fi
+    # Extract the IP address we need from DOCKER_HOST, which is formatted like tcp://192.168.99.100:2376
+    if [ ! -z "$DOCKER_HOST" ]; then DHOST="$(echo $DOCKER_HOST | perl -p -e 's/(tcp:\/\/|:[0-9]+$)//g')"; fi
 }
 
 # brew install jq p7zip bats-core composer
