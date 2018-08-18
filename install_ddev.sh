@@ -46,7 +46,7 @@ ${GREEN}
 ${RESET}"
 while true; do
     read -p "Continue? (y/n): " INSTALL
-    case $INSTALL in
+    case "$INSTALL" in
         [Yy]* ) break;;
         [Nn]* ) exit;;
         * ) echo "Please answer y or n.";;
@@ -74,9 +74,23 @@ elif [[ "$OS" == "Linux" ]]; then
     xzcat $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
 fi
 
-TARBALL="$(ls ddev_tarballs/$FILEBASE*.tar.gz)"
+case "$OS" in
+    Linux)
+        TARBALL=ddev_tarballs/ddev_linux*.tar.gz
+        ;;
+    Darwin)
+        TARBALL=ddev_tarballs/ddev_macos*.tar.gz
+        ;;
+    MINGW64_NT-10.0)
+        echo "PLease use the ddev_windows_installer provided with this package to install ddev"
+        TARBALL=ddev_tarballs/ddev_windows*.tar.gz
+        ;;
+    *)
+        echo "No ddev binary seems to be available for $OS"
+        ;;
 
-tar -xzf $TARBALL -C /tmp
+esac
+tar -xzf "$TARBALL" -C /tmp
 chmod ugo+x /tmp/ddev
 
 printf "Ready to place ddev in your /usr/local/bin.\n"
