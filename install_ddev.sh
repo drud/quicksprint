@@ -10,7 +10,6 @@ GREEN='\033[32m'
 YELLOW='\033[33m'
 RESET='\033[0m'
 OS=$(uname)
-BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 SHACMD=""
 FILEBASE=""
@@ -35,23 +34,12 @@ ${GREEN}
 #  -To do this just open it with a text editor
 #
 # It does the following:
-#  -Install Docker for your OS if you don't have it already
-#  -Install ddev by Drud Technology
-#  -Copy required components to ~/sprint/
-#  -Pre-loaded docker images for the sprint toolkit:
-#    -Drupal 8
-#    -phpmyadmin
+#  -Install Drud Technology's ddev local development tool
+#  -Copy required components to ~/sprint
+#  -Pre-loads docker images for the sprint toolkit:
 #
 ####
 ${RESET}"
-while true; do
-    read -p "Continue? (y/n): " INSTALL
-    case "$INSTALL" in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer y or n.";;
-    esac
-done
 
 echo ""
 echo "Installing docker images for ddev to use..."
@@ -70,6 +58,7 @@ case "$OS" in
         ;;
     *)
         echo "${RED}No ddev binary is available for $OS${RESET}"
+        exit 2
         ;;
 
 esac
@@ -78,16 +67,22 @@ if [ ! -z "$TARBALL" ] ; then
     tar -xzf ${TARBALL} -C /tmp
     chmod ugo+x /tmp/ddev
 
-    if [ -f /usr/local/bin/ddev ] ; then
-        printf "/usr/local/bin/ddev already exists; please update it using your normal technique. Not installing a new version."
+    if command -v ddev >/dev/null ; then
+        printf "A version of ddev already exists in $(command -v ddev); please update it using your normal technique. Not installing a new version."
     else
-        printf "Ready to place ddev in your /usr/local/bin.\n"
+        DDEV_TARGET_DIR=/usr/local/bin
+        if [ ! -d $DDEV_TARGET_DIR ] ; then
+            # Windows git-bash won't have a /usr/local/bin, but /usr/bin is likely writable.
+            DDEV_TARGET_DIR=/usr/bin
+        fi
+        printf "Ready to place ddev in directory $DDEV_TARGET_DIR.\n"
+        BINOWNER=$(ls -ld $DDEV_TARGET_DIR | awk '{print $3}')
 
         if [[ "$BINOWNER" == "$USER" ]]; then
-            mv -f /tmp/ddev /usr/local/bin/
+            mv -f /tmp/ddev $DDEV_TARGET_DIR
         else
-            printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
-            sudo mv /tmp/ddev /usr/local/bin/ddev
+            printf "${YELLOW}Running \"sudo mv /tmp/ddev $DDEV_TARGET_DIR\" Please enter your password if prompted.${RESET}\n"
+            sudo mv /tmp/ddev $DDEV_TARGET_DIR
         fi
     fi
 fi
