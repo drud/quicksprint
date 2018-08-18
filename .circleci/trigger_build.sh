@@ -10,6 +10,6 @@ JOB=${2:-nightly_build}
 PROJECT=${3:-drud/ddev}
 BRANCH=${4:-master}
 
-trigger_build_url=https://circleci.com/api/v1.1/project/github/$PROJECT/tree/$BRANCH?circle-token=$CIRCLE_TOKEN
+trigger_build_url=https://circleci.com/api/v1.1/project/github/${PROJECT}/tree/${BRANCH}?circle-token=${CIRCLE_TOKEN}
 
-curl --data "build_parameters[CIRCLE_JOB]=$JOB" $trigger_build_url
+curl --data "build_parameters[CIRCLE_JOB]=$JOB" ${trigger_build_url}

@@ -15,12 +15,12 @@ OS=$(uname)
 TIMESTAMP=$(date +"%Y%m%d-%H%M")
 
 #Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-mkdir -p sprint-$TIMESTAMP
-tar xpf sprint.tar.xz -C sprint-$TIMESTAMP
+mkdir -p sprint-${TIMESTAMP}
+tar xpf sprint.tar.xz -C sprint-${TIMESTAMP}
 wait
 
 #Update ddev project name
-perl -pi -e "s/\[ts\]/${TIMESTAMP}/" sprint-$TIMESTAMP/* sprint-$TIMESTAMP/.ddev/config.yaml
+perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" sprint-${TIMESTAMP}/* sprint-${TIMESTAMP}/.ddev/config.yaml
 
 printf "${GREEN}
 ######

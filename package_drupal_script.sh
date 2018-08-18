@@ -17,11 +17,11 @@ export GZIP=-9
 
 STAGING_DIR_NAME=drupal_sprint_package
 STAGING_DIR_BASE=~/tmp
-STAGING_DIR=$STAGING_DIR_BASE/$STAGING_DIR_NAME
+STAGING_DIR="$STAGING_DIR_BASE/$STAGING_DIR_NAME"
 REPO_DIR=$PWD
 QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
-echo $QUICKSPRINT_RELEASE >.quicksprint_release.txt
+echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 
 # The version lines on the following few lines need to get changed any time the url are changed on the line below.
 DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
@@ -50,45 +50,38 @@ fi
 
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
     printf "${RED}The staging directory $STAGING_DIR already has files. Deleting them and recreating everything.${RESET}"
-    rm -rf $STAGING_DIR
-    if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz ] ; then
-        rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz
+    rm -rf "$STAGING_DIR"
+    if [ -e "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz" ] ; then
+        rm "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz"
     fi
-    if [ -e $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip ]; then
-        rm $STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip
+    if [ -e "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip" ]; then
+        rm "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip"
     fi
 fi
 
-SHACMD=""
-FILEBASE=""
+SHACMD="sha256sum"
 LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/drud/ddev/releases/latest)
 # The releases are returned in the format {"id":3622206,"tag_name":"hello-1.0.0.11",...}, we have to extract the tag_name.
-LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+LATEST_VERSION=$(echo ${LATEST_RELEASE} | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
 RELEASE_URL="https://github.com/drud/ddev/releases/download/$LATEST_VERSION"
 
 echo "$LATEST_VERSION" >.ddev_version.txt
 
 # Install the beginning items we need in the kit.
-mkdir -p $STAGING_DIR
-cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* $STAGING_DIR
+mkdir -p ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* ${STAGING_DIR}
 
 
+# macOS/Darwin has a oneoff/weird shasum command.
 if [ "$OS" = "Darwin" ]; then
     SHACMD="shasum -a 256"
-    FILEBASE="ddev_macos"
-elif [ "$OS" = "Linux" -o "$OS" = "MINGW64_NT-10.0" ]; then
-    SHACMD="sha256sum"
-    FILEBASE="ddev_linux"
-else
-    printf "${RED}Sorry, this packager doesn't work on your OS ($OS) currently.${RESET}\n"
-    exit 1
 fi
 
 if ! docker --version >/dev/null 2>&1; then
     printf "${YELLOW}Docker is required to use this package. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
 fi
 
-cd $STAGING_DIR
+cd ${STAGING_DIR}
 
 printf "
 ${GREEN}
@@ -98,15 +91,15 @@ ${GREEN}
 
 while true; do
     read -p "Include installers? (y/n): " INSTALL
-    case $INSTALL in
+    case ${INSTALL} in
         [Yy]* ) printf "${GREEN}# Downloading docker installers. \n#### \n${RESET}";
                 mkdir -p docker_installs
-                for dockerurl in $DOCKER_URLS; do
-                    fname=$(basename $dockerurl)
-                    if [[ $fname = *"dmg"* ]]; then
-                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" $dockerurl
-                    elif [[ $fname = *"exe"* ]] ; then
-                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" $dockerurl
+                for dockerurl in ${DOCKER_URLS}; do
+                    fname=$(basename ${dockerurl})
+                    if [[ ${fname} = *"dmg"* ]]; then
+                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" ${dockerurl}
+                    elif [[ ${fname} = *"exe"* ]] ; then
+                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" ${dockerurl}
                     fi
                 done
                 break;;
@@ -127,14 +120,14 @@ if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
     curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
 fi
 pushd ddev_tarballs
-$SHACMD -c "$SHAFILE"
+${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
 # Download the ddev tarball/zipball
 for os in macos linux windows; do
     pwd
     SUFFIX=tar.gz
-    if [ $os == "windows" ] ; then
+    if [ ${os} == "windows" ] ; then
         SUFFIX=zip
     fi
     TARBALL="ddev_$os.$LATEST_VERSION.$SUFFIX"
@@ -145,37 +138,37 @@ for os in macos linux windows; do
         curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
     fi
     pushd ddev_tarballs
-    $SHACMD -c $(basename "$SHAFILE")
+    ${SHACMD} -c $(basename "$SHAFILE")
     popd >/dev/null
 done
 
 # clone or refresh d8 clone
 mkdir -p sprint
-git clone --quiet https://git.drupal.org/project/drupal.git $STAGING_DIR/sprint/drupal8
-pushd $STAGING_DIR/sprint/drupal8
-cp $REPO_DIR/example.gitignore $STAGING_DIR/sprint/drupal8/.gitignore
+git clone --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8
+pushd ${STAGING_DIR}/sprint/drupal8
+cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
 composer install --quiet
 
 # Copy licenses and COPYING notice.
-cp -r $REPO_DIR/licenses $STAGING_DIR/
-cp $REPO_DIR/COPYING $STAGING_DIR/
+cp -r ${REPO_DIR}/licenses "$STAGING_DIR/"
+cp ${REPO_DIR}/COPYING "$STAGING_DIR/"
 popd >/dev/null
 
-cd $STAGING_DIR
+cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
 # Create tar.xz archive without using xz command, so we can work on all platforms
 pushd sprint && 7z a -ttar -so bogusfilename.tar . | 7z a -si -txz ../sprint.tar.xz && popd >/dev/null
-rm -rf $STAGING_DIR/sprint
+rm -rf ${STAGING_DIR}/sprint
 
-cd $STAGING_DIR_BASE
-tar -czf drupal_sprint_package.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
-zip -9 -r -q drupal_sprint_package.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
-rm -rf $STAGING_DIR_NAME/docker_installs
-tar -czf drupal_sprint_package.no_docker.$QUICKSPRINT_RELEASE.tar.gz $STAGING_DIR_NAME
-zip -9 -r -q drupal_sprint_package.no_docker.$QUICKSPRINT_RELEASE.zip $STAGING_DIR_NAME
+cd ${STAGING_DIR_BASE}
+tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
+zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+rm -rf ${STAGING_DIR_NAME}/docker_installs
+tar -czf drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
+zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
 wait
 
@@ -184,7 +177,7 @@ printf "${GREEN}####
 #
 # Now deleting the staging directory.
 ####${RESET}"
-rm -rf $STAGING_DIR_NAME
+rm -rf ${STAGING_DIR_NAME}
 wait
 printf "${GREEN}
 # Finished
