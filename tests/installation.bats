@@ -28,7 +28,7 @@ function setup {
     command -v perl
     #  passwordless sudo ought to be available, but this command doesn't work on windows.
     # echo junk | sudo -S ls
-    docker run --rm -t -v "$PWD:/tmp/pwd" busybox ls >/dev/null
+    docker run --rm -t -v "/$PWD:/junk" busybox ls //junk >/dev/null
     cd /tmp && touch junk.txt && ln -s junk.txt junk.txt.link
     # Make sure that we have symlink creation capability (Windows 10, developer mode enabled)
     [ -L junk.txt.link ]
