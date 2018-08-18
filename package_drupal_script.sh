@@ -23,10 +23,7 @@ QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
 echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 
-# The version lines on the following few lines need to get changed any time the url are changed on the line below.
-DOCKER_URLS="https://download.docker.com/mac/stable/23751/Docker.dmg https://download.docker.com/win/stable/16762/Docker%20for%20Windows%20Installer.exe"
-DOCKER_VERSION_MAC="18.03.0-ce-mac60"
-DOCKER_VERSION_WIN="18.03.0-ce-win59"
+DOCKER_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe https://download.docker.com/win/stable/DockerToolbox.exe"
 
 RED='\033[31m'
 GREEN='\033[32m'
