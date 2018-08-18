@@ -55,11 +55,7 @@ done
 
 echo ""
 echo "Installing docker images for ddev to use..."
-if [[ "$OS" == "Linux" ]]; then
-    xzcat $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
-else
-    gzip -dc $(ls ddev_tarballs/ddev_docker_images*.tar.xz) | docker load
-fi
+7z x ddev_tarballs/ddev_docker_images.*.tar.xz -so | docker load
 
 TARBALL=""
 case "$OS" in
