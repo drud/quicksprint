@@ -93,7 +93,7 @@ while true; do
                 mkdir -p docker_installs
                 pushd docker_installs >/dev/null
                 for dockerurl in ${DOCKER_URLS}; do
-                    curl -sSL -O ${dockerurl}
+                    curl -sSlL -O ${dockerurl}
                 done
                 popd >/dev/null
                 break;;
