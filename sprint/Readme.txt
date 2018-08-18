@@ -1,25 +1,22 @@
 To access
-Website:   http://sprint-[ts].ddev.local:8080/
-           https://sprint-[ts].ddev.local:8443/
-           (U:admin P:admin)
+Website:     http://sprint-[ts].ddev.local:8080/
+             https://sprint-[ts].ddev.local:8443/
+             (User:admin Pass:admin)
 
-IDE:       http://sprint-[ts].ddev.local:8000/
-           (U:username  P:password)
-
-Mailhog:   http://sprint-[ts].ddev.local:8025/
-
-DB Admin:  http://sprint-[ts].ddev.local:8036/
+Mailhog:     http://sprint-[ts].ddev.local:8025/
+phpMyAdmin:  http://sprint-[ts].ddev.local:8036/
 
 
 Common ddev commands to know:
 
-ddev start                          [start project]
-ddev stop                           [stop project]
-ddev import-db --src=[path to db]   [import database]
+ddev start (-h)                         [start project]
+ddev rm (-h)                            [stop and remove project, nothing lost]
+ddev import-db --src=[path to db] (-h)  [import database]
+ddev help
 
-For full ddev documentation see:
-	https://ddev.readthedocs.io/
+For full ddev documentation see https://ddev.readthedocs.io/
+And support on Stack Overflow: https://stackoverflow.com/tags/ddev
 
 
 To reset this instance and start on a new issue:
-./start_clean.sh                    [note: replaces local changes]
+./start_clean.sh                    [note: overwrites any changes you have made]

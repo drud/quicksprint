@@ -4,19 +4,15 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-#Clear terminal screen so the about text can be read
-clear
-
 RED='\033[31m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
 RESET='\033[0m'
 
 # Check Docker is running
-SERVICE='docker'
-if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+if docker run --rm -t busybox:latest ls >/dev/null
 then
-    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+    printf "docker service running, continuing."
 else
     printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
     exit 1
@@ -63,9 +59,6 @@ ${GREEN}
 # Website:   ${YELLOW}http://sprint-[ts].ddev.local:8080/${GREEN}
 #            ${YELLOW}https://sprint-[ts].ddev.local:8443/${GREEN}
 #            ${YELLOW}(U:admin  P:admin)${GREEN}
-#
-# ${GREEN}IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/${GREEN}
-#            ${YELLOW}(U:username  P:password)${GREEN}
 #
 # ${GREEN}Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
 #

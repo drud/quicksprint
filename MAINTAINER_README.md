@@ -49,8 +49,8 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 ### Using your Sprint Package
 
 * Your users will then download and unarchive the tarball or zipball.
-* Linux and Mac users run install_ddev.sh, Windows users run install_ddev.cmd inside the directory created by the tarball.
-* After installation, Linux and Mac users can start up an instance by cd'ing to ~/Sites/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in Sites/sprint of their user folder.
+* Run install_ddev.sh from the unarchived directory; (Windows users must work in git-bash).
+* After installation, Linux and Mac users can start up an instance by cd'ing to ~/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in /sprint of their user folder.
 * _Windows users must run an additional command_: the start_clean command will tell you what the command is.
 
 At this point the plain vanilla git-checked-out drupal8 HEAD version should be running at http://drupal8.ddev.local.
@@ -59,6 +59,3 @@ At this point the plain vanilla git-checked-out drupal8 HEAD version should be r
 
 **7za.exe**
 https://www.7-zip.org/download.html
-
-**sed.exe and dependencies (libiconv2.dll, libintl3.dll, regex2.dll)**
-http://gnuwin32.sourceforge.net/packages/sed.htm
