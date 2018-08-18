@@ -26,7 +26,7 @@ function setup {
     command -v composer
     #  passwordless sudo ought to be available, but this command doesn't work on windows.
     # echo junk | sudo -S ls
-    docker run -t -v "$HOME:/tmp/home" -p 80:8088 busybox ls >/dev/null
+    docker run -t -v "$PWD:/tmp/pwd" -p 80:8088 busybox ls >//dev/null
 }
 
 

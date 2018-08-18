@@ -4,6 +4,10 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# This makes git-bash actually try to create symlinks.
+# Use developer mode in Windows 10 so this doesn't require admin privs.
+export MSYS=winsymlinks:nativestrict
+
 # Maximise compression
 export XZ_OPT=-9e
 export GZIP=-9
