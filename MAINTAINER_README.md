@@ -59,6 +59,3 @@ At this point the plain vanilla git-checked-out drupal8 HEAD version should be r
 
 **7za.exe**
 https://www.7-zip.org/download.html
-
-**sed.exe and dependencies (libiconv2.dll, libintl3.dll, regex2.dll)**
-http://gnuwin32.sourceforge.net/packages/sed.htm

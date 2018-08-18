@@ -59,7 +59,7 @@ fi
 SHACMD="sha256sum"
 LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/drud/ddev/releases/latest)
 # The releases are returned in the format {"id":3622206,"tag_name":"hello-1.0.0.11",...}, we have to extract the tag_name.
-LATEST_VERSION=$(echo ${LATEST_RELEASE} | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+LATEST_VERSION=$(echo ${LATEST_RELEASE} |   sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
 RELEASE_URL="https://github.com/drud/ddev/releases/download/$LATEST_VERSION"
 
 echo "$LATEST_VERSION" >.ddev_version.txt
