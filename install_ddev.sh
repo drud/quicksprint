@@ -92,16 +92,20 @@ case "$OS" in
 esac
 
 if [ ! -z "$TARBALL" ] ; then
-    tar -xzf "$TARBALL" -C /tmp
+    tar -xzf ${TARBALL} -C /tmp
     chmod ugo+x /tmp/ddev
 
-    printf "Ready to place ddev in your /usr/local/bin.\n"
-
-    if [[ "$BINOWNER" == "$USER" ]]; then
-        mv -f /tmp/ddev /usr/local/bin/
+    if [ -f /usr/local/bin/ddev ] ; then
+        printf "/usr/local/bin/ddev already exists; please update it using your normal technique. Not installing a new version."
     else
-        printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
-        sudo mv /tmp/ddev /usr/local/bin/ddev
+        printf "Ready to place ddev in your /usr/local/bin.\n"
+
+        if [[ "$BINOWNER" == "$USER" ]]; then
+            mv -f /tmp/ddev /usr/local/bin/
+        else
+            printf "${YELLOW}Running \"sudo mv /tmp/ddev /usr/local/bin/\" Please enter your password if prompted.${RESET}\n"
+            sudo mv /tmp/ddev /usr/local/bin/ddev
+        fi
     fi
 fi
 
