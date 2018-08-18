@@ -60,9 +60,6 @@ ${GREEN}
 #            ${YELLOW}https://sprint-[ts].ddev.local:8443/${GREEN}
 #            ${YELLOW}(U:admin  P:admin)${GREEN}
 #
-# ${GREEN}IDE:       ${YELLOW}http://sprint-[ts].ddev.local:8000/${GREEN}
-#            ${YELLOW}(U:username  P:password)${GREEN}
-#
 # ${GREEN}Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
 #
 # DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}

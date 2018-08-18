@@ -164,15 +164,13 @@ rm -rf ${STAGING_DIR_NAME}/docker_installs
 tar -czf drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
-wait
-
 printf "${GREEN}####
 # The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}.
 #
 # Now deleting the staging directory.
 ####${RESET}"
 rm -rf ${STAGING_DIR_NAME}
-wait
+
 printf "${GREEN}
 # Finished
 ####${RESET}

@@ -66,6 +66,7 @@ case "$OS" in
         TARBALL=ddev_tarballs/ddev_macos*.tar.gz
         ;;
     MINGW64_NT-10.0)
+        echo ""
         echo "${YELLOW}PLease use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
