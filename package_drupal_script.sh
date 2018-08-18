@@ -124,13 +124,13 @@ ${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
 # Download the ddev tarball/zipball
-for os in macos linux windows; do
+for item in macos linux windows_installer; do
     pwd
     SUFFIX=tar.gz
-    if [ ${os} == "windows" ] ; then
-        SUFFIX=zip
+    if [ ${item} == "windows_installer" ] ; then
+        SUFFIX=exe
     fi
-    TARBALL="ddev_$os.$LATEST_VERSION.$SUFFIX"
+    TARBALL="ddev_$item.$LATEST_VERSION.$SUFFIX"
     SHAFILE="$TARBALL.sha256.txt"
 
     if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
