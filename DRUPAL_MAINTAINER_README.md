@@ -1,4 +1,4 @@
-# Quicksprint Maintainer Notes
+# Drupal Quicksprint Maintainer Notes
 
 Quicksprint is a basic toolkit to get people started with ddev and a Drupal codebase. This is intended for code sprints where lots of people need to get started with the same environment in a short period of time.
 
@@ -49,12 +49,6 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 
 * Your users will then download and unarchive the tarball or zipball.
 * Run install_ddev.sh from the unarchived directory; (Windows users must work in git-bash).
-* After installation, Linux and Mac users can start up an instance by cd'ing to ~/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in /sprint of their user folder.
-* _Windows users must run an additional command_: the start_clean command will tell you what the command is.
+* After installation, users can start up an instance by cd-ing to ~/sprint and running ./start_sprint.sh. 
 
 At this point the plain vanilla git-checked-out drupal8 HEAD version should be running at http://drupal8.ddev.local.
-
-## Sources for additions
-
-**7za.exe**
-https://www.7-zip.org/download.html
