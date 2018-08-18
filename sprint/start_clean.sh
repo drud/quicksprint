@@ -10,10 +10,9 @@ YELLOW='\033[33m'
 RESET='\033[0m'
 
 # Check Docker is running
-SERVICE='docker'
-if ps ax | grep -v grep | grep -v /Library/PrivilegedHelperTools/com.docker.vmnetd | grep $SERVICE > /dev/null
+if docker run --rm -t busybox:latest ls >/dev/null
 then
-    printf "${GREEN}$SERVICE service running, continuing.\n${RESET}"
+    printf "docker service running, continuing."
 else
     printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
     exit 1
