@@ -113,7 +113,7 @@ if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
     curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
     curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
 fi
-pushd ddev_tarballs
+pushd ddev_tarballs >/dev/null
 ${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
@@ -131,7 +131,7 @@ for item in macos linux windows_installer; do
         curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
         curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
     fi
-    pushd ddev_tarballs
+    pushd ddev_tarballs >/dev/null
     ${SHACMD} -c $(basename "$SHAFILE")
     popd >/dev/null
 done
@@ -139,7 +139,7 @@ done
 # clone or refresh d8 clone
 mkdir -p sprint
 git clone --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8
-pushd ${STAGING_DIR}/sprint/drupal8
+pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
 cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
@@ -154,7 +154,7 @@ cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
 # Create tar.xz archive without using xz command, so we can work on all platforms
-pushd sprint && 7z a -ttar -so bogusfilename.tar . | 7z a -si -txz ../sprint.tar.xz && popd >/dev/null
+pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . | 7z a -si -txz ../sprint.tar.xz >/dev/null && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
