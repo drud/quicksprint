@@ -91,14 +91,11 @@ while true; do
     case ${INSTALL} in
         [Yy]* ) printf "${GREEN}# Downloading docker installers. \n#### \n${RESET}";
                 mkdir -p docker_installs
+                pushd docker_installs >/dev/null
                 for dockerurl in ${DOCKER_URLS}; do
-                    fname=$(basename ${dockerurl})
-                    if [[ ${fname} = *"dmg"* ]]; then
-                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_MAC.dmg" ${dockerurl}
-                    elif [[ ${fname} = *"exe"* ]] ; then
-                        curl -sSL -o "docker_installs/Docker-$DOCKER_VERSION_WIN.exe" ${dockerurl}
-                    fi
+                    curl -sSL -O ${dockerurl}
                 done
+                popd >/dev/null
                 break;;
 
         [Nn]* ) printf "${GREEN}# Continuing script without downloading Docker installers. \n### \n${RESET}"; 
