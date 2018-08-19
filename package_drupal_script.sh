@@ -48,7 +48,7 @@ fi
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
     printf "${RED}The staging directory $STAGING_DIR already has files. Deleting them and recreating everything.${RESET}"
     rm -rf "$STAGING_DIR"
-    rm -f $STAGING_DIR_BASE/drupal_sprint_package${QUICKSPRINT_RELEASE}.*
+    rm -f $STAGING_DIR_BASE/drupal_sprint_package.*.${QUICKSPRINT_RELEASE}.*
 fi
 
 SHACMD="sha256sum"
