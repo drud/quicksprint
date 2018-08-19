@@ -149,7 +149,7 @@ cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
 # Create tar.xz archive without using xz command, so we can work on all platforms
-pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . | 7z a -si -txz ../sprint.tar.xz >/dev/null && popd >/dev/null
+pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . 2>/dev/null | 7z a -si -txz ../sprint.tar.xz >/dev/null && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
