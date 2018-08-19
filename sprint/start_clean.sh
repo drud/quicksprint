@@ -64,6 +64,8 @@ ${GREEN}
 #
 # DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
 #
+# Chat:      ${YELLOW}https://drupal.org/chat to join Drupal Slack or drupalchat.eu!${GREEN}
+#
 # See ${YELLOW}Readme.txt${GREEN} for more information.
 ####
 ${RESET}
