@@ -14,7 +14,7 @@ export DDEV_INSTALL_DIR=~/tmp/quicksprintbin
 # Add /usr/local/bin to path for git-bash, where it may not exist.
 export PATH="$PATH:/usr/local/bin"
 
-tests/sane_testbot.sh || ( echo "sane_testbot.sh failed, test machine is not ready for duty" && exit 1 )
+tests/sanetestbot.sh || ( echo "sanetestbot.sh failed, test machine is not ready for duty" && exit 1 )
 
 function cleanup {
     rm -rf /tmp/drupal_sprint_package

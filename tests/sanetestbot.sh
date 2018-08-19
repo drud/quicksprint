@@ -4,7 +4,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-echo "sane_testbot.sh: Check to see if test machine has what it needs"
+echo "sanetestbot.sh: Check to see if test machine has what it needs"
 
 # brew install jq p7zip bats-core composer
 # choco install -y jq 7zip composer zip (gd and curl must be enabled in /c/tools/php72/php.ini)
