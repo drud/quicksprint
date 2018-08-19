@@ -8,7 +8,6 @@ set -o nounset
 UNTAR_LOCATION=/tmp
 export SPRINTDIR=~/sprint
 export QUICKSPRINT_RELEASE=$(cat .quicksprint_release.txt)
-SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 export DDEV_INSTALL_DIR=~/tmp/quicksprintbin
 
 tests/sane_testbot.sh || ( echo "sane_testbot.sh failed, test machine is not ready for duty" && exit 1 )
@@ -18,6 +17,8 @@ tests/sane_testbot.sh || ( echo "sane_testbot.sh failed, test machine is not rea
 rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
 
 echo n | ./package_drupal_script.sh || ( echo "package_drupal_script.sh failed" && exit 2 )
+# SOURCE_TARBALL_LOCATION isn't valid until package_drupal_script has run.
+SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 
 # Untar source tarball
 tar -C "$UNTAR_LOCATION" -zxf "$SOURCE_TARBALL_LOCATION"

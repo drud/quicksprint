@@ -16,13 +16,16 @@ SPRINTNAME="sprint-${TIMESTAMP}"
 
 # Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
 mkdir -p ${SPRINTNAME}
-echo "Untarring sprint.tar.xz"
+echo "Untarring sprint.tar.xz" >&2
 tar xpf sprint.tar.xz -C ${SPRINTNAME}
 
 #Update ddev project name
 perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" ${SPRINTNAME}/*.{txt,sh} ${SPRINTNAME}/.ddev/config.yaml
 
+# Next line is (only) stdout output, lets caller know the name of the project created
 printf ${SPRINTNAME}
+
+# And this goes to stderr
 printf "${GREEN}
 ######
 #

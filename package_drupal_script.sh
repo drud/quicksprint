@@ -48,12 +48,7 @@ fi
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
     printf "${RED}The staging directory $STAGING_DIR already has files. Deleting them and recreating everything.${RESET}"
     rm -rf "$STAGING_DIR"
-    if [ -e "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz" ] ; then
-        rm "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz"
-    fi
-    if [ -e "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip" ]; then
-        rm "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip"
-    fi
+    rm -f $STAGING_DIR_BASE/drupal_sprint_package${QUICKSPRINT_RELEASE}.*
 fi
 
 SHACMD="sha256sum"
@@ -158,8 +153,10 @@ pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . | 7z a -si -txz ..
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
-tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
-zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+if [ "$INSTALL" != "n" ] ; then
+    tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
+    zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+fi
 rm -rf ${STAGING_DIR_NAME}/installs
 tar -czf drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
@@ -169,7 +166,8 @@ printf "${GREEN}####
 #
 # Now deleting the staging directory.
 ####${RESET}"
-rm -rf ${STAGING_DIR_NAME}
+# DEBUG: Don't forget to turn this back on.
+# rm -rf ${STAGING_DIR_NAME}
 
 printf "${GREEN}
 # Finished

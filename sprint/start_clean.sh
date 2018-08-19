@@ -21,7 +21,7 @@ fi
 printf "
 ${GREEN}
 ####
-# This simple script starts a Drupal 8 checked out from head
+# This script starts a Drupal 8 instance checked out from head
 # running in ddev with a fresh database.
 #
 # Make sure you've uploaded any patches from last issue
@@ -44,11 +44,7 @@ done
 ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
 
 ddev start
-ddev exec git fetch
-ddev exec git reset --hard origin/8.7.x
-ddev exec composer install
-ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db:3306/db --site-name="Drupal Sprinting"
-ddev exec drush cr
+time ddev exec bash -c 'git fetch && git reset --hard origin/8.7.x && composer install && drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting" && drush cr'
 ddev describe
 
 printf "
