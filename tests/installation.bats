@@ -19,7 +19,7 @@ function setup {
 function teardown {
     ddev rm -R --omit-snapshot ${SPRINT_NAME}
     if [ ! -z "${SPRINTDIR}" -a ! -z "${SPRINT_NAME}" -a -d ${SPRINTDIR}/${SPRINT_NAME} ] ; then
-        rm -rf ${SPRINTDIR}/${SPRINT_NAME};
+        rm -rf ${SPRINTDIR}/${SPRINT_NAME}
     fi
 }
 
