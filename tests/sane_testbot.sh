@@ -13,7 +13,7 @@ echo "sane_testbot.sh: Check to see if test machine has what it needs"
 
 DISK_AVAIL=$(df -k . | awk '/[0-9]%/ { gsub(/%/, ""); print $5}')
 if [ ${DISK_AVAIL} -ge 95 ] ; then
-    "echo Disk usage is ${DISK_AVAIL}% on $(hostname), not usable";
+    echo "Disk usage is ${DISK_AVAIL}% on $(hostname), not usable";
     exit 1;
 fi
 
