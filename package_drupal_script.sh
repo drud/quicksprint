@@ -61,7 +61,7 @@ echo "$LATEST_VERSION" >.ddev_version.txt
 
 # Install the beginning items we need in the kit.
 mkdir -p ${STAGING_DIR}
-cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.sh ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install.sh ${STAGING_DIR}
 
 
 # macOS/Darwin has a oneoff/weird shasum command.

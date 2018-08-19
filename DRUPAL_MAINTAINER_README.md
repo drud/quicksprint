@@ -49,7 +49,7 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 ### Using your Sprint Package
 
 * Your users will then download and unarchive the tarball or zipball.
-* Run install_ddev.sh from the unarchived directory; (Windows users must work in git-bash).
+* Run install.sh from the unarchived directory; (Windows users must work in git-bash).
 * After installation, users can start up an instance by cd-ing to ~/sprint and running ./start_sprint.sh. 
 
 At this point the plain vanilla git-checked-out drupal8 HEAD version should be running at http://drupal8.ddev.local.

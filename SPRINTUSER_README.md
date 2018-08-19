@@ -82,8 +82,8 @@ Linux | Docker CE | Your preferred terminal application
 
 1. Change directory to the drupal_sprint_package directory using the `cd` command:
    * Example: Run `cd ~/Desktop/drupal_sprint_package`
-2. Run the `install_ddev.sh` command and follow the prompts.
-   * Example: `./install_ddev.sh`
+2. Run the `install.sh` command and follow the prompts.
+   * Example: `./install.sh`
 3. Follow the instructions that print out at the end of the previous command to create a "sprint instance".
    * Example: `cd ~/sprint` and `./start_sprint.sh`.
 4. Follow the instructions that print out at the end of the `./start_sprint.sh` command:
