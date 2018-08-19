@@ -19,23 +19,6 @@ function setup {
 # choco install -y jq 7zip composer zip (gd and curl must be enabled in /c/tools/php72/php.ini)
 # apt-get install jq p7zip-full
 # git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
-# Passwordless sudo required.
-# Developer mode enabled.
-@test "check for prereqs (docker etc)" {
-    command -v curl
-    command -v jq
-    command -v 7z
-    command -v composer
-    command -v perl
-    #  passwordless sudo ought to be available, but this command doesn't work on windows.
-    # echo junk | sudo -S ls
-    docker run --rm -t -v "/$PWD:/junk" busybox ls //junk >/dev/null
-    # Will try to get this in later.
-    # cd /tmp && rm -f junk.txt junk.txt.link && touch junk.txt && ln -s junk.txt junk.txt.link
-    # Make sure that we have symlink creation capability (Windows 10, developer mode enabled)
-    # [ -L junk.txt.link ]
-}
-
 
 @test "untar and run drupal_sprint_package" {
     rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
