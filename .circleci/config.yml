@@ -34,7 +34,7 @@ jobs:
       - store_artifacts:
           path: /artifacts
           name: Artifact storage
-      - run: ./test_drupal_quicksprint.sh
+      - run: tests/test_drupal_quicksprint.sh
 
 workflows:
   version: 2

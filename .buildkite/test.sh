@@ -8,4 +8,4 @@ echo "--- buildkite building at $(date) on $(hostname) for OS=$(go env GOOS) in 
 echo "--- package_drupal_script.sh"
 echo "n" | ./package_drupal_script.sh
 echo "--- test_drupal_quicksprint.sh"
-./test_drupal_quicksprint.sh
+tests/test_drupal_quicksprint.sh

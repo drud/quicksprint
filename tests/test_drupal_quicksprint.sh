@@ -5,6 +5,7 @@ set -o pipefail
 set -o nounset
 
 # This should be run from the repo root
+
 export PATH="/usr/local/bin:$PATH"
 bats tests
 
