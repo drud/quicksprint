@@ -11,7 +11,6 @@ This directory contains tools to get you started contributing to Drupal 8:
 
 * A computer with 8gb memory or greater.
 * Windows 7 or higher, MacOS Sierra or higher or a recent/stable Linux distribution.
-* [Git for Windows](https://gitforwindows.org/): git-bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful guide to git for Drpal](https://www.drupal.org/documentation/git).
 * A robust code editor such as Visual Studio Code, Atom, PhpStorm, Netbeans, vim or emacs (this may be provided as part of this package).
 
 **⚠️ You can still install and contribute to Drupal even without these requirements using [Drupal's quick-start command](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**!
@@ -61,6 +60,10 @@ Find the Docker installer for your Operating System underneath the **installs** 
 #### 3.2 ddev
 
 **⚠️ Windows users**: Find the ddev installer underneath the **ddev_installs** directory.
+
+#### 3.3 Git
+
+**⚠️ Windows users**:  Git Bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful guide to git for Drupal](https://www.drupal.org/documentation/git). Find the Git-2.18.0-64-bit.exe installer underneath the **installs** directory.
 
 <a name="open-terminal"></a>
 ### 4. Open Terminal
