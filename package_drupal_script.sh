@@ -61,7 +61,7 @@ echo "$LATEST_VERSION" >.ddev_version.txt
 
 # Install the beginning items we need in the kit.
 mkdir -p ${STAGING_DIR}
-cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.sh ${STAGING_DIR}
 
 
 # macOS/Darwin has a oneoff/weird shasum command.
@@ -70,7 +70,7 @@ if [ "$OS" = "Darwin" ]; then
 fi
 
 if ! docker --version >/dev/null 2>&1; then
-    printf "${YELLOW}Docker is required to use this package. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
+    printf "${YELLOW}Docker is required to use this package. Please install docker before attempting to use ddev.${RESET}\n"
 fi
 
 cd ${STAGING_DIR}
@@ -78,7 +78,7 @@ cd ${STAGING_DIR}
 printf "
 ${GREEN}
 ####
-# Shall we package docker and other installers (Git For Windows, etc) with the archive?
+# Package docker and other installers (Git For Windows, etc)?
 #### \n${RESET}"
 
 while true; do
@@ -113,7 +113,7 @@ ${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
 # Download the ddev tarball/zipball
-for item in macos linux windows_installer; do
+for item in macos linux windows windows_installer; do
     pwd
     SUFFIX=tar.gz
     if [ ${item} == "windows_installer" ] ; then

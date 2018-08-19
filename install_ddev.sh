@@ -19,7 +19,7 @@ DDEV_VERSION=$(cat ./.ddev_version.txt)
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
-    printf "docker service running, continuing."
+    printf "docker is running, continuing."
 else
     printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
     exit 1

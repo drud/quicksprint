@@ -4,6 +4,7 @@
 # bats tests
 
 function setup {
+    echo "# setup beginning" >&3
     export SPRINTDIR=~/sprint
     # DRUD_NONINTERACTIVE causes ddev not to try to use sudo and add the hostname
     export DRUD_NONINTERACTIVE=true
@@ -14,26 +15,32 @@ function setup {
 
     cd ${SPRINTDIR} && export SPRINT_NAME=$(./start_sprint.sh)
     cd ${SPRINTDIR}/${SPRINT_NAME} && echo y | ./start_clean.sh
+    echo "# setup complete" >&3
 }
 
 function teardown {
+    echo "# teardown beginning" >&3
+
     ddev rm -R --omit-snapshot ${SPRINT_NAME}
     if [ ! -z "${SPRINTDIR}" -a ! -z "${SPRINT_NAME}" -a -d ${SPRINTDIR}/${SPRINT_NAME} ] ; then
         rm -rf ${SPRINTDIR}/${SPRINT_NAME}
     fi
+    echo "# teardown complete" >&3
+
 }
 
 @test "check ddev project status and router status, check http status" {
-
-    [ -f ${SPRINTDIR}/SPRINTUSER_README.md -a -f ${SPRINTDIR}/COPYING -a -d ${SPRINTDIR}/licenses ]
     DESCRIBE=$(cd ${SPRINTDIR}/${SPRINT_NAME} && ddev describe -j)
+
+    echo "# Testing router status" >&3
     ROUTER_STATUS=$(echo ${DESCRIBE} | jq -r ".raw.router_status" )
     [ "$ROUTER_STATUS" = "healthy" ]
 
+    echo "# Testing project status" >&3
     STATUS=$(echo ${DESCRIBE} | jq -r ".raw.status")
     [ "$STATUS" = "running" ]
 
-    DESCRIBE=$(cd ${SPRINTDIR}/${SPRINT_NAME} && ddev describe -j)
+    echo "# Testing curl reachability" >&3
     NAME=$(echo ${DESCRIBE} | jq -r ".raw.name")
     HTTP_PORT=$(echo ${DESCRIBE} | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"

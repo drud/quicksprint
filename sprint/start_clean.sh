@@ -12,7 +12,7 @@ RESET='\033[0m'
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
-    printf "docker service running, continuing."
+    printf "docker is running, continuing."
 else
     printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
     exit 1
@@ -44,7 +44,8 @@ done
 ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
 
 ddev start
-time ddev exec bash -c 'git fetch && git reset --hard origin/8.7.x && composer install && drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting" && drush cr'
+ddev exec bash -c 'git fetch && git reset --hard origin/8.7.x && composer install && drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting" && drush cr'
+printf "${RESET}"
 ddev describe
 
 printf "
