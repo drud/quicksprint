@@ -6,6 +6,7 @@ set -o nounset
 
 # This test script should be run from the repo root
 UNTAR_LOCATION=/tmp
+UNTARRED_PACKAGE=$UNTAR_LOCATION/drupal_sprint_package
 export SPRINTDIR=~/sprint
 export QUICKSPRINT_RELEASE=$(cat .quicksprint_release.txt)
 export DDEV_INSTALL_DIR=~/tmp/quicksprintbin
@@ -24,7 +25,7 @@ trap cleanup EXIT
 
 # Clean up any previous existing stuff
 (chmod -R ugo+w "$SPRINTDIR/" && rm -rf  ${SPRINTDIR}/sprint-2* ) || true
-rm -rf "$UNTAR_LOCATION/drupal_sprint_package"
+rm -rf "$UNTARRED_PACKAGE"
 
 echo n | ./package_drupal_script.sh || ( echo "package_drupal_script.sh failed" && exit 2 )
 # SOURCE_TARBALL_LOCATION isn't valid until package_drupal_script has run.
@@ -33,13 +34,13 @@ SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.${QUICKSPRINT_RELE
 # Untar source tarball
 tar -C "$UNTAR_LOCATION" -zxf $SOURCE_TARBALL_LOCATION
 
-if [ ! -f ${SPRINTDIR}/SPRINTUSER_README.md -o ! -f ${SPRINTDIR}/COPYING -o ! -d ${SPRINTDIR}/licenses ]; then
-    echo "Packaged documents are missing from sprint package"
+if [ ! -f "$UNTARRED_PACKAGE/SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/COPYING" -o ! -d "$UNTARRED_PACKAGE/licenses" ]; then
+    echo "Packaged documents are missing from sprint package (in $UNTARRED_PACKAGE)"
     exit 3
 fi
 
 # Run install_ddev.sh
-(cd "${UNTAR_LOCATION}/drupal_sprint_package" && printf 'y\ny\n' | ./install_ddev.sh) || ( echo "Failed to install_ddev.sh" && exit 4 )
+(cd "$UNTARRED_PACKAGE" && printf 'y\ny\n' | ./install_ddev.sh) || ( echo "Failed to install_ddev.sh" && exit 4 )
 
 # Stop any running ddev instances, if we can
 ddev rm -a
