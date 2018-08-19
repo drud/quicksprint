@@ -11,6 +11,12 @@ echo "sane_testbot.sh: Check to see if test machine has what it needs"
 # apt-get install jq p7zip-full
 # git clone git://github.com/bats-core/bats-core; cd bats-core; git checkout v1.1.0; sudo ./install.sh /usr/local
 
+DISK_AVAIL=$(df -k . | awk '/[0-9]%/ { gsub(/%/, ""); print $5}')
+if [ ${DISK_AVAIL} -ge 95 ] ; then
+    "echo Disk usage is ${DISK_AVAIL}% on $(hostname), not usable";
+    exit 1;
+fi
+
 for item in curl jq 7z composer perl bats; do
     command -v $item >/dev/null || ( echo "$item is not installed" && exit 2 )
 done

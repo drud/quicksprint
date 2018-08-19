@@ -10,6 +10,9 @@ export SPRINTDIR=~/sprint
 export QUICKSPRINT_RELEASE=$(cat .quicksprint_release.txt)
 export DDEV_INSTALL_DIR=~/tmp/quicksprintbin
 
+# Add /usr/local/bin to path for git-bash, where it may not exist.
+export PATH="$PATH:/usr/local/bin"
+
 tests/sane_testbot.sh || ( echo "sane_testbot.sh failed, test machine is not ready for duty" && exit 1 )
 
 # Clean up any previous existing stuff
