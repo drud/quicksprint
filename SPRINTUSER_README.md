@@ -1,32 +1,93 @@
-# Drupal 8 Sprint Package
+# Drupal 8 Contribution Package
 
-This directory contains tools to get you going at a Drupal 8 sprint:
+This directory contains tools to get you started contributing to Drupal 8:
 
-* Drupal 8, already cloned with git (`git clone git://git.drupal.org/project/drupal.git`)
-* Docker (you must install it yourself; install images are provided in the installs directory). Instructions and troubleshooting information at https://ddev.readthedocs.io/en/latest/users/docker_installation/
-* Git For Windows (for Windows Users)
+* Drupal 8, already cloned with git
+* Docker CE
 * DDEV-Local (ddev) development environment
+* Additional tools for Windows
 
-Prerequisites:
+## Prerequisites
 
-**Windows Prerequisites:**
-* Windows 10 Professional/Enterprise: Please use Docker for Windows (bundled); Hyper-V must be enabled. If you don't have these, the Docker install process will typically prompt for the settings. 
-* Windows 10 Home (and other versions like Server): Please use Docker Toolbox (bundled). You must start up Docker Toolbox using the "Docker Toolbox Quickstart"
-* [Git for Windows](https://gitforwindows.org/): git-bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful git setup info at github](https://help.github.com/articles/set-up-git/). 
-* ddev Windows Installer (bundled)
+* A computer with 8gb memory or greater.
+* Windows 7 or higher, MacOS El Capitan or higher or a recent/stable Linux distribution.
+* A robust code editor such as Visual Studio Code, Atom, PhpStorm or Netbeans (this may be provided as part of this package).
 
-**macOS and Linux Prerequisites**
-* Docker-for-Mac (bundled) or for Linux. See [detailed instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/)
+**⚠️ You can still install and contribute to Drupal even without these requirements using [Drupal's quick-start command](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**!
 
-**Installation and Startup:**
+## Getting Started
 
-1. Install Docker CE if you don't already have it
-  - **macOS/Windows**: There may be installers supplied with this package
-  - **Linux**: See [Linux instructions](https://docs.docker.com/install/#docker-ce)
-2. Start Docker (it must be running to install ddev)
-3. Install DDEV-Local:
-  - Run install_ddev.sh via terminal (git-bash on Windows) from the directory where this SPRINTUSER_README.md is with `./install_ddev.sh` - On Windows also run the ddev_windows_installer bundled.
-4. Create Drupal 8 instance to use during sprint:
-  - cd to `~/sprint` and run `./start_sprint.sh`
-5. There should be a new sprint folder named `sprint-YYYYMMDD-HHMM` (with today's date and the time you ran `start_sprint`). Start the Drupal environment by using cd to move to the dated sprint folder, and run `./start_clean.sh`
-6. After start_clean is finished, it will provide you with a set of URLs and further instructions for using your sprint environment.
+1. [Get The Files](#get-the-files)
+2. [Extract drupal_sprint_package](#extract-files)
+3. [Install Docker and Other Requirements](#install)
+4. [Open Terminal](#open-terminal)
+5. [Install Contribution Tools](#install-tools)
+
+<a name="get-the-files"></a>
+### 1. Get The Files
+
+* USB Drive - Copy drupal_sprint_package-RELEASE.zip and Docker installer for your Operating System from the USB drive to your Desktop.
+* ResilioSync - Find the folder/directory that was downloaded and copy its contents to your Desktop.
+* GitHub - Download drupal_sprint_package-RELEASE.zip from https://github.com/drud/quicksprint/releases.
+
+<a name="extract-files"></a>
+### 2. Extract drupal_sprint_package directory
+
+Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
+
+<a name="install"></a>
+### 3. Install Docker and Other Requirements
+
+#### 3.1 Docker CE or Docker Toolbox
+
+Find the Docker installer for your Operating System underneath the **installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
+
+ Operating System | Docker Version | Installer
+ ---------------- | -------------- | -----------------
+ Windows 10 Pro, Enterprise (HyperV enabled) | Docker CE | "Docker for Windows Installer.exe"
+ Windows 10 Home | Docker Toolbox | DockerToolbox-VERSION-ce.exe
+ Windows 7 (or no HyperV enabled)| Docker Toolbox | DockerToolbox-VERSION-ce.exe
+ MacOS | Docker CE | Docker.dmg
+ Linux | Docker CE, docker-compose | See [Linux instructions](https://docs.docker.com/install/#docker-ce)
+
+**⚠️ Docker Toolbox users**: Please install "Git for Windows" and "VirtualBox" as needed during the install process.
+
+**⚠️ Docker CE only** Start Docker
+
+**⚠️ Docker CE only** Open Docker preferences and set docker memory allocation to 3.0GB or greater in the Advanced section. This is required to start containers.
+
+#### 3.2 ddev
+
+**⚠️ Windows users**: Find the ddev installer underneath the **ddev_installs** directory.
+
+#### 3.3 Git
+
+**⚠️ Windows users**:  Git Bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful guide to git for Drupal](https://www.drupal.org/documentation/git). Find the Git-2.18.0-64-bit.exe installer underneath the **installs** directory.
+
+<a name="open-terminal"></a>
+### 4. Open Terminal
+
+Open your Terminal application:
+
+Operating System | Docker Version | Program
+---------------- | -------------- | ----------------
+Windows 10 Pro, Enterprise (HyperV enabled) | Docker CE | Git Bash
+Windows 10 Home | Docker Toolbox | Docker Quickstart Terminal
+Windows 7 (no HyperV support) | Docker Toolbox | Docker Quickstart Terminal
+MacOS | Docker CE | Terminal.app or your preferred terminal application
+Linux | Docker CE | Your preferred terminal application
+
+<a name="install-tools"></a>
+### 5. Install Contribution Tools
+
+1. Change directory to the drupal_sprint_package directory using the `cd` command:
+   * Example: Run `cd ~/Desktop/drupal_sprint_package`
+2. Run the `install_ddev.sh` command and follow the prompts.
+   * Example: `./install_ddev.sh`
+3. Follow the instructions that print out at the end of the previous command to create a "sprint instance".
+   * Example: `cd ~/sprint` and `./start_sprint.sh`.
+4. Follow the instructions that print out at the end of the `./start_sprint.sh` command:
+   1. Change directory into the newly created directory named `sprint-YYYYMMDD-HHMM` (with today's date and the time you ran `start_sprint`).
+   2. Run `./start_clean.sh` to start your Drupal environment!
+
+This may take a few minutes and will provide you with a set of URLs and further instructions for using your contribution environment.

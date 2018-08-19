@@ -5,6 +5,7 @@ Website:     http://sprint-[ts].ddev.local:8080/
 
 Mailhog:     http://sprint-[ts].ddev.local:8025/
 phpMyAdmin:  http://sprint-[ts].ddev.local:8036/
+Chat:        https://drupal.org/chat to join Drupal Slack or drupalchat.eu!
 
 
 Common ddev commands to know:
