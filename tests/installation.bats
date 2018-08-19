@@ -10,15 +10,15 @@ function setup {
     # Provide DHOST to figure out the docker host addr for curl
     DHOST=127.0.0.1
     # Extract the IP address we need from DOCKER_HOST, which is formatted like tcp://192.168.99.100:2376
-    if [ ! -z "$DOCKER_HOST" ]; then DHOST="$(echo $DOCKER_HOST | perl -p -e 's/(tcp:\/\/|:[0-9]+$)//g')"; fi
+    if [ ! -z "${DOCKER_HOST:-}" ]; then DHOST="$(echo ${DOCKER_HOST} | perl -p -e 's/(tcp:\/\/|:[0-9]+$)//g')"; fi
 
-    cd $SPRINTDIR && bash -x ./start_sprint.sh
-    cd $SPRINTDIR/sprint-2* && echo y | ./start_clean.sh
+    cd ${SPRINTDIR} && export SPRINT_NAME=$(./start_sprint.sh)
+    cd ${SPRINTDIR}/${SPRINT_NAME} && echo y | ./start_clean.sh
 }
 
 
 @test "check ddev project status and router status" {
-    DESCRIBE=$(cd $SPRINTDIR/sprint-2* && ddev describe -j)
+    DESCRIBE=$(cd ${SPRINTDIR}/${SPRINT_NAME} && ddev describe -j)
     ROUTER_STATUS=$(echo $DESCRIBE | jq -r ".raw.router_status" )
     [ "$ROUTER_STATUS" = "healthy" ]
 
@@ -27,7 +27,7 @@ function setup {
 }
 
 @test "check http status of project for 200" {
-    DESCRIBE=$(cd $SPRINTDIR/sprint-2* && ddev describe -j)
+    DESCRIBE=$(cd ${SPRINTDIR}/${SPRINT_NAME} && ddev describe -j)
     NAME=$(echo $DESCRIBE | jq -r ".raw.name")
     HTTP_PORT=$(echo $DESCRIBE | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"
