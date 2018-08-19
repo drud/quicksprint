@@ -10,8 +10,8 @@ This directory contains tools to get you started contributing to Drupal 8:
 ## Prerequisites
 
 * A computer with 8gb memory or greater.
-* Windows 7 or higher, MacOS Sierra or higher or a recent/stable Linux distribution.
-* A robust code editor such as Visual Studio Code, Atom, PhpStorm, Netbeans, vim or emacs (this may be provided as part of this package).
+* Windows 7 or higher, MacOS El Capitan or higher or a recent/stable Linux distribution.
+* A robust code editor such as Visual Studio Code, Atom, PhpStorm or Netbeans (this may be provided as part of this package).
 
 **⚠️ You can still install and contribute to Drupal even without these requirements using [Drupal's quick-start command](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**!
 
@@ -33,8 +33,7 @@ This directory contains tools to get you started contributing to Drupal 8:
 <a name="extract-files"></a>
 ### 2. Extract drupal_sprint_package directory
 
-1. Extract the drupal_sprint_package-RELEASE.zip file to your Desktop. It is important that these files exist within your "user directory".
-2. Browse to this directory.
+Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
 
 <a name="install"></a>
 ### 3. Install Docker and Other Requirements

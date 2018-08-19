@@ -56,15 +56,15 @@ ${GREEN}
 ####
 # Use the following URL's to access your site:
 #
-# Website:   ${YELLOW}http://sprint-[ts].ddev.local:8080/${GREEN}
-#            ${YELLOW}https://sprint-[ts].ddev.local:8443/${GREEN}
-#            ${YELLOW}(U:admin  P:admin)${GREEN}
+# Website:    ${YELLOW}http://sprint-[ts].ddev.local:8080/${GREEN}
+#             ${YELLOW}https://sprint-[ts].ddev.local:8443/${GREEN}
+#             ${YELLOW}(U:admin  P:admin)${GREEN}
 #
-# ${GREEN}Mailhog:   ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
+# ${GREEN}Mailhog:    ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
 #
-# DB Admin:  ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
+# phpMyAdmin: ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
 #
-# Chat:      ${YELLOW}https://drupal.org/chat to join Drupal Slack or drupalchat.eu!${GREEN}
+# Chat:       ${YELLOW}https://drupal.org/chat to join Drupal Slack or drupalchat.eu!${GREEN}
 #
 # See ${YELLOW}Readme.txt${GREEN} for more information.
 ####
