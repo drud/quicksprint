@@ -1,4 +1,4 @@
-# Quicksprint Maintainer Notes
+# Drupal Quicksprint Maintainer Notes
 
 Quicksprint is a basic toolkit to get people started with ddev and a Drupal codebase. This is intended for code sprints where lots of people need to get started with the same environment in a short period of time.
 
@@ -20,12 +20,11 @@ Quicksprint packages are built nightly and on tagged releases. We recommend down
 
 ## Distributing a Sprint Package
 
-There are several ways to distribute your sprint package such as through a peer-to-peer tool such as ResilioSync, the Drud Wi-Fi Access Point, USB flash drives or downloading from the releases page. This will depend on the size of your sprint.
+There are several ways to distribute your sprint package such as through a peer-to-peer tool such as ResilioSync, USB flash drives or downloading from the releases page. This will depend on the size of your sprint.
 
 Method      | Sprint Size | Bandwidth | Other Considerations
 ----------  | ----------- | --------- | ----------------------
 ResilioSync | 100+ users  | N/A       | ResilioSync is not screen reader friendly and may be conflict with Firewall/Access Point security settings. Theoretically everyone would be able to get the files at the same time.
-Drud Wi-Fi  | <70 users   | N/A       | Requires access to the Drud Wi-Fi AP.
 USB drives  | varies      | N/A       | 30+ USB flash drives will work for large sprints, but people will be waiting in line.
 Download    | 25 users    | 5 m/s     | Sprint venue may not be able to support large number of users pulling releases from github.
 
@@ -50,12 +49,6 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 
 * Your users will then download and unarchive the tarball or zipball.
 * Run install_ddev.sh from the unarchived directory; (Windows users must work in git-bash).
-* After installation, Linux and Mac users can start up an instance by cd'ing to ~/sprint and running start_sprint.sh. Windows users run start_sprint.cmd in /sprint of their user folder.
-* _Windows users must run an additional command_: the start_clean command will tell you what the command is.
+* After installation, users can start up an instance by cd-ing to ~/sprint and running ./start_sprint.sh. 
 
 At this point the plain vanilla git-checked-out drupal8 HEAD version should be running at http://drupal8.ddev.local.
-
-## Sources for additions
-
-**7za.exe**
-https://www.7-zip.org/download.html
