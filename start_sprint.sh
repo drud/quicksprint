@@ -12,15 +12,17 @@ YELLOW='\033[33m'
 RESET='\033[0m'
 OS=$(uname)
 TIMESTAMP=$(date +"%Y%m%d-%H%M")
+SPRINTNAME="sprint-${TIMESTAMP}"
 
 # Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
-mkdir -p sprint-${TIMESTAMP}
+mkdir -p ${SPRINTNAME}
 echo "Untarring sprint.tar.xz"
-tar xpf sprint.tar.xz -C sprint-${TIMESTAMP}
+tar xpf sprint.tar.xz -C ${SPRINTNAME}
 
 #Update ddev project name
-perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" sprint-${TIMESTAMP}/*.{txt,sh} sprint-${TIMESTAMP}/.ddev/config.yaml
+perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" ${SPRINTNAME}/*.{txt,sh} ${SPRINTNAME}/.ddev/config.yaml
 
+printf ${SPRINTNAME}
 printf "${GREEN}
 ######
 #
@@ -28,9 +30,9 @@ printf "${GREEN}
 # execute the following commands in terminal 
 # to start a Drupal 8 instance to sprint on:
 #
-# ${YELLOW}cd sprint-${TIMESTAMP}${GREEN}
+# ${YELLOW}cd ${SPRINTNAME}${GREEN}
 # ${YELLOW}./start_clean.sh${GREEN}
 #
 ######
 ${RESET}
-"
+" >&2

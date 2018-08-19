@@ -14,6 +14,7 @@ USER=$(whoami)
 SHACMD=""
 FILEBASE=""
 CURRENT_DIR=$PWD
+DDEV_VERSION=$(cat ./.ddev_version.txt)
 
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
@@ -46,9 +47,9 @@ echo "Installing docker images for ddev to use..."
 if [ $OS = "MINGW64_NT-10.0" ] ; then PATH="./bin/windows:$PATH"; fi
 
 
-if command -v 7z; then
-    7z x ddev_tarballs/ddev_docker_images.*.tar.xz -so | docker load
-elif command -v xzcat; then
+if command -v 7z >/dev/null; then
+    7z x ddev_tarballs/ddev_docker_images.${DDEV_VERSION}.tar.xz -so | docker load
+elif command -v xzcat >/dev/null; then
     xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
 elif [[ "$OS" == "Darwin" ]]; then
     gzip -dc ls ddev_tarballs/ddev_docker_images*.tar.xz | docker load

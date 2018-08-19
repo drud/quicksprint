@@ -144,11 +144,11 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
 composer install --quiet
+popd >/dev/null
 
 # Copy licenses and COPYING notice.
-cp -r ${REPO_DIR}/licenses "$STAGING_DIR/"
-cp ${REPO_DIR}/COPYING "$STAGING_DIR/"
-popd >/dev/null
+cp -r ${REPO_DIR}/licenses ${REPO_DIR}/COPYING "$STAGING_DIR/"
+cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DIR/sprint"
 
 cd ${STAGING_DIR}
 
