@@ -24,7 +24,7 @@ jobs:
           no_output_timeout: "20m"
       - run:
           command: |
-            sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package* $ARTIFACTS
+            sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.$(cat .quicksprint_release.txt).{tar.gz,zip}  $ARTIFACTS
             cd $ARTIFACTS
             for item in *.tar.gz *.zip; do
               sha256sum $item > $item.sha256.txt

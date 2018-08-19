@@ -166,8 +166,7 @@ printf "${GREEN}####
 #
 # Now deleting the staging directory.
 ####${RESET}"
-# DEBUG: Don't forget to turn this back on.
-# rm -rf ${STAGING_DIR_NAME}
+rm -rf ${STAGING_DIR_NAME}
 
 printf "${GREEN}
 # Finished
