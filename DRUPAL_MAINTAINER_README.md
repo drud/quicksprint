@@ -36,6 +36,7 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 2. Add the files to a flash drive.
     * (MacOS only) Remove hidden directories added by Spotlight and Finder.
 3. Determine the total file size used on the device: `du /path/to/volume` so you know what the count parameter should be in the dd command below.
+    * **⚠️ Warning** If you are _overwriting_ an existing package on a flash drive then this number **must** be greater than the previous size!
 4. Create a disk image using `dd if=/dev/DEVICE` of=~/sprint-package.img bs=1m count=2700`.
     * (MacOS only) Check the disk device with `diskutil list`.
 5. Eject/Umount  the flash drive.
