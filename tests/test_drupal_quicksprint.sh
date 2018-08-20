@@ -9,7 +9,11 @@ UNTAR_LOCATION=/tmp
 UNTARRED_PACKAGE=$UNTAR_LOCATION/drupal_sprint_package
 export SPRINTDIR=~/sprint
 export QUICKSPRINT_RELEASE=$(cat .quicksprint_release.txt)
-export DDEV_INSTALL_DIR=~/tmp/quicksprintbin
+
+# For testing, use a custom version of ddev, ignore one that might otherwise be in path.
+export DDEV_INSTALL_DIR=~/tmp/quicksprint_ddev_tmp
+mkdir -p "$DDEV_INSTALL_DIR"
+export PATH="$DDEV_INSTALL_DIR:$PATH"
 
 # Add /usr/local/bin to path for git-bash, where it may not exist.
 export PATH="$PATH:/usr/local/bin"
@@ -39,8 +43,8 @@ if [ ! -f "$UNTARRED_PACKAGE/SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/CO
     exit 3
 fi
 
-# Run install_ddev.sh
-(cd "$UNTARRED_PACKAGE" && printf 'y\ny\n' | ./install_ddev.sh) || ( echo "Failed to install_ddev.sh" && exit 4 )
+# Run install.sh
+(cd "$UNTARRED_PACKAGE" && printf 'y\ny\n' | ./install.sh) || ( echo "Failed to install.sh" && exit 4 )
 
 # Stop any running ddev instances, if we can
 ddev rm -a

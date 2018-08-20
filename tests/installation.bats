@@ -26,9 +26,6 @@ function teardown {
         rm -rf ${SPRINTDIR}/${SPRINT_NAME}
     fi
     echo "# teardown complete" >&3
-
-@test "install.sh - and Sprint directories" {
-    cd $UNTAR_LOCATION/drupal_sprint_package && printf 'y\ny\n' | bash -x ./install.sh
 }
 
 @test "check ddev project status and router status, check http status" {
