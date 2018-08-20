@@ -39,6 +39,7 @@ while true; do
     esac
 done
 
+echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
 # Attempts to reconfigure ddev to update config automagically.
 ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8

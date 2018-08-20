@@ -26,7 +26,6 @@ function teardown {
         rm -rf ${SPRINTDIR}/${SPRINT_NAME}
     fi
     echo "# teardown complete" >&3
-
 }
 
 @test "check ddev project status and router status, check http status" {

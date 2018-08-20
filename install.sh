@@ -25,7 +25,7 @@ else
     exit 1
 fi
 
-#Explain what the script does
+# Explain what the script does
 printf "
 ${GREEN}
 ####
@@ -44,7 +44,7 @@ ${RESET}"
 
 echo ""
 echo "Installing docker images for ddev to use..."
-if [ $OS = "MINGW64_NT-10.0" ] ; then PATH="./bin/windows:$PATH"; fi
+if [ ${OS} = "MINGW64_NT-10.0" ] ; then PATH="./bin/windows:$PATH"; fi
 
 
 if command -v 7z >/dev/null; then
@@ -61,13 +61,14 @@ fi
 TARBALL=""
 case "$OS" in
     Linux)
-        TARBALL=ddev_tarballs/ddev_linux*.tar.gz
+        TARBALL=ddev_tarballs/ddev_linux.${DDEV_VERSION}.tar.gz
         ;;
     Darwin)
-        TARBALL=ddev_tarballs/ddev_macos*.tar.gz
+        TARBALL=ddev_tarballs/ddev_macos.${DDEV_VERSION}.tar.gz
         ;;
     MINGW64_NT-10.0)
         echo ""
+        TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
         echo "${YELLOW}PLease use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
@@ -81,22 +82,29 @@ if [ ! -z "$TARBALL" ] ; then
     tar -xzf ${TARBALL} -C /tmp
     chmod ugo+x /tmp/ddev
 
-    if command -v ddev >/dev/null ; then
-        printf "A version of ddev already exists in $(command -v ddev); please update it using your normal technique. Not installing a new version."
+    if command -v ddev >/dev/null && [  -z "${DDEV_INSTALL_DIR}" ] ; then
+        printf "${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}"
     else
-        DDEV_TARGET_DIR=/usr/local/bin
-        if [ ! -d $DDEV_TARGET_DIR ] ; then
-            # Windows git-bash won't have a /usr/local/bin, but /usr/bin is likely writable.
-            DDEV_TARGET_DIR=/usr/bin
+        # Calling script may have already set DDEV_INSTALL_DIR, otherwise we respect and use it.
+        # Otherwise, try to use /usr/local/bin and then /usr/bin
+        if [ ! -z "${DDEV_INSTALL_DIR}" ]; then
+            # It's the responsibility of the caller to have created the directory
+            # and to have added the directory to $PATH
+            echo "Installing for tests into ${DDEV_INSTALL_DIR}"
         fi
-        printf "Ready to place ddev in directory $DDEV_TARGET_DIR.\n"
-        BINOWNER=$(ls -ld $DDEV_TARGET_DIR | awk '{print $3}')
+        DDEV_INSTALL_DIR=${DDEV_INSTALL_DIR:-/usr/local/bin}
+        if [ ! -d ${DDEV_INSTALL_DIR} ] ; then
+            echo "DDEV_INSTALL_DIR ${DDEV_INSTALL_DIR} does not exist"
+            exit 3
+        fi
+        printf "Ready to place ddev in directory $DDEV_INSTALL_DIR.\n"
+        BINOWNER=$(ls -ld $DDEV_INSTALL_DIR | awk '{print $3}')
 
         if [[ "$BINOWNER" == "$USER" ]]; then
-            mv -f /tmp/ddev $DDEV_TARGET_DIR
+            mv -f /tmp/ddev ${DDEV_INSTALL_DIR}
         else
-            printf "${YELLOW}Running \"sudo mv /tmp/ddev $DDEV_TARGET_DIR\" Please enter your password if prompted.${RESET}\n"
-            sudo mv /tmp/ddev $DDEV_TARGET_DIR
+            printf "${YELLOW}Running \"sudo mv /tmp/ddev $DDEV_INSTALL_DIR\" Please enter your password if prompted.${RESET}\n"
+            sudo mv /tmp/ddev ${DDEV_INSTALL_DIR}
         fi
     fi
 fi
