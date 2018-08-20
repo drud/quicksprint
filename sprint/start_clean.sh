@@ -43,6 +43,7 @@ done
 # Attempts to reconfigure ddev to update config automagically.
 ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
 
+echo "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}"
 ddev start
 ddev exec bash -c 'git fetch && git reset --hard origin/8.7.x && composer install && drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting" && drush cr'
 printf "${RESET}"
