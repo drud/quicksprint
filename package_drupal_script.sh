@@ -48,12 +48,7 @@ fi
 if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
     printf "${RED}The staging directory $STAGING_DIR already has files. Deleting them and recreating everything.${RESET}"
     rm -rf "$STAGING_DIR"
-    if [ -e "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz" ] ; then
-        rm "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.tar.gz"
-    fi
-    if [ -e "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip" ]; then
-        rm "$STAGING_DIR_BASE/drupal_sprint_package$QUICKSPRINT_RELEASE.zip"
-    fi
+    rm -f $STAGING_DIR_BASE/drupal_sprint_package.*.${QUICKSPRINT_RELEASE}.*
 fi
 
 SHACMD="sha256sum"
@@ -66,7 +61,7 @@ echo "$LATEST_VERSION" >.ddev_version.txt
 
 # Install the beginning items we need in the kit.
 mkdir -p ${STAGING_DIR}
-cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.* ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install_ddev.sh ${STAGING_DIR}
 
 
 # macOS/Darwin has a oneoff/weird shasum command.
@@ -75,7 +70,7 @@ if [ "$OS" = "Darwin" ]; then
 fi
 
 if ! docker --version >/dev/null 2>&1; then
-    printf "${YELLOW}Docker is required to use this package. Download and install docker at https://www.docker.com/community-edition#/download before attempting to use ddev.${RESET}\n"
+    printf "${YELLOW}Docker is required to use this package. Please install docker before attempting to use ddev.${RESET}\n"
 fi
 
 cd ${STAGING_DIR}
@@ -83,7 +78,7 @@ cd ${STAGING_DIR}
 printf "
 ${GREEN}
 ####
-# Shall we package docker and other installers (Git For Windows, etc) with the archive?
+# Package docker and other installers (Git For Windows, etc)?
 #### \n${RESET}"
 
 while true; do
@@ -118,7 +113,7 @@ ${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
 # Download the ddev tarball/zipball
-for item in macos linux windows_installer; do
+for item in macos linux windows windows_installer; do
     pwd
     SUFFIX=tar.gz
     if [ ${item} == "windows_installer" ] ; then
@@ -144,22 +139,24 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
 composer install --quiet
+popd >/dev/null
 
 # Copy licenses and COPYING notice.
-cp -r ${REPO_DIR}/licenses "$STAGING_DIR/"
-cp ${REPO_DIR}/COPYING "$STAGING_DIR/"
-popd >/dev/null
+cp -r ${REPO_DIR}/licenses ${REPO_DIR}/COPYING "$STAGING_DIR/"
+cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DIR/sprint"
 
 cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
 # Create tar.xz archive without using xz command, so we can work on all platforms
-pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . | 7z a -si -txz ../sprint.tar.xz >/dev/null && popd >/dev/null
+pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . 2>/dev/null | 7z a -si -txz ../sprint.tar.xz >/dev/null && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
-tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
-zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+if [ "$INSTALL" != "n" ] ; then
+    tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
+    zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+fi
 rm -rf ${STAGING_DIR_NAME}/installs
 tar -czf drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}

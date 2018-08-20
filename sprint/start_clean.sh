@@ -12,7 +12,7 @@ RESET='\033[0m'
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
-    printf "docker service running, continuing."
+    printf "docker is running, continuing."
 else
     printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
     exit 1
@@ -21,7 +21,7 @@ fi
 printf "
 ${GREEN}
 ####
-# This simple script starts a Drupal 8 checked out from head
+# This script starts a Drupal 8 instance checked out from head
 # running in ddev with a fresh database.
 #
 # Make sure you've uploaded any patches from last issue
@@ -43,12 +43,10 @@ done
 # Attempts to reconfigure ddev to update config automagically.
 ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
 
+echo "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}"
 ddev start
-ddev exec git fetch
-ddev exec git reset --hard origin/8.7.x
-ddev exec composer install
-ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db:3306/db --site-name="Drupal Sprinting"
-ddev exec drush cr
+ddev exec bash -c 'git fetch && git reset --hard origin/8.7.x && composer install && drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting" && drush cr'
+printf "${RESET}"
 ddev describe
 
 printf "

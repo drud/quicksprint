@@ -8,4 +8,6 @@ echo "--- buildkite building at $(date) on $(hostname) for OS=$(go env GOOS) in 
 echo "--- package_drupal_script.sh"
 echo "n" | ./package_drupal_script.sh
 echo "--- test_drupal_quicksprint.sh"
-./test_drupal_quicksprint.sh
+tests/test_drupal_quicksprint.sh
+echo "--- cleanup"
+rm -f ~/tmp/drupal_sprint_package.no_docker.$(cat .quicksprint_release.txt).tar.gz
