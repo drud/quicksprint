@@ -87,24 +87,24 @@ if [ ! -z "$TARBALL" ] ; then
     else
         # Calling script may have already set DDEV_INSTALL_DIR, otherwise we respect and use it.
         # Otherwise, try to use /usr/local/bin and then /usr/bin
-        if [ ! -z "${DDEV_INSTALL_DIR}" ]; then
+        if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
             # It's the responsibility of the caller to have created the directory
             # and to have added the directory to $PATH
             echo "Installing for tests into ${DDEV_INSTALL_DIR}"
         fi
         DDEV_INSTALL_DIR=${DDEV_INSTALL_DIR:-/usr/local/bin}
-        if [ ! -d ${DDEV_INSTALL_DIR} ] ; then
-            echo "DDEV_INSTALL_DIR ${DDEV_INSTALL_DIR} does not exist"
+        if [ ! -d ${DDEV_INSTALL_DIR:-} ] ; then
+            echo "DDEV_INSTALL_DIR '${DDEV_INSTALL_DIR}' does not exist"
             exit 3
         fi
         printf "Ready to place ddev in directory $DDEV_INSTALL_DIR.\n"
-        BINOWNER=$(ls -ld $DDEV_INSTALL_DIR | awk '{print $3}')
+        BINOWNER=$(ls -ld ${DDEV_INSTALL_DIR:-} | awk '{print $3}')
 
         if [[ "$BINOWNER" == "$USER" ]]; then
-            mv -f /tmp/ddev ${DDEV_INSTALL_DIR}
+            mv -f /tmp/ddev ${DDEV_INSTALL_DIR:-}
         else
             printf "${YELLOW}Running \"sudo mv /tmp/ddev $DDEV_INSTALL_DIR\" Please enter your password if prompted.${RESET}\n"
-            sudo mv /tmp/ddev ${DDEV_INSTALL_DIR}
+            sudo mv /tmp/ddev ${DDEV_INSTALL_DIR:-}
         fi
     fi
 fi

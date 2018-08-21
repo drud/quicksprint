@@ -33,7 +33,7 @@ This directory contains tools to get you started contributing to Drupal 8:
 <a name="extract-files"></a>
 ### 2. Extract drupal_sprint_package directory
 
-Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
+Extract the drupal_sprint_package.RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
 
 <a name="install"></a>
 ### 3. Install Docker and Other Requirements
@@ -50,19 +50,25 @@ Find the Docker installer for your Operating System underneath the **installs** 
  MacOS | Docker CE | Docker.dmg
  Linux | Docker CE, docker-compose | See [Linux instructions](https://docs.docker.com/install/#docker-ce)
 
-**⚠️ Docker Toolbox users**: Please install "Git for Windows" and "VirtualBox" as needed during the install process.
+**⚠️Docker Toolbox users**: Please click the checkboxes to install "Git for Windows" and "VirtualBox" as needed during the install process.
 
-**⚠️ Docker CE only** Start Docker
+**⚠️Docker Toolbox Users must start "Docker Quickstart Terminal" to start docker running.
 
-**⚠️ Docker CE only** Open Docker preferences and set docker memory allocation to 3.0GB or greater in the Advanced section. This is required to start containers.
+**⚠️Docker for Windows and Docker for Mac** Start the docker application
+
+**⚠️Docker for Windows**: You *must* share the C: drive (or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
+
+**⚠️All users:** additional information is available at [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/).
+
+**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/) to get docker properly set up.
 
 #### 3.2 ddev
 
-**⚠️ Windows users**: Find the ddev installer underneath the **ddev_installs** directory.
+**⚠️ Windows users**: Find the ddev_windows_installer.RELEASE.exe underneath the **ddev_tarballs** directory. Run it to install ddev at this time.
 
 #### 3.3 Git
 
-**⚠️ Windows users**:  Git Bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful guide to git for Drupal](https://www.drupal.org/documentation/git). Find the Git-2.18.0-64-bit.exe installer underneath the **installs** directory.
+**⚠️ Windows users**:  Git Bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful guide to git for Drupal](https://www.drupal.org/documentation/git). Find the Git-RELEASE-64-bit.exe installer underneath the **installs** directory.
 
 <a name="open-terminal"></a>
 ### 4. Open Terminal
@@ -73,7 +79,7 @@ Operating System | Docker Version | Program
 ---------------- | -------------- | ----------------
 Windows 10 Pro, Enterprise (HyperV enabled) | Docker CE | Git Bash
 Windows 10 Home | Docker Toolbox | Docker Quickstart Terminal
-Windows 7 (no HyperV support) | Docker Toolbox | Docker Quickstart Terminal
+Windows 7  | Docker Toolbox | Docker Quickstart Terminal
 MacOS | Docker CE | Terminal.app or your preferred terminal application
 Linux | Docker CE | Your preferred terminal application
 
