@@ -150,7 +150,7 @@ cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
 # Create tar.xz archive using xz command, so we can work on all platforms
-pushd sprint >/dev/null && tar -cJf ../sprint.tar.gz . && popd >/dev/null
+pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
