@@ -82,7 +82,7 @@ if [ ! -z "$TARBALL" ] ; then
     tar -xzf ${TARBALL} -C /tmp
     chmod ugo+x /tmp/ddev
 
-    if command -v ddev >/dev/null && [  -z "${DDEV_INSTALL_DIR}" ] ; then
+    if command -v ddev >/dev/null && [  -z "${DDEV_INSTALL_DIR:-}" ] ; then
         printf "${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}"
     else
         # Calling script may have already set DDEV_INSTALL_DIR, otherwise we respect and use it.
@@ -90,14 +90,14 @@ if [ ! -z "$TARBALL" ] ; then
         if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
             # It's the responsibility of the caller to have created the directory
             # and to have added the directory to $PATH
-            echo "Installing for tests into ${DDEV_INSTALL_DIR}"
+            echo "Installing for tests into DDEV_INSTALL_DIR='${DDEV_INSTALL_DIR:-}'"
         fi
         DDEV_INSTALL_DIR=${DDEV_INSTALL_DIR:-/usr/local/bin}
         if [ ! -d ${DDEV_INSTALL_DIR:-} ] ; then
-            echo "DDEV_INSTALL_DIR '${DDEV_INSTALL_DIR}' does not exist"
+            echo "DDEV_INSTALL_DIR '${DDEV_INSTALL_DIR:-}' does not exist"
             exit 3
         fi
-        printf "Ready to place ddev in directory $DDEV_INSTALL_DIR.\n"
+        printf "Ready to place ddev in directory ${DDEV_INSTALL_DIR:-}.\n"
         BINOWNER=$(ls -ld ${DDEV_INSTALL_DIR:-} | awk '{print $3}')
 
         if [[ "$BINOWNER" == "$USER" ]]; then
@@ -126,3 +126,7 @@ ${GREEN}
 ######
 ${RESET}
 "
+
+if ! command -v ddev && [ ${OS} = "MINGW64_NT-10.0" ] ; then
+    printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
+fi
