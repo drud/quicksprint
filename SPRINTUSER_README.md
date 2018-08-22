@@ -52,7 +52,7 @@ Find the Docker installer for your Operating System underneath the **installs** 
 
 **⚠️Docker Toolbox users**: Please click the checkboxes to install "Git for Windows" and "VirtualBox" as needed during the install process.
 
-**⚠️Docker Toolbox Users must start "Docker Quickstart Terminal" to start docker running.
+**⚠️Docker Toolbox Users:** start "Docker Quickstart Terminal" to start docker running.
 
 **⚠️Docker for Windows and Docker for Mac** Start the docker application
 
