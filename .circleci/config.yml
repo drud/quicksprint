@@ -1,5 +1,7 @@
-version: 2
+version: 2.0
+
 jobs:
+
   "package_build":
     machine:
       image: image: circleci/classic:201808-01
@@ -20,7 +22,7 @@ jobs:
         paths:
         - quicksprint
         - tmp
-  "test":
+  "test_package":
     machine:
       image: image: circleci/classic:201808-01
     working_directory: ~/quicksprint
@@ -65,7 +67,7 @@ workflows:
   normal_build_and_test:
     jobs:
     - package_build
-    - test:
+    - test_packabge:
       requires:
         - package_build
     - artifacts:
@@ -82,7 +84,7 @@ workflows:
                 - master
     jobs:
     - package_build
-    - test:
+    - test_package:
       requires:
       - package_build
     - artifacts:
@@ -98,7 +100,7 @@ workflows:
         ignore: /.*/
     jobs:
     - package_build
-    - test:
+    - test_package:
       requires:
       - package_build
     - artifacts:
