@@ -127,6 +127,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev && [ ${OS} = "MINGW64_NT-10.0" ] ; then
+if ! command -v ddev >/dev/null && [ ${OS} = "MINGW64_NT-10.0" ] ; then
     printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
 fi
