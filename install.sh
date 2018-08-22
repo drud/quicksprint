@@ -48,7 +48,7 @@ echo "Installing docker images for ddev to use..."
 if command -v xzcat >/dev/null; then
     xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
 elif [[ "$OS" == "Darwin" ]]; then
-    gzip -dc ls ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+    gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
 else
     echo "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}"
 fi
