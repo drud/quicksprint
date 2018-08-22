@@ -68,11 +68,11 @@ workflows:
     jobs:
     - package_build
     - test_packabge:
-      requires:
+        requires:
         - package_build
     - artifacts:
-      requires:
-      - package_build
+        requires:
+        - package_build
 
   nightly_build:
     triggers:
@@ -85,11 +85,11 @@ workflows:
     jobs:
     - package_build
     - test_package:
-      requires:
-      - package_build
+        requires:
+        - package_build
     - artifacts:
-      requires:
-      - package_build
+        requires:
+        - package_build
 
   tag_build:
     filters:
@@ -101,9 +101,9 @@ workflows:
     jobs:
     - package_build
     - test_package:
-      requires:
-      - package_build
+        requires:
+        - package_build
     - artifacts:
-      requires:
-      - package_build
+        requires:
+        - package_build
 
