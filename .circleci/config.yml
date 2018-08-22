@@ -67,7 +67,7 @@ workflows:
   normal_build_and_test:
     jobs:
     - package_build
-    - test_packabge:
+    - test_package:
         requires:
         - package_build
     - artifacts:
