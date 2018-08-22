@@ -94,29 +94,29 @@ workflows:
   tag_build:
     jobs:
     - package_build:
-      filters:
-        tags:
-          only:
-          - "/.*/"
-        branches:
-          ignore: /.*/
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
 
     - test_package:
         requires:
         - package_build
-      filters:
-        tags:
-          only:
-          - "/.*/"
-        branches:
-          ignore: /.*/
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
     - artifacts:
         requires:
         - package_build
-      filters:
-        tags:
-          only:
-          - "/.*/"
-        branches:
-          ignore: /.*/
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
 
