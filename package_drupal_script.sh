@@ -30,7 +30,6 @@ GREEN='\033[32m'
 YELLOW='\033[33m'
 RESET='\033[0m'
 OS=$(uname)
-BINOWNER=$(ls -ld /usr/local/bin | awk '{print $3}')
 USER=$(whoami)
 
 # Ensure 7z is installed
