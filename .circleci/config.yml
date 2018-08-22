@@ -1,107 +1,170 @@
-version: 2
+version: 2.0
+
 jobs:
-  "package_build":
+
+  "buildjob":
     machine:
-      image: image: circleci/classic:201808-01
-    working_directory: ~/quicksprint
-    environment:
-      TERM: vt100
+      image: circleci/classic:201808-01
+    working_directory: ~/circletest
     steps:
     - checkout
-    - run:
-        command: ./.circleci/circle_vm_setup.sh
-        name: NORMAL Circle VM setup - tools, docker
-    - run:
-        command: echo "y" | time ./package_drupal_script.sh
-        name: Run the package_drupal_script.sh
-        no_output_timeout: "20m"
+    - run: echo $CIRCLE_JOB
+    - run: mkdir -p builddir && echo $CIRCLE_JOB >builddir/circle_build_job.txt
+    - run: echo "PWD=$PWD" && ls -lR $PWD
     - persist_to_workspace:
         root: ~/
-        paths:
-        - quicksprint
-        - tmp
-  "test":
+        paths: circletest
+
+  "j1":
+    working_directory: ~/circletest
     machine:
-      image: image: circleci/classic:201808-01
-    working_directory: ~/quicksprint
-    environment:
-      TERM: vt100
+      image: circleci/classic:201808-01
     steps:
     - attach_workspace:
         at: ~/
-    - run:
-        command: ./.circleci/circle_vm_setup.sh
-        name: NORMAL Circle VM setup - tools, docker
-    - run: tests/test_drupal_quicksprint.sh
+    - run: echo "PWD=$PWD" && ls -lR
+    - run: echo "CIRCLE_JOB=$CIRCLE_JOB and build_job=$(cat builddir/circle_build_job.txt)"
 
-
-  "artifacts":
+  "j2":
+    working_directory: ~/circletest
     machine:
-      image: image: circleci/classic:201808-01
-    working_directory: ~/quicksprint
-    environment:
-      ARTIFACTS: /artifacts
+      image: circleci/classic:201808-01
     steps:
     - attach_workspace:
         at: ~/
-    - run:
-        command: ./.circleci/circle_vm_setup.sh
-        name: NORMAL Circle VM setup - tools, docker
-    - run:
-        command: |
-          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.$(cat .quicksprint_release.txt).{tar.gz,zip}  $ARTIFACTS
-          cd $ARTIFACTS
-          for item in *.tar.gz *.zip; do
-            sha256sum $item > $item.sha256.txt
-          done
-        name: make artifacts tarball downloads
-        no_output_timeout: "20m"
-    - store_artifacts:
-        path: /artifacts
-        name: Artifact storage
-        
+    - run: echo "PWD=$PWD" && ls -lR
+    - run: echo "CIRCLE_JOB=$CIRCLE_JOB and build_job=$(cat builddir/circle_build_job.txt)"
+
+  "j3":
+    working_directory: ~/circletest
+    machine:
+      image: circleci/classic:201808-01
+    steps:
+    - attach_workspace:
+        at: ~/
+    - run: echo "PWD=$PWD" && ls -lR
+    - run: echo "CIRCLE_JOB=$CIRCLE_JOB and build_job=$(cat builddir/circle_build_job.txt)"
+
 workflows:
   version: 2
-  normal_build_and_test:
+  test:
     jobs:
-    - package_build
-    - test:
-      requires:
-        - package_build
-    - artifacts:
-      requires:
-      - package_build
+    - buildjob
+    - j1:
+        requires:
+        - buildjob
+    - j2:
+        requires:
+        - buildjob
+    - j3:
+        requires:
+        - buildjob
 
-  nightly_build:
-    triggers:
-      - schedule:
-          cron: "0 3 * * 1-5"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-    - package_build
-    - test:
-      requires:
-      - package_build
-    - artifacts:
-      requires:
-      - package_build
 
-  tag_build:
-    filters:
-      tags:
-        only:
-        - "/.*/"
-      branches:
-        ignore: /.*/
-    jobs:
-    - package_build
-    - test:
-      requires:
-      - package_build
-    - artifacts:
-      requires:
-      - package_build
-
+#version: 2
+#jobs:
+#  "package_build":
+#    machine:
+#      image: image: circleci/classic:201808-01
+#    working_directory: ~/quicksprint
+#    environment:
+#      TERM: vt100
+#    steps:
+#    - checkout
+#    - run:
+#        command: ./.circleci/circle_vm_setup.sh
+#        name: NORMAL Circle VM setup - tools, docker
+#    - run:
+#        command: echo "y" | time ./package_drupal_script.sh
+#        name: Run the package_drupal_script.sh
+#        no_output_timeout: "20m"
+#    - persist_to_workspace:
+#        root: ~/
+#        paths:
+#        - quicksprint
+#        - tmp
+#  "test":
+#    machine:
+#      image: image: circleci/classic:201808-01
+#    working_directory: ~/quicksprint
+#    environment:
+#      TERM: vt100
+#    steps:
+#    - attach_workspace:
+#        at: ~/
+#    - run:
+#        command: ./.circleci/circle_vm_setup.sh
+#        name: NORMAL Circle VM setup - tools, docker
+#    - run: tests/test_drupal_quicksprint.sh
+#
+#
+#  "artifacts":
+#    machine:
+#      image: image: circleci/classic:201808-01
+#    working_directory: ~/quicksprint
+#    environment:
+#      ARTIFACTS: /artifacts
+#    steps:
+#    - attach_workspace:
+#        at: ~/
+#    - run:
+#        command: ./.circleci/circle_vm_setup.sh
+#        name: NORMAL Circle VM setup - tools, docker
+#    - run:
+#        command: |
+#          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.$(cat .quicksprint_release.txt).{tar.gz,zip}  $ARTIFACTS
+#          cd $ARTIFACTS
+#          for item in *.tar.gz *.zip; do
+#            sha256sum $item > $item.sha256.txt
+#          done
+#        name: make artifacts tarball downloads
+#        no_output_timeout: "20m"
+#    - store_artifacts:
+#        path: /artifacts
+#        name: Artifact storage
+#
+#workflows:
+#  version: 2
+#  normal_build_and_test:
+#    jobs:
+#    - package_build
+#    - test:
+#      requires:
+#        - package_build
+#    - artifacts:
+#      requires:
+#      - package_build
+#
+#  nightly_build:
+#    triggers:
+#      - schedule:
+#          cron: "0 3 * * 1-5"
+#          filters:
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#    - package_build
+#    - test:
+#      requires:
+#      - package_build
+#    - artifacts:
+#      requires:
+#      - package_build
+#
+#  tag_build:
+#    filters:
+#      tags:
+#        only:
+#        - "/.*/"
+#      branches:
+#        ignore: /.*/
+#    jobs:
+#    - package_build
+#    - test:
+#      requires:
+#      - package_build
+#    - artifacts:
+#      requires:
+#      - package_build
+#
