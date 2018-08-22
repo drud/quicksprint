@@ -33,7 +33,7 @@ OS=$(uname)
 USER=$(whoami)
 
 # Ensure zcat is installed
-command -v zcat >/dev/null 2>&1 || { echo >&2 "${RED}zcat command is required but it's not installed. Aborting.${RESET}"; exit 1; }
+command -v zcat >/dev/null 2>&1 || { echo >&2 "${RED}zcat command is required but it's not installed. ('brew install xz' on macOS, 'apt-get install xz-utils' on Debian/Ubuntu) Aborting.${RESET}"; exit 1; }
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
@@ -83,10 +83,11 @@ ${GREEN}
 while true; do
     read -p "Include installers? (y/n): " INSTALL
     case ${INSTALL} in
-        [Yy]* ) printf "${GREEN}# Downloading docker installers. \n#### \n${RESET}";
+        [Yy]* ) printf "${GREEN}# Downloading installers. \n#### \n${RESET}";
                 mkdir -p installs
                 pushd installs >/dev/null
                 for dockerurl in ${DOWNLOAD_URLS}; do
+                    echo "Downloading ${dockerurl##*/} from ${dockerurl}"
                     curl -sSL -O ${dockerurl}
                 done
                 popd >/dev/null
@@ -104,6 +105,7 @@ mkdir -p ddev_tarballs
 TARBALL="ddev_docker_images.$LATEST_VERSION.tar.xz"
 SHAFILE="$TARBALL.sha256.txt"
 if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
+    echo "Downloading $TARBALL ..."
     curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
     curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
 fi
@@ -113,7 +115,6 @@ popd >/dev/null
 
 # Download the ddev tarball/zipball
 for item in macos linux windows windows_installer; do
-    pwd
     SUFFIX=tar.gz
     if [ ${item} == "windows_installer" ] ; then
         SUFFIX=exe
@@ -122,6 +123,7 @@ for item in macos linux windows windows_installer; do
     SHAFILE="$TARBALL.sha256.txt"
 
     if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
+        echo "Downloading $TARBALL ..."
         curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
         curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
     fi
@@ -148,7 +150,7 @@ cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
 # Create tar.xz archive using xz command, so we can work on all platforms
-pushd >/dev/null && tar -cJf ../sprint.tar.gz . && popd >/dev/null
+pushd sprint >/dev/null && tar -cJf ../sprint.tar.gz . && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
