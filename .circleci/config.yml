@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  package_build:
+  "package_build":
     machine:
       image: image: circleci/classic:201808-01
     working_directory: ~/quicksprint
@@ -20,7 +20,7 @@ jobs:
         paths:
         - quicksprint
         - tmp
-  test:
+  "test":
     machine:
       image: image: circleci/classic:201808-01
     working_directory: ~/quicksprint
@@ -35,7 +35,7 @@ jobs:
     - run: tests/test_drupal_quicksprint.sh
 
 
-  artifacts:
+  "artifacts":
     machine:
       image: image: circleci/classic:201808-01
     working_directory: ~/quicksprint
