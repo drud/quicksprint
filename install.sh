@@ -44,12 +44,8 @@ ${RESET}"
 
 echo ""
 echo "Installing docker images for ddev to use..."
-if [ ${OS} = "MINGW64_NT-10.0" ] ; then PATH="./bin/windows:$PATH"; fi
 
-
-if command -v 7z >/dev/null; then
-    7z x ddev_tarballs/ddev_docker_images.${DDEV_VERSION}.tar.xz -so | docker load
-elif command -v xzcat >/dev/null; then
+if command -v xzcat >/dev/null; then
     xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
 elif [[ "$OS" == "Darwin" ]]; then
     gzip -dc ls ddev_tarballs/ddev_docker_images*.tar.xz | docker load
@@ -86,7 +82,6 @@ if [ ! -z "$TARBALL" ] ; then
         printf "${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}"
     else
         # Calling script may have already set DDEV_INSTALL_DIR, otherwise we respect and use it.
-        # Otherwise, try to use /usr/local/bin and then /usr/bin
         if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
             # It's the responsibility of the caller to have created the directory
             # and to have added the directory to $PATH

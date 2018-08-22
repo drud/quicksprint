@@ -32,8 +32,8 @@ RESET='\033[0m'
 OS=$(uname)
 USER=$(whoami)
 
-# Ensure 7z is installed
-command -v 7z >/dev/null 2>&1 || { echo >&2 "${RED}I require 7z command but it's not installed. Aborting.${RESET}"; exit 1; }
+# Ensure zcat is installed
+command -v zcat >/dev/null 2>&1 || { echo >&2 "${RED}zcat command is required but it's not installed. Aborting.${RESET}"; exit 1; }
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
@@ -60,7 +60,7 @@ echo "$LATEST_VERSION" >.ddev_version.txt
 
 # Install the beginning items we need in the kit.
 mkdir -p ${STAGING_DIR}
-cp -r .ddev_version.txt .quicksprint_release.txt bin sprint start_sprint.* SPRINTUSER_README.md install.sh ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt sprint start_sprint.* SPRINTUSER_README.md install.sh ${STAGING_DIR}
 
 
 # macOS/Darwin has a oneoff/weird shasum command.
@@ -147,8 +147,8 @@ cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DI
 cd ${STAGING_DIR}
 
 echo "Creating tar and zipballs"
-# Create tar.xz archive without using xz command, so we can work on all platforms
-pushd sprint >/dev/null && 7z a -ttar -so bogusfilename.tar . 2>/dev/null | 7z a -si -txz ../sprint.tar.xz >/dev/null && popd >/dev/null
+# Create tar.xz archive using xz command, so we can work on all platforms
+pushd >/dev/null && tar -cJf ../sprint.tar.gz . && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
