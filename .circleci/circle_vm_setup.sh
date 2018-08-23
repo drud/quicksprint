@@ -7,8 +7,8 @@ set -x
 
 v=php7.2
 sudo add-apt-repository -y ppa:ondrej/php
-sudo apt-get update -qq
-sudo apt-get install -y -qq jq p7zip-full realpath zip ${v} ${v}-bcmath ${v}-curl ${v}-cgi ${v}-cli ${v}-common ${v}-fpm ${v}-gd ${v}-intl ${v}-json ${v}-mysql ${v}-mbstring  ${v}-opcache ${v}-soap ${v}-readline ${v}-xdebug ${v}-xml ${v}-xmlrpc ${v}-zip;
+sudo apt-get update
+sudo apt-get install -y jq p7zip-full realpath zip ${v} ${v}-bcmath ${v}-curl ${v}-cgi ${v}-cli ${v}-common ${v}-fpm ${v}-gd ${v}-intl ${v}-json ${v}-mysql ${v}-mbstring  ${v}-opcache ${v}-soap ${v}-readline ${v}-xdebug ${v}-xml ${v}-xmlrpc ${v}-zip;
 
 # Remove any existing docker
 sudo apt-get remove docker docker-engine docker.io
