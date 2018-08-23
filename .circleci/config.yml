@@ -1,46 +1,79 @@
-version: 2
+version: 2.0
+
 jobs:
-  # 'build' is the default build, the only one triggered automatically by github or anything else.
-  normal_build_and_test:
+
+  "package_build":
     machine:
-      image: circleci/classic:201711-01
+      image: circleci/classic:201808-01
+    working_directory: ~/quicksprint
+    environment:
+      TERM: vt100
+    steps:
+    - checkout
+    - run:
+        command: ./.circleci/circle_vm_setup.sh
+        name: NORMAL Circle VM setup - tools, docker
+    - run:
+        command: echo "y" | time ./package_drupal_script.sh
+        name: Run the package_drupal_script.sh
+        no_output_timeout: "20m"
+    - persist_to_workspace:
+        root: ~/
+        paths:
+        - quicksprint
+        - tmp
+  "test_package":
+    machine:
+      image: circleci/classic:201808-01
+    working_directory: ~/quicksprint
+    environment:
+      TERM: vt100
+    steps:
+    - attach_workspace:
+        at: ~/
+    - run:
+        command: ./.circleci/circle_vm_setup.sh
+        name: NORMAL Circle VM setup - tools, docker
+    - run: tests/test_drupal_quicksprint.sh
+
+
+  "artifacts":
+    machine:
+      image: circleci/classic:201808-01
     working_directory: ~/quicksprint
     environment:
       ARTIFACTS: /artifacts
-      TERM: vt100
     steps:
-      - checkout
-
-      - run:
-          command: ./.circleci/circle_vm_setup.sh
-          name: NORMAL Circle VM setup - tools, docker
-
-      - run:
-          command: printf "docker version=$(docker --version)\ndocker-compose version=$(docker-compose --version)\nbats version=$(bats --version)\nHOME=$HOME USER=$(whoami) PWD=$PWD"
-          name: Installed tool versions
-      - run:
-          command: echo "y" | time ./package_drupal_script.sh
-          name: Run the package_drupal_script.sh
-          no_output_timeout: "20m"
-      - run:
-          command: |
-            sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.$(cat .quicksprint_release.txt).{tar.gz,zip}  $ARTIFACTS
-            cd $ARTIFACTS
-            for item in *.tar.gz *.zip; do
-              sha256sum $item > $item.sha256.txt
-            done
-          name: make artifacts tarball downloads
-          no_output_timeout: "20m"
-      - store_artifacts:
-          path: /artifacts
-          name: Artifact storage
-      - run: tests/test_drupal_quicksprint.sh
-
+    - attach_workspace:
+        at: ~/
+    - run:
+        command: ./.circleci/circle_vm_setup.sh
+        name: NORMAL Circle VM setup - tools, docker
+    - run:
+        command: |
+          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.$(cat .quicksprint_release.txt).{tar.gz,zip}  $ARTIFACTS
+          cd $ARTIFACTS
+          for item in *.tar.gz *.zip; do
+            sha256sum $item > $item.sha256.txt
+          done
+        name: make artifacts tarball downloads
+        no_output_timeout: "20m"
+    - store_artifacts:
+        path: /artifacts
+        name: Artifact storage
+        
 workflows:
   version: 2
   normal_build_and_test:
     jobs:
-      - normal_build_and_test
+    - package_build
+    - test_package:
+        requires:
+        - package_build
+    - artifacts:
+        requires:
+        - package_build
+
   nightly_build:
     triggers:
       - schedule:
@@ -50,14 +83,40 @@ workflows:
               only:
                 - master
     jobs:
-      - normal_build_and_test
+    - package_build
+    - test_package:
+        requires:
+        - package_build
+    - artifacts:
+        requires:
+        - package_build
+
   tag_build:
     jobs:
-      - normal_build_and_test:
-          filters:
-            tags:
-              only:
-                - "/.*/"
-            branches:
-              ignore: /.*/
+    - package_build:
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
+
+    - test_package:
+        requires:
+        - package_build
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
+    - artifacts:
+        requires:
+        - package_build
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
 
