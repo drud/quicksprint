@@ -16,7 +16,7 @@ if [ ${DISK_AVAIL} -ge 95 ] ; then
     exit 1;
 fi
 
-for item in curl jq zcat composer perl bats; do
+for item in curl jq zcat composer perl zip bats; do
     command -v $item >/dev/null || ( echo "$item is not installed" && exit 2 )
 done
 docker run --rm -t -v "/$PWD:/junk" busybox ls //junk >/dev/null || ( echo "docker is not running" && exit 3 )
