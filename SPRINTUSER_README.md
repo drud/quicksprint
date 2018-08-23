@@ -40,7 +40,8 @@ Extract the drupal_sprint_package.RELEASE.zip file, and open or browse to the "d
 
 #### 3.1 Docker CE or Docker Toolbox
 
-Find the Docker installer for your Operating System underneath the **installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
+* **Windows users:** Install Git For Windows from the **installs** directory. The version here is newer than you might have on your computer if you already have it, so install if you don't have Git for Windows or have a version less than 2.18.0.
+* **All users:** Find the Docker installer for your Operating System underneath the **installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
 
  Operating System | Docker Version | Installer
  ---------------- | -------------- | -----------------
@@ -50,13 +51,11 @@ Find the Docker installer for your Operating System underneath the **installs** 
  MacOS | Docker CE | Docker.dmg
  Linux | Docker CE, docker-compose | See [Linux instructions](https://docs.docker.com/install/#docker-ce)
 
-**⚠️Docker Toolbox users**: Please click the checkboxes to install "Git for Windows" and "VirtualBox" as needed during the install process.
-
-**⚠️Docker Toolbox Users:** start "Docker Quickstart Terminal" to start docker running.
+**⚠️Docker Toolbox Users:** Run "Docker Quickstart Terminal" to start docker running.
 
 **⚠️Docker for Windows and Docker for Mac** Start the docker application
 
-**⚠️Docker for Windows**: You *must* share the C: drive (or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
+**⚠️Docker for Windows**: You *must* share the C: drive (preferably all drives, or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
 
 **⚠️All users:** additional information is available at [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/).
 
@@ -65,10 +64,6 @@ Find the Docker installer for your Operating System underneath the **installs** 
 #### 3.2 ddev
 
 **⚠️ Windows users**: Find the ddev_windows_installer.RELEASE.exe underneath the **ddev_tarballs** directory. Run it to install ddev at this time.
-
-#### 3.3 Git
-
-**⚠️ Windows users**:  Git Bash is used for all installation scripts, and of course you'll need git to be able to develop patches. [Helpful guide to git for Drupal](https://www.drupal.org/documentation/git). Find the Git-RELEASE-64-bit.exe installer underneath the **installs** directory.
 
 <a name="open-terminal"></a>
 ### 4. Open Terminal
