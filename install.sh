@@ -15,6 +15,7 @@ SHACMD=""
 FILEBASE=""
 CURRENT_DIR=$PWD
 DDEV_VERSION=$(cat ./.ddev_version.txt)
+NTOK=""
 
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
@@ -62,10 +63,16 @@ case "$OS" in
     Darwin)
         TARBALL=ddev_tarballs/ddev_macos.${DDEV_VERSION}.tar.gz
         ;;
-    MINGW64_NT-10.0)
+    MINGW64_NT-*)
+        NTOK=$(echo ${OS} | grep -o '(10.0|6.3|6.2|6.1)$' || echo 'no')
+
+        if [[ "${NTOK}" == "no" ]]; then
+            echo "${RED}You must use Windows 7 or greater${RESET}"
+            exit 2
+        fi
         echo ""
         TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
-        echo "${YELLOW}PLease use the ddev_windows_installer provided with this package to install ddev${RESET}"
+        echo "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
         echo "${RED}No ddev binary is available for $OS${RESET}"
@@ -122,6 +129,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ ${OS} = "MINGW64_NT-10.0" ] ; then
+if ! command -v ddev >/dev/null && [ "${NTOK}" != "no" || "${NTOK}" != "" ] ; then
     printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
 fi
