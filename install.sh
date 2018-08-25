@@ -9,7 +9,7 @@ RED='\033[31m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
 RESET='\033[0m'
-OS=$(uname)
+OS=$(uname | grep -oE '(Darwin|Linux|MINGW64)' || uname)
 USER=$(whoami)
 SHACMD=""
 FILEBASE=""
@@ -63,19 +63,13 @@ case "$OS" in
     Darwin)
         TARBALL=ddev_tarballs/ddev_macos.${DDEV_VERSION}.tar.gz
         ;;
-    MINGW64_NT-*)
-        NTOK=$(echo ${OS} | grep -o '(10.0|6.3|6.2|6.1)$' || echo 'no')
-
-        if [[ "${NTOK}" == "no" ]]; then
-            echo "${RED}You must use Windows 7 or greater${RESET}"
-            exit 2
-        fi
+    MINGW64)
         echo ""
         TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
         echo "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
-        echo "${RED}No ddev binary is available for $OS${RESET}"
+        echo "${RED}No ddev binary is available for ${OS}${RESET}"
         exit 2
         ;;
 
@@ -129,6 +123,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ "${NTOK}" != "no" || "${NTOK}" != "" ] ; then
+if ! command -v ddev >/dev/null && [ "${OS}" = "MINGW64" ] ; then
     printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
 fi
