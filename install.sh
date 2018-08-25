@@ -15,7 +15,6 @@ SHACMD=""
 FILEBASE=""
 CURRENT_DIR=$PWD
 DDEV_VERSION=$(cat ./.ddev_version.txt)
-NTOK=""
 
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
