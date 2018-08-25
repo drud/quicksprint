@@ -9,7 +9,7 @@ RED='\033[31m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
 RESET='\033[0m'
-OS=$(uname)
+OS=$(uname | grep -oE '(Darwin|Linux|MINGW64)' || uname)
 USER=$(whoami)
 SHACMD=""
 FILEBASE=""
@@ -62,7 +62,7 @@ case "$OS" in
     Darwin)
         TARBALL=ddev_tarballs/ddev_macos.${DDEV_VERSION}.tar.gz
         ;;
-    MINGW64_NT*)
+    MINGW64)
         echo ""
         TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
         echo "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
@@ -122,6 +122,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ "${OS}" = "MINGW64_NT*" ] ; then
+if ! command -v ddev >/dev/null && [ "${OS}" = "MINGW64" ] ; then
     printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
 fi
