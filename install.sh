@@ -62,13 +62,13 @@ case "$OS" in
     Darwin)
         TARBALL=ddev_tarballs/ddev_macos.${DDEV_VERSION}.tar.gz
         ;;
-    MINGW64_NT-10.0)
+    MINGW64_NT*)
         echo ""
         TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
-        echo "${YELLOW}PLease use the ddev_windows_installer provided with this package to install ddev${RESET}"
+        echo "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
-        echo "${RED}No ddev binary is available for $OS${RESET}"
+        echo "${RED}No ddev binary is available for ${OS}${RESET}"
         exit 2
         ;;
 
@@ -122,6 +122,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ ${OS} = "MINGW64_NT-10.0" ] ; then
+if ! command -v ddev >/dev/null && [ "${OS}" = "MINGW64_NT*" ] ; then
     printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
 fi
