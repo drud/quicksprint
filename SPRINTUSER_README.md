@@ -59,9 +59,11 @@ Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "d
 
 **⚠️Docker for Windows**: You *must* share the C: drive (preferably all drives, or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
 
-**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/) to get docker properly set up.
+**⚠️All users** Additional Docker **installation** troubleshooting and installation documentation is available at [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/).
 
-**⚠️All users:** Now start the Docker app you installed. If Docker asks you to login, you can ignore this.
+-**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/) to confirm your versions of docker ce and docker-compose to get docker properly setup.
+
+**⚠️All users:** Now start the Docker app you installed. Docker may ask you to create a DockerHub user account, and you may ignore this prompt safely and continue on below.
 
 #### 3.2 ddev
 
