@@ -31,14 +31,14 @@ trap cleanup EXIT
 (mkdir -p "${SPRINTDIR}" && chmod -R ugo+w "${SPRINTDIR}" && rm -rf  ${SPRINTDIR}/sprint-2* ) || true
 rm -rf "$UNTARRED_PACKAGE"
 
-echo n | ./package_drupal_script.sh || ( echo "package_drupal_script.sh failed" && exit 2 )
-# SOURCE_TARBALL_LOCATION isn't valid until package_drupal_script has run.
+echo n | ./package.sh || ( echo "package.sh failed" && exit 2 )
+# SOURCE_TARBALL_LOCATION isn't valid until package script has run.
 SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
 
 # Untar source tarball
 tar -C "$UNTAR_LOCATION" -zxf ${SOURCE_TARBALL_LOCATION:-}
 
-if [ ! -f "$UNTARRED_PACKAGE/DRUPAL_SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/COPYING" -o ! -d "$UNTARRED_PACKAGE/licenses" ]; then
+if [ ! -f "$UNTARRED_PACKAGE/SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/COPYING" -o ! -d "$UNTARRED_PACKAGE/licenses" ]; then
     echo "Packaged documents are missing from package (in $UNTARRED_PACKAGE)"
     exit 3
 fi

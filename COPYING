@@ -8,7 +8,7 @@ This Software is distributed in a compressed archive with the following third-pa
 
     mailhog/mailhog - (c) Copyright 2014 - 2018 Ian Kent (http://iankent.uk).
 
-  Docker images are included in the distributable release as software artifacts and distributed according to the provisions of the Apache 2.0 license:
+  The following Docker™ images are included in the distributable release as software artifacts and distributed according to the provisions of the Apache 2.0 license:
 
     drud/ddev-router - (c) Copyright 2018 DRUD Technology, LLC.
     drud/phpmyadmin - (c) Copyright 2018 DRUD Technology, LLC.

@@ -39,7 +39,6 @@ ${GREEN}
 #  -Install the DDEV-Local development tool
 #  -Copy required components to ~/sprint
 #  -Pre-loads docker images for the toolkit:
-#
 ####
 ${RESET}"
 
