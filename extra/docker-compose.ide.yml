@@ -1,0 +1,24 @@
+version: "3"
+
+# Adds Cloud9 IDE.
+services:
+  ide:
+    container_name: ddev-${DDEV_SITENAME}-ide
+    image: briangilbert/cloud9-alpine:20180318
+    ports:
+      # Cloud9 is served from this port inside the container.
+      - 8000
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=8000
+    volumes:
+      - ../drupal8:/workspace:rw
+    labels:
+      # These labels ensure this service is discoverable by ddev.
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+      com.ddev.app-url: $DDEV_URL
+  # This links the Cloud9 service to the web service defined in the main docker-compose.yml, allowing applications running in the web service to access the IDE service at sitename.ddev.local:8000
+  web:
+    links:
+      - ide:$DDEV_HOSTNAME

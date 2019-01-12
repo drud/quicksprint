@@ -12,6 +12,7 @@ RESET='\033[0m'
 OS=$(uname)
 USER=$(whoami)
 SHACMD=""
+XZCAT="xzcat"
 FILEBASE=""
 CURRENT_DIR=$PWD
 DDEV_VERSION=$(cat ./.ddev_version.txt)
@@ -37,7 +38,7 @@ ${GREEN}
 # It does the following:
 #  -Install Drud Technology's ddev local development tool
 #  -Copy required components to ~/sprint
-#  -Pre-loads docker images for the sprint toolkit:
+#  -Pre-loads docker images for the sprint toolkit
 #
 ####
 ${RESET}"
@@ -53,6 +54,24 @@ if [ -z "${QUICKSPRINT_SKIP_IMAGE_INSTALL:-}" ]; then
         gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
     else
         printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
+    fi
+
+    # Allows the user to choose whether they need an editor with PHP-capabilities.
+    if [ -f ddev_tarballs/docker_additions.tar.xz ]; then
+        printf "${GREEN}#### \n# This package includes an editor. \n# If you already have an editor or IDE, type N here. \n####${RESET}"
+        while true; do
+            read -p "Load Cloud9 IDE? (y/n): " CLOUD9
+            case ${CLOUD9} in
+                [Yy]* ) printf "${GREEN}# Loading Cloud9 IDE docker image. \n#### \n${RESET}";
+                    ${XZCAT} ddev_tarballs/docker_additions.tar.xz | docker load
+                    break;;
+
+                [Nn]* ) printf "${GREEN}# Continuing without Cloud9 IDE. \n### \n${RESET}";
+                    break;;
+
+                * ) echo "Please answer y or n.";;
+            esac
+        done
     fi
 fi
 

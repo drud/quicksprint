@@ -145,6 +145,32 @@ cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DI
 
 cd ${STAGING_DIR}
 
+printf "
+${GREEN}
+####
+# Package Cloud9 IDE image?
+#   This increases the size of the package and requires more memory, but
+#   gives users an IDE without needing to install one as well as PHP
+#   or NodeJS locally.
+#### \n${RESET}"
+
+while true; do
+    read -p "Include Cloud9 IDE? (y/n): " CLOUD9
+    case ${CLOUD9} in
+        [Yy]* ) printf "${GREEN}# Downloading briangilbert/cloud9-alpine. \n#### \n${RESET}";
+                docker pull briangilbert/cloud9-alpine:20180318
+                cp "${REPODIR}/extra/docker-compose.ide.yml" "${STAGING_DIR}/sprint/.ddev/"
+                printf "${GREEN}##### \n# Compressing image. \n#This may take a while. \n#####\n${RESET}";
+                docker save briangilbert/cloud9-alpine:20180318 | xz -z -9e > $STAGING_DIR/ddev_tarballs/docker_additions.tar.xz
+                break;;
+
+        [Nn]* ) printf "${GREEN}# Continuing script without including Cloud9 IDE. \n### \n${RESET}";
+                break;;
+
+        * ) echo "Please answer y or n.";;
+    esac
+done
+
 echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
 pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
