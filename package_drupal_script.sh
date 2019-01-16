@@ -23,7 +23,14 @@ QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
 echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 
-DOWNLOAD_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe https://github.com/docker/toolbox/releases/download/v18.06.0-ce/DockerToolbox-18.06.0-ce.exe https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe"
+TOOLBOX_LATEST_RELEASE="$(curl -L -s -H 'Accept: application/json' https://github.com/docker/toolbox/releases/latest | jq -r .tag_name | sed 's/^v//')"
+TOOLBOX_DOWNLOAD_URL="https://github.com/docker/toolbox/releases/download/v${TOOLBOX_LATEST_RELEASE}/DockerToolbox-${TOOLBOX_LATEST_RELEASE}.exe"
+
+GIT_LATEST_RELEASE="$(curl -L -s -H 'Accept: application/json' https://github.com/git-for-windows/git/releases/latest | jq -r .tag_name | sed 's/^v//; s/\.windows\.1//;')"
+GIT_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/v${GIT_LATEST_RELEASE}.windows.1/Git-${GIT_LATEST_RELEASE}-64-bit.exe"
+
+
+DOWNLOAD_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe ${TOOLBOX_DOWNLOAD_URL} ${GIT_DOWNLOAD_URL}"
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -86,14 +93,14 @@ while true; do
         [Yy]* ) printf "${GREEN}# Downloading installers. \n#### \n${RESET}";
                 mkdir -p installs
                 pushd installs >/dev/null
-                for dockerurl in ${DOWNLOAD_URLS}; do
-                    echo "Downloading ${dockerurl##*/} from ${dockerurl}"
-                    curl -sSL -O ${dockerurl}
+                for download_url in ${DOWNLOAD_URLS}; do
+                    echo "Downloading ${download_url##*/} from ${download_url}"
+                    curl -sSL -O ${download_url}
                 done
                 popd >/dev/null
                 break;;
 
-        [Nn]* ) printf "${GREEN}# Continuing script without downloading Docker installers. \n### \n${RESET}"; 
+        [Nn]* ) printf "${GREEN}# Continuing script without downloading installers. \n### \n${RESET}";
                 break;;
 
         * ) echo "Please answer y or n.";;
@@ -114,7 +121,7 @@ ${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
 # Download the ddev tarball/zipball
-for item in macos linux windows windows_installer; do
+for item in macos linux windows_installer; do
     SUFFIX=tar.gz
     if [ ${item} == "windows_installer" ] ; then
         SUFFIX=exe
