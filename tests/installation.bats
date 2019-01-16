@@ -35,6 +35,7 @@ function teardown {
     ROUTER_STATUS=$(echo ${DESCRIBE} | jq -r ".raw.router_status" )
     if [ "$ROUTER_STATUS" != "healthy" ] ; then
         echo "# Router status not healthy (${ROUTER_STATUS})" >&3
+        echo "# Full DESCRIBE=${DESCRIBE}" >&3
         ddev list >&3;
         return 101
     fi
