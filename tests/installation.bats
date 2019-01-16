@@ -33,7 +33,11 @@ function teardown {
 
     echo "# Testing router status" >&3
     ROUTER_STATUS=$(echo ${DESCRIBE} | jq -r ".raw.router_status" )
-    [ "$ROUTER_STATUS" = "healthy" ]
+    if [ "$ROUTER_STATUS" != "healthy" ] ; then
+        echo "# Router status not healthy (${ROUTER_STATUS})" >&3
+        ddev list >&3;
+        return 101
+    fi
 
     echo "# Testing project status" >&3
     STATUS=$(echo ${DESCRIBE} | jq -r ".raw.status")
