@@ -121,7 +121,7 @@ ${SHACMD} -c "$SHAFILE"
 popd >/dev/null
 
 # Download the ddev tarball/zipball
-for item in macos linux windows_installer; do
+for item in macos linux windows windows_installer; do
     SUFFIX=tar.gz
     if [ ${item} == "windows_installer" ] ; then
         SUFFIX=exe
