@@ -29,11 +29,17 @@ function teardown {
 }
 
 @test "check ddev project status and router status, check http status" {
-    DESCRIBE=$(cd ${SPRINTDIR}/${SPRINT_NAME} && ddev describe -j)
+    cd ${SPRINTDIR}/${SPRINT_NAME}
+    DESCRIBE=$(ddev describe -j)
 
-    echo "# Testing router status" >&3
-    ROUTER_STATUS=$(echo ${DESCRIBE} | jq -r ".raw.router_status" )
-    [ "$ROUTER_STATUS" = "healthy" ]
+    ROUTER_STATUS=$(echo "${DESCRIBE}" | jq -r ".raw.router_status" )
+    echo "# Test router status (${ROUTER_STATUS})" >&3
+    if [ "$ROUTER_STATUS" != "healthy" ] ; then
+        echo "# Router status not healthy (${ROUTER_STATUS})" >&3
+        echo "# Full DESCRIBE=${DESCRIBE}" >&3
+        ddev list >&3;
+        return 101
+    fi
 
     echo "# Testing project status" >&3
     STATUS=$(echo ${DESCRIBE} | jq -r ".raw.status")
