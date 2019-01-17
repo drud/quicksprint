@@ -52,7 +52,7 @@ ddev start >ddev_start.txt 2>&1
 echo "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}"
 ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
 echo "${YELLOW}Running 'ddev composer install'${RESET}"
-ddev composer install
+ddev composer install -d drupal8
 echo "${YELLOW}Running 'drush si' to install drupal.${RESET}"
 ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
 printf "${RESET}"
