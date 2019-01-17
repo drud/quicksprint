@@ -13,7 +13,7 @@ This directory contains tools to get you started contributing to Drupal 8:
 * Windows 7 or higher, MacOS El Capitan or higher or a recent/stable Linux distribution.
 * A robust code editor such as Visual Studio Code, Atom, PhpStorm or Netbeans (this may be provided as part of this package).
 
-**⚠️ You can still install and contribute to Drupal even without these requirements using [Drupal's quick-start command](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**!
+**⚠️ If your computer does not match a requirement, try the [Drupal quick-start](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**! Now skip the steps below.
 
 ## Getting Started
 
@@ -26,14 +26,16 @@ This directory contains tools to get you started contributing to Drupal 8:
 <a name="get-the-files"></a>
 ### 1. Get The Files
 
+Use one of the options below to get the files.
+
 * USB Drive - Copy drupal_sprint_package-RELEASE.zip and Docker installer for your Operating System from the USB drive to your Desktop.
 * ResilioSync - Find the folder/directory that was downloaded and copy its contents to your Desktop.
 * GitHub - Download drupal_sprint_package-RELEASE.zip from https://github.com/drud/quicksprint/releases.
 
 <a name="extract-files"></a>
-### 2. Extract drupal_sprint_package directory
+### 2. drupal_sprint_package directory
 
-Extract the drupal_sprint_package.RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
+Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
 
 <a name="install"></a>
 ### 3. Install Docker and Other Requirements
@@ -57,9 +59,11 @@ Extract the drupal_sprint_package.RELEASE.zip file, and open or browse to the "d
 
 **⚠️Docker for Windows**: You *must* share the C: drive (preferably all drives, or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
 
-**⚠️All users:** additional information is available at [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/).
+**⚠️All users** Additional Docker **installation** troubleshooting and installation documentation is available at [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/).
 
-**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/) to get docker properly set up.
+-**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/) to confirm your versions of docker ce and docker-compose to get docker properly setup.
+
+**⚠️All users:** Now start the Docker app you installed. Docker may ask you to create a DockerHub user account, and you may ignore this prompt safely and continue on below.
 
 #### 3.2 ddev
 
