@@ -43,7 +43,7 @@ ${GREEN}
 ${RESET}"
 
 echo ""
-echo "Installing docker images for ddev to use..."
+printf "Installing docker images for ddev to use...\n"
 
 if command -v xzcat >/dev/null; then
     xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load

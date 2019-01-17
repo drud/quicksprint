@@ -46,15 +46,15 @@ echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which 
 # Attempts to reconfigure ddev to update config automagically.
 ddev config --docroot drupal8 --project-name sprint-[ts] --project-type drupal8
 
-echo "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}"
-echo "${YELLOW}Running ddev start.${RESET}"
+printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
+printf "${YELLOW}Running ddev start...${RESET}\n"
 ddev start >ddev_start.txt 2>&1
-echo "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}"
-ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
-echo "${YELLOW}Running 'ddev composer install'${RESET}"
-ddev composer install -d drupal8
-echo "${YELLOW}Running 'drush si' to install drupal.${RESET}"
-ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
+printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
+time ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
+printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
+time ddev composer install -d drupal8
+printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
+time ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
 printf "${RESET}"
 ddev describe
 
