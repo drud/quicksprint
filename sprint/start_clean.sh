@@ -50,11 +50,11 @@ printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minut
 printf "${YELLOW}Running ddev start...${RESET}\n"
 ddev start >ddev_start.txt 2>&1
 printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
-time ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
+ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
-time ddev composer install -d drupal8
+ddev composer install -d drupal8
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
-time ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
+ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
 printf "${RESET}"
 ddev describe
 
