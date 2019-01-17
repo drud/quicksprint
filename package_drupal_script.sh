@@ -159,7 +159,7 @@ while true; do
     case ${CLOUD9} in
         [Yy]* ) printf "${GREEN}# Downloading briangilbert/cloud9-alpine. \n#### \n${RESET}";
                 docker pull briangilbert/cloud9-alpine:20180318
-                cp "${REPODIR}/extra/docker-compose.ide.yml" "${STAGING_DIR}/sprint/.ddev/"
+                cp "${REPO_DIR}/extra/docker-compose.ide.yml" "${STAGING_DIR}/sprint/.ddev/"
                 printf "${GREEN}##### \n# Compressing image. \n#This may take a while. \n#####\n${RESET}";
                 docker save briangilbert/cloud9-alpine:20180318 | xz -z -9e > $STAGING_DIR/ddev_tarballs/docker_additions.tar.xz
                 break;;
