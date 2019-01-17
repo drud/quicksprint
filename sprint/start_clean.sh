@@ -50,7 +50,7 @@ echo "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes
 echo "${YELLOW}Running ddev start.${RESET}"
 ddev start >ddev_start.txt 2>&1
 echo "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}"
-ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'
+ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
 echo "${YELLOW}Running 'ddev composer install'${RESET}"
 ddev composer install
 echo "${YELLOW}Running 'drush si' to install drupal.${RESET}"
