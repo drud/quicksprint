@@ -42,7 +42,7 @@ done
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
 # Attempts to reconfigure ddev to update config automagically.
-ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
+ddev config --docroot drupal8 --project-name sprint-[ts] --project-type drupal8
 
 echo "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}"
 ddev start
