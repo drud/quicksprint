@@ -70,7 +70,7 @@ if [ -d $ddev_tarballs ] && (ls $ddev_tarballs/* | grep -v ${LATEST_VERSION}) ; 
 fi
 
 # Install the beginning items we need in the kit.
-cp -r .ddev_version.txt .quicksprint_release.txt sprint start_sprint.* SPRINTUSER_README.md install.sh ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt sprint start_sprint.* *.md install.sh ${STAGING_DIR}
 
 
 # macOS/Darwin has a oneoff/weird shasum command.
