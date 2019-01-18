@@ -50,13 +50,6 @@ else
     exit 1
 fi
 
-
-if [ -d "$STAGING_DIR" ] && [ ! -z "$(ls -A "$STAGING_DIR")" ] ; then
-    printf "${RED}The staging directory $STAGING_DIR already has files. Deleting them and recreating everything.${RESET}"
-    rm -rf "$STAGING_DIR"
-    rm -f $STAGING_DIR_BASE/drupal_sprint_package.*.${QUICKSPRINT_RELEASE}.*
-fi
-
 SHACMD="sha256sum"
 LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/drud/ddev/releases/latest)
 # The releases are returned in the format {"id":3622206,"tag_name":"hello-1.0.0.11",...}, we have to extract the tag_name.
@@ -65,9 +58,19 @@ RELEASE_URL="https://github.com/drud/ddev/releases/download/$LATEST_VERSION"
 
 echo "$LATEST_VERSION" >.ddev_version.txt
 
+# Remove anything in the ddev_tarballs directory that don't match current version.
+ddev_tarballs="${STAGING_DIR}/ddev_tarballs"
+mkdir -p ${ddev_tarballs}
+
+# Remove anything in staging directory except ddev_tarballs.
+rm -rf "${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}"
+# Remove anytyhing in ddev_tarballs that is not the latest version
+if [ -d $ddev_tarballs ] && (ls $ddev_tarballs/* | grep -v ${LATEST_VERSION}) ; then
+    rm $(ls $ddev_tarballs/* | grep -v ${LATEST_VERSION})
+fi
+
 # Install the beginning items we need in the kit.
-mkdir -p ${STAGING_DIR}
-cp -r .ddev_version.txt .quicksprint_release.txt sprint start_sprint.* SPRINTUSER_README.md install.sh ${STAGING_DIR}
+cp -r .ddev_version.txt .quicksprint_release.txt sprint start_sprint.* *.md install.sh ${STAGING_DIR}
 
 
 # macOS/Darwin has a oneoff/weird shasum command.
@@ -76,7 +79,7 @@ if [ "$OS" = "Darwin" ]; then
 fi
 
 if ! docker --version >/dev/null 2>&1; then
-    printf "${YELLOW}Docker is required to use this package. Please install docker before attempting to use ddev.${RESET}\n"
+    printf "${YELLOW}Docker is required to create package. Please install docker before attempting to use ddev.${RESET}\n"
 fi
 
 cd ${STAGING_DIR}
@@ -108,36 +111,19 @@ while true; do
     esac
 done
 
-mkdir -p ddev_tarballs
-TARBALL="ddev_docker_images.$LATEST_VERSION.tar.xz"
-SHAFILE="$TARBALL.sha256.txt"
-if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
-    echo "Downloading $TARBALL ..."
-    curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
-    curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
-fi
-pushd ddev_tarballs >/dev/null
-${SHACMD} -c "$SHAFILE"
-popd >/dev/null
+pushd ${ddev_tarballs} >/dev/null
+# Download the ddev tarballs if necessary; check to make sure they all have correct sha256.
+for tarball in ddev_macos.$LATEST_VERSION.tar.gz ddev_linux.$LATEST_VERSION.tar.gz ddev_windows.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
+    shafile="${tarball}.sha256.txt"
 
-# Download the ddev tarball/zipball
-for item in macos linux windows windows_installer; do
-    SUFFIX=tar.gz
-    if [ ${item} == "windows_installer" ] ; then
-        SUFFIX=exe
+    if ! [ -f "${tarball}" -a -f "${shafile}" ] ; then
+        echo "Downloading ${tarball} ..."
+        curl --fail -sSL "$RELEASE_URL/${tarball}" -o "${tarball}"
+        curl --fail -sSL "$RELEASE_URL/$shafile" -o "${shafile}"
     fi
-    TARBALL="ddev_$item.$LATEST_VERSION.$SUFFIX"
-    SHAFILE="$TARBALL.sha256.txt"
-
-    if [ ! -f "ddev_tarballs/$TARBALL" ] ; then
-        echo "Downloading $TARBALL ..."
-        curl --fail -sSL "$RELEASE_URL/$TARBALL" -o "ddev_tarballs/$TARBALL"
-        curl --fail -sSL "$RELEASE_URL/$SHAFILE" -o "ddev_tarballs/$SHAFILE"
-    fi
-    pushd ddev_tarballs >/dev/null
-    ${SHACMD} -c $(basename "$SHAFILE")
-    popd >/dev/null
+    ${SHACMD} -c "${shafile}"
 done
+popd >/dev/null
 
 # clone or refresh d8 clone
 mkdir -p sprint
@@ -172,11 +158,5 @@ zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGIN
 printf "${GREEN}####
 # The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}.
 #
-# Now deleting the staging directory.
+# Package is built, staging directory remains in ${STAGING_DIR}.
 ####${RESET}"
-rm -rf ${STAGING_DIR_NAME}
-
-printf "${GREEN}
-# Finished
-####${RESET}
-"

@@ -22,7 +22,7 @@ tests/sanetestbot.sh || ( echo "sanetestbot.sh failed, test machine is not ready
 
 function cleanup {
     rm -rf /tmp/drupal_sprint_package
-    if [ ! -z "$SOURCE_TARBALL_LOCATION" ] ; then rm -f ${SOURCE_TARBALL_LOCATION}; fi
+    if [ ! -z "${SOURCE_TARBALL_LOCATION:-}" ] ; then rm -f ${SOURCE_TARBALL_LOCATION:-nopedontrm}; fi
 }
 trap cleanup EXIT
 
@@ -36,7 +36,7 @@ echo n | ./package_drupal_script.sh || ( echo "package_drupal_script.sh failed" 
 SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 
 # Untar source tarball
-tar -C "$UNTAR_LOCATION" -zxf $SOURCE_TARBALL_LOCATION
+tar -C "$UNTAR_LOCATION" -zxf ${SOURCE_TARBALL_LOCATION:-}
 
 if [ ! -f "$UNTARRED_PACKAGE/SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/COPYING" -o ! -d "$UNTARRED_PACKAGE/licenses" ]; then
     echo "Packaged documents are missing from sprint package (in $UNTARRED_PACKAGE)"

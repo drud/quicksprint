@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SPRINT_BRANCH=8.7.x
+
 set -o errexit
 set -o pipefail
 set -o nounset
@@ -42,11 +44,17 @@ done
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
 # Attempts to reconfigure ddev to update config automagically.
-ddev config --docroot drupal8 --projectname sprint-[ts] --projecttype drupal8
+ddev config --docroot drupal8 --project-name sprint-[ts] --project-type drupal8
 
-echo "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}"
-ddev start
-ddev exec bash -c 'git fetch && git reset --hard origin/8.7.x && composer install && drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting" && drush cr'
+printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
+printf "${YELLOW}Running ddev start...${RESET}\n"
+ddev start >ddev_start.txt 2>&1
+printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
+ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
+printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
+ddev composer install -d drupal8
+printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
+ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
 printf "${RESET}"
 ddev describe
 
