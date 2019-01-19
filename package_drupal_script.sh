@@ -147,7 +147,7 @@ rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
 if [ "$INSTALL" != "n" ] ; then
-    tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz 
+    tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
     zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 fi
 rm -rf ${STAGING_DIR_NAME}/installs
