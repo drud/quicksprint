@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MIN_DDEV_VERSION=v1.5
+
 set -o errexit
 set -o pipefail
 set -o nounset
@@ -20,5 +22,10 @@ for item in curl jq zcat composer perl zip bats; do
     command -v $item >/dev/null || ( echo "$item is not installed" && exit 2 )
 done
 docker run --rm -t -v "/$PWD:/junk" busybox ls //junk >/dev/null || ( echo "docker is not running" && exit 3 )
+
+if command -v ddev >/dev/null && [ "$(ddev version -j | jq -r .raw.cli)" \< "${MIN_DDEV_VERSION}" ] ; then
+  echo "ddev version in $(command -v ddev) is inadequate: $(ddev version -j | jq -r .raw.cli)"
+  exit 4
+fi
 
 echo "Testbot appears to be sane"
