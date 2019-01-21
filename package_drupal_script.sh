@@ -126,7 +126,7 @@ popd >/dev/null
 
 # clone or refresh d8 clone
 mkdir -p sprint
-git clone --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8
+git clone --config core.autocrlf=false --config core.eol=lf --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8
 pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
 cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
