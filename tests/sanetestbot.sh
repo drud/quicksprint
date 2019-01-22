@@ -21,7 +21,11 @@ fi
 for item in curl jq zcat composer perl zip bats; do
     command -v $item >/dev/null || ( echo "$item is not installed" && exit 2 )
 done
-docker run --rm -t -v "/$PWD:/junk" busybox ls //junk >/dev/null || ( echo "docker is not running" && exit 3 )
+
+DOCKER_CMD="docker run --rm -t -v "/$PWD:/junk" busybox ls //junk "
+# Try the docker run command twice because of the really annoying mkdir /c: file exists bug
+# Apparently https://github.com/docker/for-win/issues/1560
+(sleep 1 && ( $DOCKER_CMD >/dev/null ) || (sleep 1 && $DOCKER_CMD >/dev/null )) || ( echo "docker is not running or can't do `$DOCKER_CMD`" && exit 3 )
 
 if command -v ddev >/dev/null && [ "$(ddev version -j | jq -r .raw.cli)" \< "${MIN_DDEV_VERSION}" ] ; then
   echo "ddev version in $(command -v ddev) is inadequate: $(ddev version -j | jq -r .raw.cli)"
