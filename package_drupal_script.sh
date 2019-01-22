@@ -4,6 +4,9 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Base checkout should be of the 8.7.x branch
+SPRINT_BRANCH=8.7.x
+
 # This makes git-bash actually try to create symlinks.
 # Use developer mode in Windows 10 so this doesn't require admin privs.
 export MSYS=winsymlinks:nativestrict
@@ -126,7 +129,7 @@ popd >/dev/null
 
 # clone or refresh d8 clone
 mkdir -p sprint
-git clone --config core.autocrlf=false --config core.eol=lf --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8
+git clone --config core.autocrlf=false --config core.eol=lf --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8 -b ${SPRINT_BRANCH}
 pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
 cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
