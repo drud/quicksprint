@@ -21,6 +21,7 @@ tar -xpf sprint.tar.xz -C ${SPRINTNAME}
 
 #Update ddev project name
 perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" ${SPRINTNAME}/*.{txt,sh} ${SPRINTNAME}/.ddev/config.yaml
+rm -f ${SPRINTNAME}/*.bak
 
 # Next line is (only) stdout output, lets caller know the name of the project created
 printf ${SPRINTNAME}
