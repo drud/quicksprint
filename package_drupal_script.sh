@@ -62,7 +62,7 @@ ddev_tarballs="${STAGING_DIR}/ddev_tarballs"
 mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
-rm -rf "${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}"
+rm -rf ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}
 # Remove anything in ddev_tarballs that is not the latest version
 if [ -d "${ddev_tarballs}" ]; then
      find "${ddev_tarballs}" -type f -not -name "*${LATEST_VERSION}*" -exec rm '{}' \;
