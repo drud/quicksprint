@@ -48,9 +48,9 @@ ddev config --docroot drupal8 --project-name sprint-[ts] --project-type drupal8
 
 printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
 printf "${YELLOW}Running ddev start...${RESET}\n"
-ddev start >ddev_start.txt 2>&1
+ddev start >ddev_start.txt 2>&1 || (echo "ddev start failed: $(cat ddev_start.txt)" && exit 101)
 printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
-ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'"
+ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'" || (echo "ddev exec bash...git reset failed" && exit 102)
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
 ddev composer install -d drupal8
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
