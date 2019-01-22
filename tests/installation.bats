@@ -33,7 +33,7 @@ function teardown {
 @test "check git configuration" {
     cd ${SPRINTDIR}/${SPRINT_NAME}
     [ "$(git config core.eol)" = "lf" ]
-    [ "${git config core.autocrlf" = "false" ]
+    [ "$(git config core.autocrlf") = "false" ]
     [ "$(git rev-parse --abbrev-ref HEAD)" = ${SPRINT_BRANCH} ]
 }
 
