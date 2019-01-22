@@ -63,9 +63,9 @@ mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
 rm -rf "${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}"
-# Remove anytyhing in ddev_tarballs that is not the latest version
-if [ -d $ddev_tarballs ] && (ls $ddev_tarballs/* | grep -v ${LATEST_VERSION}) ; then
-    rm $(ls $ddev_tarballs/* | grep -v ${LATEST_VERSION})
+# Remove anything in ddev_tarballs that is not the latest version
+if [ -d "${ddev_tarballs}" ]; then
+     find "${ddev_tarballs}" -type f -not -name "*${LATEST_VERSION}*" -exec rm '{}' \;
 fi
 
 # Install the beginning items we need in the kit.
