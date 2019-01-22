@@ -10,7 +10,6 @@ export MSYS=winsymlinks:nativestrict
 
 # Maximise compression
 export XZ_OPT=-9e
-export GZIP=-9
 
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in the repository root.
@@ -148,11 +147,11 @@ rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
 if [ "$INSTALL" != "n" ] ; then
-    tar -czf drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
+    tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
     zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 fi
 rm -rf ${STAGING_DIR_NAME}/installs
-tar -czf drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz ${STAGING_DIR_NAME}
+tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
 printf "${GREEN}####
