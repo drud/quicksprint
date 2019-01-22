@@ -24,22 +24,24 @@ printf "
 ${GREEN}
 ####
 # This script starts a Drupal 8 instance checked out from head
-# running in ddev with a fresh database.
+# running in ddev with a fresh database.${RESET}"
+if [ -d drupal8 ] ; then
+  printf "${GREEN}
 #
 # Make sure you've uploaded any patches from last issue
 # you worked on before continuing. This will revert all
 # local code and database changes.
 #
-####
-${RESET}"
-while true; do
-    read -p "Continue? (y/n): " INSTALL
-    case $INSTALL in
-        [Yy]* ) printf "${GREEN}# Continuing \n#### \n${RESET}"; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer y or n.";;
-    esac
-done
+####${RESET}\n"
+    while true; do
+        read -p "Continue? (y/n): " INSTALL
+        case $INSTALL in
+            [Yy]* ) printf "${GREEN}# Continuing \n#### \n${RESET}"; break;;
+            [Nn]* ) exit;;
+            * ) echo "Please answer y or n.";;
+        esac
+    done
+fi
 
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 

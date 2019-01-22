@@ -79,7 +79,7 @@ if [ ! -z "$TARBALL" ] ; then
     chmod ugo+x /tmp/ddev
 
     if command -v ddev >/dev/null && [  -z "${DDEV_INSTALL_DIR:-}" ] ; then
-        printf "${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}"
+        printf "\n${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}\n"
     else
         # Calling script may have already set DDEV_INSTALL_DIR, otherwise we respect and use it.
         if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
@@ -122,6 +122,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ "${OS}" = "MINGW64_NT*" ] ; then
-    printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
+if ! command -v ddev >/dev/null && [ "${OS}" =~ "MINGW64_NT*" ] ; then
+    printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}\n"
 fi

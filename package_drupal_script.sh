@@ -143,17 +143,19 @@ cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DI
 
 cd ${STAGING_DIR}
 
-echo "Creating tar and zipballs"
+echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
-pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
+pushd sprint >/dev/null && tar -cvJf ../sprint.tar.xz . && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
 if [ "$INSTALL" != "n" ] ; then
+    echo "Creating drupal_sprint_package with installs..."
     tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
     zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 fi
 rm -rf ${STAGING_DIR_NAME}/installs
+echo "Creating no-docker sprint package..."
 tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
