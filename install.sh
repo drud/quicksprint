@@ -65,7 +65,7 @@ case "$OS" in
     MINGW64_NT*)
         echo ""
         TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
-        echo "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
+        printf "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
         ;;
     *)
         echo "${RED}No ddev binary is available for ${OS}${RESET}"
