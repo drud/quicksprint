@@ -4,6 +4,9 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Base checkout should be of the 8.7.x branch
+SPRINT_BRANCH=8.7.x
+
 # This makes git-bash actually try to create symlinks.
 # Use developer mode in Windows 10 so this doesn't require admin privs.
 export MSYS=winsymlinks:nativestrict
@@ -39,7 +42,7 @@ OS=$(uname)
 USER=$(whoami)
 
 # Ensure zcat is installed
-command -v zcat >/dev/null 2>&1 || { echo >&2 "${RED}zcat command is required but it's not installed. ('brew install xz' on macOS, 'apt-get install xz-utils' on Debian/Ubuntu) Aborting.${RESET}"; exit 1; }
+command -v zcat >/dev/null 2>&1 || { printf >&2 "${RED}zcat command is required but it's not installed. ('brew install xz' on macOS, 'apt-get install xz-utils' on Debian/Ubuntu) Aborting.${RESET}\n"; exit 1; }
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
@@ -62,7 +65,7 @@ ddev_tarballs="${STAGING_DIR}/ddev_tarballs"
 mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
-rm -rf "${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}"
+rm -rf ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}
 # Remove anything in ddev_tarballs that is not the latest version
 if [ -d "${ddev_tarballs}" ]; then
      find "${ddev_tarballs}" -type f -not -name "*${LATEST_VERSION}*" -exec rm '{}' \;
@@ -126,7 +129,7 @@ popd >/dev/null
 
 # clone or refresh d8 clone
 mkdir -p sprint
-git clone --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8
+git clone --config core.autocrlf=false --config core.eol=lf --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8 -b ${SPRINT_BRANCH}
 pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
 cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
@@ -140,17 +143,19 @@ cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DI
 
 cd ${STAGING_DIR}
 
-echo "Creating tar and zipballs"
+echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
 pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
 if [ "$INSTALL" != "n" ] ; then
+    echo "Creating drupal_sprint_package with installs..."
     tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
     zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 fi
 rm -rf ${STAGING_DIR_NAME}/installs
+echo "Creating no-docker sprint package..."
 tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
@@ -158,4 +163,4 @@ printf "${GREEN}####
 # The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}.
 #
 # Package is built, staging directory remains in ${STAGING_DIR}.
-####${RESET}"
+####${RESET}\n"

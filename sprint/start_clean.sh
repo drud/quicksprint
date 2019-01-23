@@ -31,7 +31,7 @@ ${GREEN}
 # local code and database changes.
 #
 ####
-${RESET}"
+${RESET}\n"
 while true; do
     read -p "Continue? (y/n): " INSTALL
     case $INSTALL in

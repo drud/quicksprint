@@ -50,7 +50,7 @@ if command -v xzcat >/dev/null; then
 elif [[ "$OS" == "Darwin" ]]; then
     gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
 else
-    echo "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}"
+    printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
 fi
 
 
@@ -65,10 +65,10 @@ case "$OS" in
     MINGW64_NT*)
         echo ""
         TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
-        echo "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}"
+        printf "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}\n"
         ;;
     *)
-        echo "${RED}No ddev binary is available for ${OS}${RESET}"
+        printf "${RED}No ddev binary is available for ${OS}${RESET}\n"
         exit 2
         ;;
 
@@ -79,7 +79,7 @@ if [ ! -z "$TARBALL" ] ; then
     chmod ugo+x /tmp/ddev
 
     if command -v ddev >/dev/null && [  -z "${DDEV_INSTALL_DIR:-}" ] ; then
-        printf "${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}"
+        printf "\n${RED}A version of ddev already exists in $(command -v ddev); You may upgrade it using your normal upgrade technique. Not installing a new version.${RESET}\n"
     else
         # Calling script may have already set DDEV_INSTALL_DIR, otherwise we respect and use it.
         if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
@@ -122,6 +122,6 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ "${OS}" = "MINGW64_NT*" ] ; then
-    printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}"
+if ! command -v ddev >/dev/null && [ "${OS}" =~ "MINGW64_NT*" ] ; then
+    printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}\n"
 fi
