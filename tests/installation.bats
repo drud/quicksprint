@@ -31,7 +31,7 @@ function teardown {
 }
 
 @test "check git configuration" {
-    cd ${SPRINTDIR}/${SPRINT_NAME}
+    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
     [ "$(git config core.eol)" = "lf" ]
     [ "$(git config core.autocrlf)" = "false" ]
     [ "$(git rev-parse --abbrev-ref HEAD)" = ${SPRINT_BRANCH} ]
