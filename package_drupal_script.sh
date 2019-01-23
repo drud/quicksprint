@@ -42,7 +42,7 @@ OS=$(uname)
 USER=$(whoami)
 
 # Ensure zcat is installed
-command -v zcat >/dev/null 2>&1 || { echo >&2 "${RED}zcat command is required but it's not installed. ('brew install xz' on macOS, 'apt-get install xz-utils' on Debian/Ubuntu) Aborting.${RESET}"; exit 1; }
+command -v zcat >/dev/null 2>&1 || { printf >&2 "${RED}zcat command is required but it's not installed. ('brew install xz' on macOS, 'apt-get install xz-utils' on Debian/Ubuntu) Aborting.${RESET}\n"; exit 1; }
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
