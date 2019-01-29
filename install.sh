@@ -64,6 +64,11 @@ case "$OS" in
         ;;
     MINGW64_NT*)
         echo ""
+        # Assume if DDEV_INSTALL_DIR is set that we *do* need ddev on Windows, install it.
+        # Otherwise, we'll do the install using the installer below.
+        if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
+            TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
+        fi
         ;;
     *)
         printf "${RED}No ddev binary is available for ${OS}${RESET}\n"
