@@ -64,8 +64,6 @@ case "$OS" in
         ;;
     MINGW64_NT*)
         echo ""
-        TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
-        printf "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}\n"
         ;;
     *)
         printf "${RED}No ddev binary is available for ${OS}${RESET}\n"
@@ -103,6 +101,12 @@ if [ ! -z "$TARBALL" ] ; then
         fi
     fi
 fi
+if ! command -v ddev >/dev/null && [[ "$OS" =~ "MINGW64" ]] ; then
+    printf "${YELLOW}Running the ddev_windows_installer. Please allow privileges as requested${RESET}\n"
+    # Silent install of ddev for windows
+    cmd //c $PWD/ddev_tarballs/ddev_windows_installer.${DDEV_VERSION}.exe //S
+    printf "${GREEN}Installed ddev using the ddev_windows_installer. It may not be in your PATH until you open a new window.${RESET}\n"
+fi
 
 mkdir -p ~/sprint
 cp start_sprint.sh ~/sprint
@@ -122,7 +126,3 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ "${OS}" =~ "MINGW64_NT*" ] ; then
-    /tmp/ddev_windows_installer.${DDEV_VERSION}.exe /S
-    printf "${GREEN}Installed ddev using the ddev_windows_installer.${RESET}\n"
-fi
