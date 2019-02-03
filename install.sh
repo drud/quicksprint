@@ -45,14 +45,16 @@ ${RESET}"
 echo ""
 printf "Installing docker images for ddev to use...\n"
 
-if command -v xzcat >/dev/null; then
-    xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
-elif [[ "$OS" == "Darwin" ]]; then
-    gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
-else
-    printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
+# Allow faster turnaround on testing by export QUICKSPRINT_SKIP_IMAGE_INSTALL=true
+if [ -z "${QUICKSPRINT_SKIP_IMAGE_INSTALL:-}" ]; then
+    if command -v xzcat >/dev/null; then
+        true # xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+    elif [[ "$OS" == "Darwin" ]]; then
+        true #gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+    else
+        printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
+    fi
 fi
-
 
 TARBALL=""
 case "$OS" in
