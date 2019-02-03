@@ -25,6 +25,7 @@ function teardown {
 
     ddev rm -R --omit-snapshot ${SPRINT_NAME}
     if [ ! -z "${SPRINTDIR}" -a ! -z "${SPRINT_NAME}" -a -d ${SPRINTDIR}/${SPRINT_NAME} ] ; then
+        chmod -R u+w ${SPRINTDIR}/${SPRINT_NAME}
         rm -rf ${SPRINTDIR}/${SPRINT_NAME}
     fi
     echo "# teardown complete" >&3

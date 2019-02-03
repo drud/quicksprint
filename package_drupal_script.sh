@@ -65,6 +65,8 @@ ddev_tarballs="${STAGING_DIR}/ddev_tarballs"
 mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
+# Chmod as on WIndows read-only stuff is often unremoveable
+chmod -R u+w ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh} || true
 rm -rf ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}
 # Remove anything in ddev_tarballs that is not the latest version
 if [ -d "${ddev_tarballs}" ]; then
@@ -146,6 +148,7 @@ cd ${STAGING_DIR}
 echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
 pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
+if [ -f ${STAGING_DIR}/sprint} ] ; then chmod -R u+w ${STAGING_DIR}/sprint; fi
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
@@ -154,6 +157,7 @@ if [ "$INSTALL" != "n" ] ; then
     tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
     zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 fi
+if [ -f ${STAGING_DIR_NAME}/installs ]; then chmod -R u+w ${STAGING_DIR_NAME}/installs; fi
 rm -rf ${STAGING_DIR_NAME}/installs
 echo "Creating no-docker sprint package..."
 tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
