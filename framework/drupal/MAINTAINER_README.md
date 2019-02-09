@@ -5,7 +5,7 @@ Quicksprint is a basic toolkit to get people started with ddev and a Drupal code
 There are two parts to this project:
 
 1. A build of the tarball that a sprint attendee needs (done by a maintainer using Linux or Mac OS, who should be reading this right now). The maintainer uses `package.sh --framework drupal` to create a tarball/zipball for sprint attendees to use.
-2. A released tarball/zipball that has everything ready for an ordinary sprint user to get set up fast. It includes a DRUPAL_SPRINTUSER_README.md to help them know what to do.
+2. A released tarball/zipball that has everything ready for an ordinary sprint user to get set up fast. It includes a SPRINTUSER_README.md to help them know what to do.
 
 Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal8 repository to provide the tools to get people going quickly at a sprint.
 
