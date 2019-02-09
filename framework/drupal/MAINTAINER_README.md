@@ -17,7 +17,7 @@ Quicksprint packages are built nightly and on tagged releases. We recommend down
     * Confirm Docker is running.
     * Confirm docker-compose is available.
     * Make sure you have these packages on your build machine: curl jq zcat composer perl zip bats. You can run the tests/sanetestbot.sh script to test.
-    * Then run the script `package_drupal_script.sh`
+    * Then run the script `package.sh --framework drupal`
 
 ## Distributing a Sprint Package
 
