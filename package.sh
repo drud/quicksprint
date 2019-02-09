@@ -15,7 +15,7 @@ OS=$(uname)
 USER=$(whoami)
 
 # @todo Checks framework argument.
-ARGS=$(getopt -o hfd: -l "help,docker,framework:" --name "$0" -- "$@")
+ARGS=$(getopt -o hdf: -l "help,docker,framework:" --name "$0" -- "$@")
 
 eval set -- "$ARGS"
 
