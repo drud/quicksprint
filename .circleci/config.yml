@@ -14,8 +14,8 @@ jobs:
         command: ./.circleci/circle_vm_setup.sh
         name: NORMAL Circle VM setup - tools, docker
     - run:
-        command: echo "y" | ./package_drupal_script.sh
-        name: Run the package_drupal_script.sh
+        command: echo "n" | time ./package.sh -d
+        name: Run the package.sh
         no_output_timeout: "20m"
     - persist_to_workspace:
         root: ~/

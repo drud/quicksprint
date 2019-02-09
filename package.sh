@@ -4,6 +4,58 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+
+FRAMEWORK="drupal"
+INSTALL_DOCKER=false
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+RESET='\033[0m'
+OS=$(uname)
+USER=$(whoami)
+
+# @todo Checks framework argument.
+ARGS=$(getopt -o hfd: -l "help,docker,framework:" --name "$0" -- "$@")
+
+eval set -- "$ARGS"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -f|--framework)
+            shift;
+            if [ -n "$1" ]; then
+                FRAMEWORK="$1"
+                if [ ! -d "${PWD}/framework/${FRAMEWORK}" ]; then
+                    printf "${RED}Framework ${FRAMEWORK} directory not found.\n${RESET}"
+                    exit
+                fi
+                shift;
+            fi
+            ;;
+        -d|--docker)
+            INSTALL_DOCKER=true
+            shift;
+            ;;
+        -h|--help)
+            echo "Usage: package.sh [--help] [--framework drupal]"
+            echo ""
+            echo "Packages a contribution kit for the specified framework."
+            echo ""
+            echo "Arguments:"
+            echo "      --framework NAME ${GREEN}Builds the package for the specified framework (Drupal).${RESET}"
+            echo "      --docker         ${GREEN}Includes Docker installers in the package.${RESET}"
+            echo "      --help           ${GREEN}Prints this message and exits.${RESET}"
+            exit
+            shift;
+            ;;
+        --)
+            shift;
+            break
+            ;;
+    esac
+done
+
+
 # Base checkout should be of the 8.7.x branch
 SPRINT_BRANCH=8.7.x
 
@@ -11,13 +63,10 @@ SPRINT_BRANCH=8.7.x
 # Use developer mode in Windows 10 so this doesn't require admin privs.
 export MSYS=winsymlinks:nativestrict
 
-# Maximise compression
-export XZ_OPT=-9e
-
 # This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
 # It assumes it's being run in the repository root.
 
-STAGING_DIR_NAME=drupal_sprint_package
+STAGING_DIR_NAME="${FRAMEWORK}_sprint_package"
 STAGING_DIR_BASE=~/tmp
 STAGING_DIR="$STAGING_DIR_BASE/$STAGING_DIR_NAME"
 REPO_DIR=$PWD
@@ -34,12 +83,6 @@ GIT_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/v${GI
 
 DOWNLOAD_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe ${TOOLBOX_DOWNLOAD_URL} ${GIT_DOWNLOAD_URL}"
 
-RED='\033[31m'
-GREEN='\033[32m'
-YELLOW='\033[33m'
-RESET='\033[0m'
-OS=$(uname)
-USER=$(whoami)
 
 # Ensure zcat is installed
 command -v zcat >/dev/null 2>&1 || { printf >&2 "${RED}zcat command is required but it's not installed. ('brew install xz' on macOS, 'apt-get install xz-utils' on Debian/Ubuntu) Aborting.${RESET}\n"; exit 1; }
@@ -88,32 +131,19 @@ fi
 
 cd ${STAGING_DIR}
 
-printf "
-${GREEN}
-####
-# Package docker and other installers (Git For Windows, etc)?
-#### \n${RESET}"
 
-while true; do
-    read -p "Include installers? (y/n): " INSTALL
-    case ${INSTALL} in
-        [Yy]* ) printf "${GREEN}# Downloading installers. \n#### \n${RESET}";
-                mkdir -p installs
-                pushd installs >/dev/null
-                for download_url in ${DOWNLOAD_URLS}; do
-                    echo "Downloading ${download_url##*/} from ${download_url}"
-                    curl -sSL -O ${download_url}
-                done
-                popd >/dev/null
-                break;;
-
-        [Nn]* ) printf "${GREEN}# Continuing script without downloading installers. \n### \n${RESET}";
-                break;;
-
-        * ) echo "Please answer y or n.";;
-
-    esac
-done
+if [ $INSTALL_DOCKER = true ]; then
+    printf "${GREEN}####\n# Downloading installers. \n#### \n${RESET}";
+    mkdir -p installs
+    pushd installs >/dev/null
+    for download_url in ${DOWNLOAD_URLS}; do
+        echo "Downloading ${download_url##*/} from ${download_url}"
+        curl -sSL -O ${download_url}
+    done
+    popd >/dev/null
+else
+    printf "${GREEN}####\n# Continuing script without downloading installers. \n#### \n${RESET}";
+fi
 
 pushd ${ddev_tarballs} >/dev/null
 # Download the ddev tarballs if necessary; check to make sure they all have correct sha256.
@@ -129,47 +159,19 @@ for tarball in ddev_macos.$LATEST_VERSION.tar.gz ddev_linux.$LATEST_VERSION.tar.
 done
 popd >/dev/null
 
-# clone or refresh d8 clone
-mkdir -p sprint
-git clone --config core.autocrlf=false --config core.eol=lf --quiet https://git.drupal.org/project/drupal.git ${STAGING_DIR}/sprint/drupal8 -b ${SPRINT_BRANCH}
-pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
-cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
-
-echo "Running composer install --quiet"
-composer install --quiet
-popd >/dev/null
-
 # Copy licenses and COPYING notice.
 cp -r ${REPO_DIR}/licenses ${REPO_DIR}/COPYING "$STAGING_DIR/"
 cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DIR/sprint"
 
 cd ${STAGING_DIR}
 
-printf "
-${GREEN}
-####
-# Package Cloud9 IDE image?
-#   This increases the size of the package and requires more memory, but
-#   gives users an IDE without needing to install one as well as PHP
-#   or NodeJS locally.
-#### \n${RESET}"
-
-while true; do
-    read -p "Include Cloud9 IDE? (y/n): " CLOUD9
-    case ${CLOUD9} in
-        [Yy]* ) printf "${GREEN}# Downloading briangilbert/cloud9-alpine. \n#### \n${RESET}";
-                docker pull briangilbert/cloud9-alpine:20180318
-                cp "${REPO_DIR}/extra/docker-compose.ide.yml" "${STAGING_DIR}/sprint/.ddev/"
-                printf "${GREEN}##### \n# Compressing image. \n#This may take a while. \n#####\n${RESET}";
-                docker save briangilbert/cloud9-alpine:20180318 | xz -z -9e > $STAGING_DIR/ddev_tarballs/docker_additions.tar.xz
-                break;;
-
-        [Nn]* ) printf "${GREEN}# Continuing script without including Cloud9 IDE. \n### \n${RESET}";
-                break;;
-
-        * ) echo "Please answer y or n.";;
-    esac
-done
+# Run framework specific package script.
+printf "Running ${GREEN}${FRAMEWORK}${RESET} package script...\n"
+REPO_DIR="${REPO_DIR}" STAGING_DIR="${STAGING_DIR}" ${REPO_DIR}/framework/${FRAMEWORK}/package_${FRAMEWORK}_script.sh
+if [ $? -ne 0 ]; then
+    printf "${RED}An error occurred in the ${FRAMEWORK} package script.\n${RESET}"
+    exit 1
+fi
 
 echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
@@ -178,10 +180,10 @@ if [ -f ${STAGING_DIR}/sprint} ] ; then chmod -R u+w ${STAGING_DIR}/sprint; fi
 rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
-if [ "$INSTALL" != "n" ] ; then
-    echo "Creating drupal_sprint_package with installs..."
-    tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
-    zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+if [ ${INSTALL_DOCKER} = true ] ; then
+    echo "Creating ${FRAMEWORK}_sprint_package with installs..."
+    tar -cf - ${STAGING_DIR_NAME} | gzip -9 >${FRAMEWORK}_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
+    zip -9 -r -q ${FRAMEWORK}_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 fi
 if [ -f ${STAGING_DIR_NAME}/installs ]; then chmod -R u+w ${STAGING_DIR_NAME}/installs; fi
 rm -rf ${STAGING_DIR_NAME}/installs
