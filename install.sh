@@ -45,14 +45,16 @@ ${RESET}"
 echo ""
 printf "Installing docker images for ddev to use...\n"
 
-if command -v xzcat >/dev/null; then
-    xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
-elif [[ "$OS" == "Darwin" ]]; then
-    gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
-else
-    printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
+# Allow faster turnaround on testing by export QUICKSPRINT_SKIP_IMAGE_INSTALL=true
+if [ -z "${QUICKSPRINT_SKIP_IMAGE_INSTALL:-}" ]; then
+    if command -v xzcat >/dev/null; then
+        true # xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+    elif [[ "$OS" == "Darwin" ]]; then
+        true #gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+    else
+        printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
+    fi
 fi
-
 
 TARBALL=""
 case "$OS" in
@@ -64,8 +66,11 @@ case "$OS" in
         ;;
     MINGW64_NT*)
         echo ""
-        TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
-        printf "${YELLOW}Please use the ddev_windows_installer provided with this package to install ddev${RESET}\n"
+        # Assume if DDEV_INSTALL_DIR is set that we *do* need ddev on Windows, install it.
+        # Otherwise, we'll do the install using the installer below.
+        if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
+            TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
+        fi
         ;;
     *)
         printf "${RED}No ddev binary is available for ${OS}${RESET}\n"
@@ -103,6 +108,12 @@ if [ ! -z "$TARBALL" ] ; then
         fi
     fi
 fi
+if ! command -v ddev >/dev/null && [[ "$OS" =~ "MINGW64" ]] ; then
+    printf "${YELLOW}Running the ddev_windows_installer. Please allow privileges as requested${RESET}\n"
+    # Silent install of ddev for windows
+    cmd //c $PWD/ddev_tarballs/ddev_windows_installer.${DDEV_VERSION}.exe //S
+    printf "${GREEN}Installed ddev using the ddev_windows_installer. It may not be in your PATH until you open a new window.${RESET}\n"
+fi
 
 mkdir -p ~/sprint
 cp start_sprint.sh ~/sprint
@@ -122,6 +133,3 @@ ${GREEN}
 ${RESET}
 "
 
-if ! command -v ddev >/dev/null && [ "${OS}" =~ "MINGW64_NT*" ] ; then
-    printf "${RED}ddev has not yet been installed. Please use the ddev_windows_installer to install it${RESET}\n"
-fi
