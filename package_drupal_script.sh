@@ -159,9 +159,9 @@ if [ "$INSTALL" != "n" ] ; then
 fi
 if [ -f ${STAGING_DIR_NAME}/installs ]; then chmod -R u+w ${STAGING_DIR_NAME}/installs; fi
 rm -rf ${STAGING_DIR_NAME}/installs
-echo "Creating no-docker sprint package..."
-tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
-zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+echo "Creating no_extra_installs sprint package..."
+tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_extra_installs.${QUICKSPRINT_RELEASE}.tar.gz
+zip -9 -r -q drupal_sprint_package.no_extra_installs.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
 packages=$(ls ${STAGING_DIR_BASE}/drupal_sprint_package*${QUICKSPRINT_RELEASE}*)
 printf "${GREEN}####
