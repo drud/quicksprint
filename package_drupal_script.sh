@@ -163,8 +163,10 @@ echo "Creating no-docker sprint package..."
 tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
 zip -9 -r -q drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
+packages=$(ls ${STAGING_DIR_BASE}/drupal_sprint_package*${QUICKSPRINT_RELEASE}*)
 printf "${GREEN}####
-# The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}.
+# The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}:
+# ${packages:-}
 #
 # Package is built, staging directory remains in ${STAGING_DIR}.
 ####${RESET}\n"

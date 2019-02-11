@@ -51,7 +51,7 @@ jobs:
         name: NORMAL Circle VM setup - tools, docker
     - run:
         command: |
-          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.$(cat .quicksprint_release.txt).{tar.gz,zip}  $ARTIFACTS
+          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.*$(cat .quicksprint_release.txt)*.{tar.gz,zip}  $ARTIFACTS
           cd $ARTIFACTS
           for item in *.tar.gz *.zip; do
             sha256sum $item > $item.sha256.txt
