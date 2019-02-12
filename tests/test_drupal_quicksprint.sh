@@ -33,7 +33,7 @@ rm -rf "$UNTARRED_PACKAGE"
 
 echo n | ./package_drupal_script.sh || ( echo "package_drupal_script.sh failed" && exit 2 )
 # SOURCE_TARBALL_LOCATION isn't valid until package_drupal_script has run.
-SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_docker.${QUICKSPRINT_RELEASE}.tar.gz
+SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_extra_installs.${QUICKSPRINT_RELEASE}.tar.gz
 
 # Untar source tarball
 tar -C "$UNTAR_LOCATION" -zxf ${SOURCE_TARBALL_LOCATION:-}

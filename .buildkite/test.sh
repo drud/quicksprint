@@ -12,4 +12,4 @@ echo "n" | ./package_drupal_script.sh
 echo "--- test_drupal_quicksprint.sh"
 tests/test_drupal_quicksprint.sh
 echo "--- cleanup"
-rm -f ~/tmp/drupal_sprint_package.no_docker.$(cat .quicksprint_release.txt).tar.gz
+rm -f ~/tmp/drupal_sprint_package.no_extra_installs.*$(cat .quicksprint_release.txt)*.tar.gz
