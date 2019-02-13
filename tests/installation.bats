@@ -16,7 +16,6 @@ function setup {
     if [ ! -z "${DOCKER_HOST:-}" ]; then DHOST="$(echo ${DOCKER_HOST} | perl -p -e 's/(tcp:\/\/|:[0-9]+$)//g')"; fi
 
     cd ${SPRINTDIR} && export SPRINT_NAME=$(./start_sprint.sh)
-    cd ${SPRINTDIR}/${SPRINT_NAME} && echo y | ./start_clean.sh
     echo "# setup complete" >&3
 }
 

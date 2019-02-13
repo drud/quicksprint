@@ -89,10 +89,7 @@ Linux | Docker CE | Your preferred terminal application
    * Example: Run `cd ~/Desktop/drupal_sprint_package`
 2. Run the `install.sh` command and follow the prompts.
    * Example: `./install.sh`
-3. Follow the instructions that print out at the end of the previous command to create a "sprint instance".
+3. Follow the instructions that print out at the end of the previous command to create a sprint instance.
    * Example: `cd ~/sprint` and `./start_sprint.sh`.
-4. Follow the instructions that print out at the end of the `./start_sprint.sh` command:
-   1. Change directory into the newly created directory named `sprint-YYYYMMDD-HHMM` (with today's date and the time you ran `start_sprint`).
-   2. Run `./start_clean.sh` to start your Drupal environment!
 
 This may take a few minutes and will provide you with a set of URLs and further instructions for using your contribution environment.
