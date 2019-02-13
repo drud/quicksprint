@@ -15,7 +15,7 @@ function setup {
     # Extract the IP address we need from DOCKER_HOST, which is formatted like tcp://192.168.99.100:2376
     if [ ! -z "${DOCKER_HOST:-}" ]; then DHOST="$(echo ${DOCKER_HOST} | perl -p -e 's/(tcp:\/\/|:[0-9]+$)//g')"; fi
     cd ${SPRINTDIR} && ./start_sprint.sh
-    export SPRINT_NAME=$(basename $PWD)
+    export SPRINT_NAME=$(cat "${SPRINTDIR}/.test_sprint_name.txt")
     echo "# setup complete" >&3
 }
 
