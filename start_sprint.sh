@@ -21,10 +21,6 @@ mkdir -p ${SPRINTNAME}
 echo "Untarring sprint.tar.xz" >&2
 tar -xpf sprint.tar.xz -C ${SPRINTNAME}
 
-#Update ddev project name
-perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" ${SPRINTNAME}/*.{txt,sh} ${SPRINTNAME}/.ddev/config.yaml
-rm -f ${SPRINTNAME}/*.bak
-
 # Check Docker is running
 if docker run --rm -t busybox:latest ls >/dev/null
 then
@@ -34,10 +30,10 @@ else
     exit 1
 fi
 
+cd "${SPRINTNAME}"
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-# Attempts to reconfigure ddev to update config automagically.
-ddev config --docroot drupal8 --project-name sprint-[ts] --project-type drupal8
+ddev config --docroot drupal8 --project-type drupal8 --php-version=7.2 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
 
 printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
 printf "${YELLOW}Running ddev start...${RESET}\n"
@@ -56,13 +52,13 @@ ${GREEN}
 ####
 # Use the following URL's to access your site:
 #
-# Website:    ${YELLOW}http://sprint-[ts].ddev.local:8080/${GREEN}
-#             ${YELLOW}https://sprint-[ts].ddev.local:8443/${GREEN}
+# Website:    ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8080/${GREEN}
+#             ${YELLOW}https://sprint-${TIMESTAMP}.ddev.local:8443/${GREEN}
 #             ${YELLOW}(U:admin  P:admin)${GREEN}
 #
-# ${GREEN}Mailhog:    ${YELLOW}http://sprint-[ts].ddev.local:8025/${GREEN}
+# ${GREEN}Mailhog:    ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8025/${GREEN}
 #
-# phpMyAdmin: ${YELLOW}http://sprint-[ts].ddev.local:8036/${GREEN}
+# phpMyAdmin: ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8036/${GREEN}
 #
 # Chat:       ${YELLOW}https://drupal.org/chat to join Drupal Slack or drupalchat.eu!${GREEN}
 #
