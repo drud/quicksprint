@@ -66,7 +66,7 @@ mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
 # Chmod as on WIndows read-only stuff is often unremoveable
-chmod -R u+w ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh} || true
+chmod -R u+w ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh} 2>/dev/null || true
 rm -rf ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}
 # Remove anything in ddev_tarballs that is not the latest version
 if [ -d "${ddev_tarballs}" ]; then

@@ -28,7 +28,7 @@ trap cleanup EXIT
 
 
 # Clean up any previous existing stuff
-(mkdir -p ${SPRINTDIR} && chmod -R ugo+w "$SPRINTDIR/" && rm -rf  ${SPRINTDIR}/sprint-2* ) || true
+(mkdir -p "${SPRINTDIR}" && chmod -R ugo+w "${SPRINTDIR}" && rm -rf  ${SPRINTDIR}/sprint-2* ) || true
 rm -rf "$UNTARRED_PACKAGE"
 
 echo n | ./package_drupal_script.sh || ( echo "package_drupal_script.sh failed" && exit 2 )

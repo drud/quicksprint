@@ -61,7 +61,7 @@ ${GREEN}
 #
 # phpMyAdmin: ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8036/${GREEN}
 #
-# Chat:       ${YELLOW}https://drupal.org/chat to join Drupal Slack or drupalchat.eu!${GREEN}
+# Chat:       ${YELLOW}https://drupal.org/chat to join Drupal Slack or https://drupalchat.me${GREEN}
 #
 # See ${YELLOW}Readme.txt${GREEN} for more information.
 ####
