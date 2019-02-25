@@ -18,6 +18,3 @@ ddev help
 For full ddev documentation see https://ddev.readthedocs.io/
 And support on Stack Overflow: https://stackoverflow.com/tags/ddev
 
-
-To reset this instance and start on a new issue:
-./start_clean.sh                    [note: overwrites any changes you have made]

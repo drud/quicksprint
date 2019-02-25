@@ -6,6 +6,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+SPRINT_BRANCH=8.7.x
+
 RED='\033[31m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
@@ -13,30 +15,55 @@ RESET='\033[0m'
 OS=$(uname)
 TIMESTAMP=$(date +"%Y%m%d-%H%M")
 SPRINTNAME="sprint-${TIMESTAMP}"
+echo ${SPRINTNAME} > .test_sprint_name.txt
 
 # Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
 mkdir -p ${SPRINTNAME}
 echo "Untarring sprint.tar.xz" >&2
 tar -xpf sprint.tar.xz -C ${SPRINTNAME}
 
-#Update ddev project name
-perl -pi -e "s/\[ts\]/${TIMESTAMP}/g" ${SPRINTNAME}/*.{txt,sh} ${SPRINTNAME}/.ddev/config.yaml
-rm -f ${SPRINTNAME}/*.bak
+# Check Docker is running
+if docker run --rm -t busybox:latest ls >/dev/null
+then
+    printf "docker is running, continuing."
+else
+    printf "${RED}Docker is not running and is required for this script, exiting.\n${RESET}"
+    exit 1
+fi
 
-# Next line is (only) stdout output, lets caller know the name of the project created
-printf ${SPRINTNAME}
+cd "${SPRINTNAME}"
+echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-# And this goes to stderr
-printf "${GREEN}
-######
+ddev config --docroot drupal8 --project-type drupal8 --php-version=7.2 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
+
+printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
+printf "${YELLOW}Running ddev start...${RESET}\n"
+ddev start >ddev_start.txt 2>&1 || (echo "ddev start failed: $(cat ddev_start.txt)" && exit 101)
+printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
+ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'" || (echo "ddev exec bash...git reset failed" && exit 102)
+printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
+ddev composer install -d drupal8
+printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
+ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
+printf "${RESET}"
+ddev describe
+
+printf "
+${GREEN}
+####
+# Use the following URL's to access your site:
 #
-# Your Drupal 8 instance is now ready to use, 
-# execute the following commands in terminal 
-# to start a Drupal 8 instance to sprint on:
+# Website:    ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8080/${GREEN}
+#             ${YELLOW}https://sprint-${TIMESTAMP}.ddev.local:8443/${GREEN}
+#             ${YELLOW}(U:admin  P:admin)${GREEN}
 #
-# ${YELLOW}cd ${SPRINTNAME}${GREEN}
-# ${YELLOW}./start_clean.sh${GREEN}
+# ${GREEN}Mailhog:    ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8025/${GREEN}
 #
-######
+# phpMyAdmin: ${YELLOW}http://sprint-${TIMESTAMP}.ddev.local:8036/${GREEN}
+#
+# Chat:       ${YELLOW}https://drupal.org/chat to join Drupal Slack or https://drupalchat.me${GREEN}
+#
+# See ${YELLOW}Readme.txt${GREEN} for more information.
+####
 ${RESET}
-" >&2
+"
