@@ -42,14 +42,14 @@ Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "d
 
 #### 3.1 Docker CE or Docker Toolbox
 
-* **Windows users:** Install Git For Windows from the **installs** directory. The version here is newer than you might have on your computer if you already have it, so install if you don't have Git for Windows or have a version less than 2.18.0.
+* **Windows users install git:** First, install Git For Windows from the **installs** directory. The version here is newer than you might have on your computer if you already have it, so install if you don't have Git for Windows or have a version less than 2.21.0.
 * **All users:** Find the Docker installer for your Operating System underneath the **installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
 
  Operating System | Docker Version | Installer
  ---------------- | -------------- | -----------------
  Windows 10 Pro, Enterprise (HyperV enabled) | Docker CE | "Docker for Windows Installer.exe"
- Windows 10 Home | Docker Toolbox | DockerToolbox-VERSION-ce.exe
- Windows 7 (or no HyperV enabled)| Docker Toolbox | DockerToolbox-VERSION-ce.exe
+ Windows 10 Home | Docker Toolbox | DockerToolbox-VERSION.exe
+ Windows 7 (or no HyperV enabled)| Docker Toolbox | DockerToolbox-VERSION.exe
  MacOS | Docker CE | Docker.dmg
  Linux | Docker CE, docker-compose | See [Linux instructions](https://docs.docker.com/install/#docker-ce)
 
@@ -59,9 +59,9 @@ Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "d
 
 **⚠️Docker for Windows**: You *must* share the C: drive (preferably all drives, or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
 
-**⚠️All users** Additional Docker **installation** troubleshooting and installation documentation is available at [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/).
+**⚠️All users** Additional Docker **installation** troubleshooting and installation documentation is available at [ddev docker instructions](https://ddev.readthedocs.io/en/stable/users/docker_installation/).
 
--**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/latest/users/docker_installation/) to confirm your versions of docker ce and docker-compose to get docker properly setup.
+-**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/stable/users/docker_installation/) to confirm your versions of docker ce and docker-compose to get docker properly setup.
 
 **⚠️All users:** Now start the Docker app you installed. Docker may ask you to create a DockerHub user account, and you may ignore this prompt safely and continue on below.
 
