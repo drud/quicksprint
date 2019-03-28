@@ -31,10 +31,10 @@ else
     exit 1
 fi
 
-cd "${SPRINTNAME}"
+cd "${SPRINTNAME}/drupal8"
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-ddev config --docroot drupal8 --project-type drupal8 --php-version=7.2 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
+ddev config --docroot . --project-type drupal8 --php-version=7.2 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
 
 ddev config global --instrumentation-opt-in=false >/dev/null
 printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
@@ -43,7 +43,7 @@ ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
 printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
 ddev exec bash -c "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'" || (echo "ddev exec bash...git reset failed" && exit 102)
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
-ddev composer install -d drupal8
+ddev composer install
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
 ddev exec drush si standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name="Drupal Sprinting"
 printf "${RESET}"
