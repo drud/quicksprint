@@ -124,7 +124,10 @@ ${GREEN}
 ######
 #
 # Your ddev and the sprint kit are now ready to use,
-# execute the following commands now to start:
+# Please open a NEW WINDOW to make sure you have any additional PATHs
+# and execute the following commands to start:
+#
+# IN A NEW WINDOW:
 #
 # ${YELLOW}cd ~/sprint${GREEN}
 # ${YELLOW}./start_sprint.sh${GREEN}
