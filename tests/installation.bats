@@ -38,7 +38,7 @@ function teardown {
 }
 
 @test "check ddev project status and router status, check http status" {
-    cd ${SPRINTDIR}/${SPRINT_NAME}
+    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
     DESCRIBE=$(ddev describe -j)
 
     ROUTER_STATUS=$(echo "${DESCRIBE}" | jq -r ".raw.router_status" )
