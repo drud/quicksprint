@@ -6,7 +6,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-SPRINT_BRANCH=8.7.x
+SPRINT_BRANCH=8.8.x
 
 RED='\033[31m'
 GREEN='\033[32m'
