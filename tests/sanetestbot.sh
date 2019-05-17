@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MIN_DDEV_VERSION=v1.5
+MIN_DDEV_VERSION=v1.8
 
 set -o errexit
 set -o pipefail
@@ -27,7 +27,7 @@ DOCKER_CMD="docker run --rm -t -v "/$PWD:/junk" busybox ls //junk "
 # Apparently https://github.com/docker/for-win/issues/1560
 (sleep 1 && ( $DOCKER_CMD >/dev/null ) || (sleep 1 && $DOCKER_CMD >/dev/null )) || ( echo "docker is not running or can't do `$DOCKER_CMD`" && exit 3 )
 
-if command -v ddev >/dev/null && [ "$(ddev version -j | jq -r .raw.cli)" \< "${MIN_DDEV_VERSION}" ] ; then
+if command -v ddev >/dev/null && [ "$(ddev version -j | jq -r .raw.commit)" \< "${MIN_DDEV_VERSION}" ] ; then
   echo "ddev version in $(command -v ddev) is inadequate: $(ddev version -j | jq -r .raw.cli)"
   exit 4
 fi
