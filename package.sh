@@ -37,14 +37,12 @@ while [ $# -gt 0 ]; do
             shift;
             ;;
         -h|--help)
-            echo "Usage: package.sh [--help] [--framework drupal]"
-            echo ""
-            echo "Packages a contribution kit for the specified framework."
-            echo ""
-            echo "Arguments:"
-            echo "      --framework NAME ${GREEN}Builds the package for the specified framework (Drupal).${RESET}"
-            echo "      --docker         ${GREEN}Includes Docker installers in the package.${RESET}"
-            echo "      --help           ${GREEN}Prints this message and exits.${RESET}"
+            printf "Usage: package.sh [--help] [--framework drupal]\n\n"
+            printf "Packages a contribution kit for the specified framework.\n\n"
+            printf "Arguments:\n"
+            printf "      --framework NAME ${GREEN}Builds the package for the specified framework (Drupal).\n${RESET}"
+            printf "      --docker         ${GREEN}Includes Docker installers in the package.\n${RESET}"
+            printf "      --help           ${GREEN}Prints this message and exits.\n${RESET}"
             exit
             shift;
             ;;
