@@ -15,6 +15,7 @@ RESET='\033[0m'
 OS=$(uname)
 TIMESTAMP=$(date +"%Y%m%d-%H%M")
 SPRINTNAME="sprint-${TIMESTAMP}"
+CWD=$(pwd)
 echo ${SPRINTNAME} > .test_sprint_name.txt
 
 # Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
