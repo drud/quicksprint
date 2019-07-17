@@ -50,6 +50,11 @@ while [ $# -gt 0 ]; do
             shift;
             break
             ;;
+        *)
+            printf "${YELLOW}#### Ignoring unknown option: $1\n${RESET}"
+            shift;
+            break
+            ;;
     esac
 done
 
