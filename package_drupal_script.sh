@@ -95,7 +95,7 @@ ${GREEN}
 #### \n${RESET}"
 
 while true; do
-    read -p "Include installers? (y/n): " INSTALL
+    read -p "Create installer tarball? (y/n): " INSTALL
     case ${INSTALL} in
         [Yy]* ) printf "${GREEN}# Downloading installers. \n#### \n${RESET}";
                 mkdir -p installs
@@ -153,19 +153,19 @@ rm -rf ${STAGING_DIR}/sprint
 
 cd ${STAGING_DIR_BASE}
 if [ "$INSTALL" != "n" ] ; then
-    echo "Creating drupal_sprint_package with installs..."
-    tar -cf - ${STAGING_DIR_NAME} | gzip -9 >drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
-    zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+    echo "Creating install tarball..."
+    tar -cf - ${STAGING_DIR_NAME}/installs | gzip -9 >quicksprint_thirdpart_installs.${QUICKSPRINT_RELEASE}.tar.gz
+    zip -9 -r -q quicksprint_thirdpart_installs.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}/installs
 fi
 if [ -f ${STAGING_DIR_NAME}/installs ]; then chmod -R u+w ${STAGING_DIR_NAME}/installs; fi
 rm -rf ${STAGING_DIR_NAME}/installs
-echo "Creating no_extra_installs sprint package..."
-tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.no_extra_installs.${QUICKSPRINT_RELEASE}.tar.gz
-zip -9 -r -q drupal_sprint_package.no_extra_installs.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
+echo "Creating sprint package..."
+tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
+zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 
 packages=$(ls ${STAGING_DIR_BASE}/drupal_sprint_package*${QUICKSPRINT_RELEASE}*)
 printf "${GREEN}####
-# The built tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}:
+# The built sprint tarballs and optional install tarballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}:
 # ${packages:-}
 #
 # Package is built, staging directory remains in ${STAGING_DIR}.
