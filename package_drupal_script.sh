@@ -154,8 +154,8 @@ rm -rf ${STAGING_DIR}/sprint
 cd ${STAGING_DIR_BASE}
 if [ "$INSTALL" != "n" ] ; then
     echo "Creating install tarball..."
-    tar -cf - ${STAGING_DIR_NAME}/installs | gzip -9 >quicksprint_thirdpart_installs.${QUICKSPRINT_RELEASE}.tar.gz
-    zip -9 -r -q quicksprint_thirdpart_installs.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}/installs
+    tar -cf - ${STAGING_DIR_NAME}/installs | gzip -9 >quicksprint_thirdparty_installs.${QUICKSPRINT_RELEASE}.tar.gz
+    zip -9 -r -q quicksprint_thirdparty_installs.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}/installs
 fi
 if [ -f ${STAGING_DIR_NAME}/installs ]; then chmod -R u+w ${STAGING_DIR_NAME}/installs; fi
 rm -rf ${STAGING_DIR_NAME}/installs

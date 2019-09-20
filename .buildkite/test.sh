@@ -12,7 +12,7 @@ echo "--- running testbot_maintenance.sh"
 bash $(dirname $0)/testbot_maintenance.sh
 
 echo "--- package_drupal_script.sh"
-rm -f ~/tmp/drupal_sprint_package*gz ~/tmp/drupal_sprint_package*zip
+rm -f ~/tmp/quicksprint_thirdparty*gz ~/tmp/drupal_sprint_package*gz ~/tmp/drupal_sprint_package*zip
 echo "n" | ./package_drupal_script.sh
 echo "--- test_drupal_quicksprint.sh"
 tests/test_drupal_quicksprint.sh
