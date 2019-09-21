@@ -25,14 +25,18 @@ sudo add-apt-repository \
 sudo apt-get update -qq
 sudo apt-get install -qq docker-ce
 
-# docker-compose
-sudo rm -f /usr/local/bin/docker-compose
-sudo curl -s -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+if [ ! -d /home/linuxbrew/.linuxbrew/bin ] ; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+fi
 
+echo "export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH" >>~/.bashrc
 
-curl -sS https://getcomposer.org/installer -o composer-setup.php
-    sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+. ~/.bashrc
+
+brew update && brew tap drud/ddev
+for item in mkcert ddev docker-compose; do
+    brew install $item || /home/linuxbrew/.linuxbrew/bin/brew upgrade $item
+done
 
 # install recent bats bash testing framework
 BATS_TAG=v1.1.0
