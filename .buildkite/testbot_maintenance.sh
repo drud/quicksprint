@@ -8,7 +8,7 @@ os=$(go env GOOS)
 case $os in
 darwin)
     brew upgrade mkcert || brew install mkcert || true
-    brew unlink ddev && (brew upgrade ddev || brew install ddev || true)
+    rm /usr/local/bin/ddev && brew unlink ddev && (brew upgrade ddev || brew install ddev || true)
     brew link ddev
     ;;
 windows)
