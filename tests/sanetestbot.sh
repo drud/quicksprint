@@ -35,7 +35,7 @@ docker pull busybox:latest >/dev/null
 (sleep 1 && (docker run --rm -t -p 80:80 -p 443:443 -p 1081:1081 -p 1082:1082 -v /$HOME:/tmp/junker99 busybox:latest ls //tmp/junker99 >/dev/null) || (sleep 1 && docker run --rm -t -p 80:80 -p 443:443 -p 1081:1081 -p 1082:1082 -v /$HOME:/tmp/junker99 busybox:latest ls //tmp/junker99 >/dev/null ))
 
 # Check that required commands are available.
-for command in curl jq zcat composer perl zip bats; do
+for command in curl jq zcat perl zip bats; do
     command -v $command >/dev/null || ( echo "Did not find command installed '$command'" && exit 2 )
 done
 
