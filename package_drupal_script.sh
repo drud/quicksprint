@@ -135,13 +135,8 @@ git clone --config core.autocrlf=false --config core.eol=lf --quiet https://git.
 pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
 cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
-echo "Running ddev composer install --quiet"
-set -x
-ddev config --project-type=drupal8
-ddev start
-ddev composer install --quiet
-ddev poweroff
-set +x
+echo "Running composer install --quiet"
+composer install --quiet
 popd >/dev/null
 
 # Copy licenses and COPYING notice.
