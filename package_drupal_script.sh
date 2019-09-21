@@ -138,7 +138,9 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 echo "Running ddev composer install --quiet"
 set -x
 ddev config --project-type=drupal8
+ddev start
 ddev composer install --quiet
+ddev poweroff
 set +x
 popd >/dev/null
 
