@@ -5,6 +5,7 @@ echo "--- buildkite building at $(date) on $(hostname) for OS=$(go env GOOS) in 
 set -o errexit
 set -o pipefail
 set -o nounset
+export DDEV_NO_INSTRUMENTATION=true
 
 # Run any testbot maintenance that may need to be done
 echo "--- running testbot_maintenance.sh"
