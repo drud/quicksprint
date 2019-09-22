@@ -43,7 +43,7 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/quicksprint
     environment:
-      ARTIFACTS: ~/artifacts
+      ARTIFACTS: /home/circleci/artifacts
       DDEV_NO_INSTRUMENTATION: true
     steps:
     - attach_workspace:
@@ -70,6 +70,8 @@ jobs:
         - artifacts
 
   publish-github-release:
+    environment:
+      ARTIFACTS: /root/artifacts
     docker:
     - image: cibuilds/github:0.10
     steps:
