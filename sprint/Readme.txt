@@ -11,7 +11,8 @@ Chat:        https://drupal.org/chat to join Drupal Slack or drupalchat.eu!
 Common ddev commands to know:
 
 ddev start (-h)                         [start project]
-ddev rm (-h)                            [stop and remove project, nothing lost]
+ddev stop (-h)                          [stop project, nothing lost]
+ddev poweroff                           [stop all projects and resources, nothing lost]
 ddev import-db --src=[path to db] (-h)  [import database]
 ddev help
 
