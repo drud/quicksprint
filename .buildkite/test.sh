@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "--- buildkite building at $(date) on $(hostname) for OS=$(go env GOOS) in $PWD with golang=$(go version) docker=$(docker version --format '{{.Server.Version}}') and docker-compose $(docker-compose version --short) ddev version=$(ddev version -j | jq -r .raw.cli)"
+echo "--- buildkite building at $(date) on $(hostname) for OS=$(go env GOOS) in $PWD with golang=$(go version) docker=$(docker version --format '{{.Server.Version}}') and docker-compose $(docker-compose version --short) ddev version=$(ddev --version)"
 
 set -o errexit
 set -o pipefail
