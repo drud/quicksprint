@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script creates a new drupal 8 instance in the current directory ready to sprint on an issue.
+# This script creates a new drupal 8 instance in the current directory.
 
 set -o errexit
 set -o pipefail

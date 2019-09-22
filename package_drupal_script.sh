@@ -14,7 +14,7 @@ export MSYS=winsymlinks:nativestrict
 # Maximise compression
 export XZ_OPT=-9e
 
-# This script creates a package of artifacts that can then be used at a code sprint working on Drupal 8.
+# This script creates a package of artifacts that can then be used at a contribution event working on Drupal 8.
 # It assumes it's being run in the repository root.
 
 STAGING_DIR_NAME=drupal_sprint_package
@@ -165,7 +165,7 @@ zip -9 -r -q drupal_sprint_package.no_extra_installs.${QUICKSPRINT_RELEASE}.zip 
 
 packages=$(ls ${STAGING_DIR_BASE}/drupal_sprint_package*${QUICKSPRINT_RELEASE}*)
 printf "${GREEN}####
-# The built sprint tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}:
+# The built tarballs and zipballs are now in ${YELLOW}$STAGING_DIR_BASE${GREEN}:
 # ${packages:-}
 #
 # Package is built, staging directory remains in ${STAGING_DIR}.
