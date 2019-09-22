@@ -1,7 +1,6 @@
 version: 2.0
 
 jobs:
-
   "package_build":
     machine:
       image: ubuntu-1604:201903-01
@@ -44,7 +43,7 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/quicksprint
     environment:
-      ARTIFACTS: /artifacts
+      ARTIFACTS: ~/artifacts
       DDEV_NO_INSTRUMENTATION: true
     steps:
     - attach_workspace:
@@ -62,7 +61,7 @@ jobs:
         name: make artifacts tarball downloads
         no_output_timeout: "20m"
     - store_artifacts:
-        path: /artifacts
+        path: $ARTIFACTS
         name: Artifact storage
 
   publish-github-release:
@@ -70,11 +69,11 @@ jobs:
     - image: cibuilds/github:0.10
     steps:
     - attach_workspace:
-        at: ./artifacts
+        at: ~/
     - run:
         name: "Publish Release on GitHub"
         command: |
-          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} /artifacts/
+          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} $ARTIFACTS
 
 workflows:
   version: 2
