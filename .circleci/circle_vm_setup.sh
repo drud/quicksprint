@@ -34,7 +34,7 @@ echo "export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH" >>~/.bashrc
 . ~/.bashrc
 
 brew update && brew tap drud/ddev
-for item in mkcert ddev docker-compose; do
+for item in mkcert ddev composer php docker-compose; do
     brew install $item || /home/linuxbrew/.linuxbrew/bin/brew upgrade $item
 done
 
