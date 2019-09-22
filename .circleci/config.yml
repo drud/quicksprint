@@ -53,14 +53,14 @@ jobs:
         name: NORMAL Circle VM setup - tools, docker
     - run:
         command: |
-          mkdir $ARTIFACTS && cd $ARTIFACTS && cp ~/tmp/*$(cat .quicksprint_release.txt)*.{tar.gz,zip} .
+          mkdir /home/circleci/artifacts && cd /home/circleci/artifacts && cp ~/tmp/*$(cat .quicksprint_release.txt)*.{tar.gz,zip} .
           for item in *.tar.gz *.zip; do
             sha256sum $item > $item.sha256.txt
           done
         name: make artifacts tarball downloads
         no_output_timeout: "20m"
     - store_artifacts:
-        path: $ARTIFACTS
+        path: /home/circleci/artifacts
         name: Artifact storage
     - persist_to_workspace:
         root: ~/

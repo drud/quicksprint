@@ -41,7 +41,7 @@ printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minut
 printf "${YELLOW}Running ddev start...YOU MAY BE ASKED for your sudo password to add a hostname to /etc/hosts${RESET}\n"
 ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
 printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
-ddev exec "git fetch && git reset --hard 'origin/${SPRINT_BRANCH}'" || (echo "ddev exec...git reset failed" && exit 102)
+ddev exec "(git fetch && git reset --hard 'origin/${SPRINT_BRANCH}') || (echo "ddev exec...git reset failed" && exit 102)
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
 ddev composer install
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
