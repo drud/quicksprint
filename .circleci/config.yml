@@ -63,6 +63,12 @@ jobs:
     - store_artifacts:
         path: $ARTIFACTS
         name: Artifact storage
+    - persist_to_workspace:
+        root: ~/
+        paths:
+        - quicksprint
+        - tmp
+        - artifacts
 
   publish-github-release:
     docker:
