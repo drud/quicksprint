@@ -8,13 +8,14 @@ jobs:
     working_directory: ~/quicksprint
     environment:
       TERM: vt100
+      DDEV_NO_INSTRUMENTATION: true
     steps:
     - checkout
     - run:
         command: ./.circleci/circle_vm_setup.sh
         name: NORMAL Circle VM setup - tools, docker
     - run:
-        command: echo "y" | ./package_drupal_script.sh
+        command: source ~/.bashrc && echo "y" | ./package_drupal_script.sh
         name: Run the package_drupal_script.sh
         no_output_timeout: "20m"
     - persist_to_workspace:
@@ -28,13 +29,14 @@ jobs:
     working_directory: ~/quicksprint
     environment:
       TERM: vt100
+      DDEV_NO_INSTRUMENTATION: true
     steps:
     - attach_workspace:
         at: ~/
     - run:
         command: ./.circleci/circle_vm_setup.sh
         name: NORMAL Circle VM setup - tools, docker
-    - run: tests/test_drupal_quicksprint.sh
+    - run: source ~/.bashrc && tests/test_drupal_quicksprint.sh
 
 
   "artifacts":
@@ -43,6 +45,7 @@ jobs:
     working_directory: ~/quicksprint
     environment:
       ARTIFACTS: /artifacts
+      DDEV_NO_INSTRUMENTATION: true
     steps:
     - attach_workspace:
         at: ~/
@@ -51,7 +54,7 @@ jobs:
         name: NORMAL Circle VM setup - tools, docker
     - run:
         command: |
-          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/drupal_sprint_package.*$(cat .quicksprint_release.txt)*.{tar.gz,zip}  $ARTIFACTS
+          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/*$(cat .quicksprint_release.txt)*.{tar.gz,zip}  $ARTIFACTS
           cd $ARTIFACTS
           for item in *.tar.gz *.zip; do
             sha256sum $item > $item.sha256.txt
