@@ -22,7 +22,7 @@ function setup {
 function teardown {
     echo "# teardown beginning" >&3
 
-    ddev rm -R --omit-snapshot ${SPRINT_NAME}
+    ddev delete -O -y ${SPRINT_NAME}
     if [ ! -z "${SPRINTDIR}" -a ! -z "${SPRINT_NAME}" -a -d ${SPRINTDIR}/${SPRINT_NAME} ] ; then
         chmod -R u+w ${SPRINTDIR}/${SPRINT_NAME}
         rm -rf ${SPRINTDIR}/${SPRINT_NAME}

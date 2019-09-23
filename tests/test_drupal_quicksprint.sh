@@ -46,8 +46,8 @@ fi
 # Run install.sh
 (cd "$UNTARRED_PACKAGE" && printf 'y\ny\n' | ./install.sh) || ( echo "Failed to install.sh" && exit 4 )
 
-# Stop any running ddev instances, if we can
-ddev rm -a
+# Stop any running ddev instances
+ddev poweroff
 
 # /usr/local/bin is added for git-bash, where it may not be in the $PATH.
 export PATH="/usr/local/bin:$PATH"
