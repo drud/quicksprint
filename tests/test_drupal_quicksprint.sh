@@ -21,7 +21,7 @@ export PATH="$PATH:/usr/local/bin"
 tests/sanetestbot.sh || ( echo "sanetestbot.sh failed, test machine is not ready for duty" && exit 1 )
 
 function cleanup {
-    rm -rf /tmp/drupal_sprint_package
+    rm -rf /tmp/drupal_sprint_package "$DDEV_INSTALL_DIR"
     if [ ! -z "${SOURCE_TARBALL_LOCATION:-}" ] ; then rm -f ${SOURCE_TARBALL_LOCATION:-nopedontrm}; fi
 }
 trap cleanup EXIT
