@@ -1,7 +1,6 @@
 version: 2.0
 
 jobs:
-
   "package_build":
     machine:
       image: ubuntu-1604:201903-01
@@ -44,7 +43,7 @@ jobs:
       image: ubuntu-1604:201903-01
     working_directory: ~/quicksprint
     environment:
-      ARTIFACTS: /artifacts
+      ARTIFACTS: /home/circleci/artifacts
       DDEV_NO_INSTRUMENTATION: true
     steps:
     - attach_workspace:
@@ -54,17 +53,35 @@ jobs:
         name: NORMAL Circle VM setup - tools, docker
     - run:
         command: |
-          sudo mkdir $ARTIFACTS && sudo chmod ugo+w $ARTIFACTS && cp ~/tmp/*$(cat .quicksprint_release.txt)*.{tar.gz,zip}  $ARTIFACTS
-          cd $ARTIFACTS
+          mkdir /home/circleci/artifacts && cd /home/circleci/artifacts && cp ~/tmp/*$(cat .quicksprint_release.txt)*.{tar.gz,zip} .
           for item in *.tar.gz *.zip; do
             sha256sum $item > $item.sha256.txt
           done
         name: make artifacts tarball downloads
         no_output_timeout: "20m"
     - store_artifacts:
-        path: /artifacts
+        path: /home/circleci/artifacts
         name: Artifact storage
-        
+    - persist_to_workspace:
+        root: ~/
+        paths:
+        - quicksprint
+        - tmp
+        - artifacts
+
+  publish-github-release:
+    environment:
+      ARTIFACTS: /root/artifacts
+    docker:
+    - image: cibuilds/github:0.10
+    steps:
+    - attach_workspace:
+        at: ~/
+    - run:
+        name: "Publish Release on GitHub"
+        command: |
+          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} $ARTIFACTS
+
 workflows:
   version: 2
   normal_build_and_test:
@@ -116,6 +133,16 @@ workflows:
     - artifacts:
         requires:
         - package_build
+        filters:
+          tags:
+            only:
+            - "/.*/"
+          branches:
+            ignore: /.*/
+    - publish-github-release:
+        requires:
+        - artifacts
+        - test_package
         filters:
           tags:
             only:
