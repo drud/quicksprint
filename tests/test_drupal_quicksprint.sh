@@ -39,7 +39,7 @@ SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.no_extra_installs.${QUICKSPR
 tar -C "$UNTAR_LOCATION" -zxf ${SOURCE_TARBALL_LOCATION:-}
 
 if [ ! -f "$UNTARRED_PACKAGE/DRUPAL_SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/COPYING" -o ! -d "$UNTARRED_PACKAGE/licenses" ]; then
-    echo "Packaged documents are missing from sprint package (in $UNTARRED_PACKAGE)"
+    echo "Packaged documents are missing from package (in $UNTARRED_PACKAGE)"
     exit 3
 fi
 

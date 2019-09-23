@@ -29,15 +29,16 @@ fi
 printf "
 ${GREEN}
 ####
-# This script will install everything you need to participate in this sprint.
+# This script will install everything you need to participate in this
+# contribution event.
 #
 # Feel free to first inspect the script before continuing if you like.
 #  -To do this just open it with a text editor
 #
 # It does the following:
-#  -Install Drud Technology's ddev local development tool
+#  -Install the DDEV-Local development tool
 #  -Copy required components to ~/sprint
-#  -Pre-loads docker images for the sprint toolkit:
+#  -Pre-loads docker images for the toolkit:
 #
 ####
 ${RESET}"
@@ -123,7 +124,7 @@ printf "
 ${GREEN}
 ######
 #
-# Your ddev and the sprint kit are now ready to use,
+# Your ddev and the contribution event kit are now ready to use,
 # Please open a NEW WINDOW to make sure you have any additional PATHs
 # and execute the following commands to start:
 #

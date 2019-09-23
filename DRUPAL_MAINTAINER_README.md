@@ -1,19 +1,19 @@
 # Drupal Quicksprint Maintainer Notes
 
-Quicksprint is a basic toolkit to get people started with ddev and a Drupal codebase. This is intended for code sprints where lots of people need to get started with the same environment in a short period of time.
+Quicksprint is a basic toolkit to get people started with ddev and a Drupal codebase. This is intended for contribution events where lots of people need to get started with the same environment in a short period of time.
 
 There are two parts to this project:
 
-1. A build of the tarball that a sprint attendee needs (done by a maintainer using Linux or Mac OS, who should be reading this right now). The maintainer uses `package_drupal_script.sh` to create a tarball/zipball for sprint attendees to use.
-2. A released tarball/zipball that has everything ready for an ordinary sprint user to get set up fast. It includes a DRUPAL_SPRINTUSER_README.md to help them know what to do.
+1. A build of the tarball that a contribution event attendee needs (done by a maintainer using Linux or Mac OS, who should be reading this right now). The maintainer uses `package_drupal_script.sh` to create a tarball/zipball for sprint attendees to use.
+2. A released tarball/zipball that has everything ready for an ordinary contributor to get set up fast. It includes a DRUPAL_SPRINTUSER_README.md to help them know what to do.
 
-Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal8 repository to provide the tools to get people going quickly at a sprint.
+Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal8 repository to provide the tools to get people going quickly at a contribution event.
 
 ## Creating a Sprint Package
 
 Quicksprint packages are built nightly and on tagged releases. We recommend downloading a tagged release from the GitHub [Releases page](https://github.com/drud/quicksprint/releases). You may create a custom build using this source repository.
 
-* To create a sprint package you will need to
+* To create a package you will need to
     * Confirm Docker is running.
     * Confirm docker-compose is available.
     * Make sure you have these packages on your build machine: curl jq zcat composer perl zip bats. You can run the tests/sanetestbot.sh script to test.
@@ -21,12 +21,12 @@ Quicksprint packages are built nightly and on tagged releases. We recommend down
 
 ## Distributing a Sprint Package
 
-There are several ways to distribute your sprint package such as through a peer-to-peer tool such as ResilioSync, USB flash drives or downloading from the releases page. This will depend on the size of your sprint.
+There are several ways to distribute your package such as through a peer-to-peer tool such as ResilioSync, USB flash drives or downloading from the releases page. This will depend on the size of your sprint.
 
 Method      | Sprint Size | Bandwidth | Other Considerations
 ----------  | ----------- | --------- | ----------------------
 ResilioSync | 100+ users  | N/A       | ResilioSync is not screen reader friendly and may be conflict with Firewall/Access Point security settings. Theoretically everyone would be able to get the files at the same time.
-USB drives  | varies      | N/A       | 30+ USB flash drives will work for large sprints, but people will be waiting in line.
+USB drives  | varies      | N/A       | 30+ USB flash drives will work for large events, but people will be waiting in line.
 Download    | 25 users    | 5 m/s     | Sprint venue may not be able to support large number of users pulling releases from github.
 
 #### USB Flash Drives
