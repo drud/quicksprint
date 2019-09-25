@@ -5,12 +5,12 @@ This directory contains tools to get you started contributing to Drupal 8:
 * Drupal 8, already cloned with git
 * Docker CE
 * DDEV-Local (ddev) development environment
-* Additional tools for Windows
+* Additional tools including git for Windows
 
 ## Prerequisites
 
-* A computer with 8gb memory or greater.
-* Windows 7 or higher, MacOS El Capitan or higher or a recent/stable Linux distribution.
+* A computer with 6gb memory or greater.
+* Windows 7 or higher, MacOS Sierra or higher or a recent/stable Linux distribution.
 * A robust code editor such as Visual Studio Code, Atom, PhpStorm or Netbeans (this may be provided as part of this package).
 
 **⚠️ If your computer does not match a requirement, try the [Drupal quick-start](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**! Now skip the steps below.
