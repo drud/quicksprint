@@ -11,7 +11,7 @@ Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a clone
 
 ## Creating a Sprint Package
 
-Quicksprint packages are built nightly and on tagged releases. We recommend downloading a tagged release from the GitHub [Releases page](https://github.com/drud/quicksprint/releases). You may create a custom build using this source repository.
+Quicksprint packages are built nightly and on tagged releases. Please download a tagged release from the GitHub [Releases page](https://github.com/drud/quicksprint/releases) rather than bothering to build it yourself. But of course, you could create a custom build using this source repository.
 
 * To create a package you will need to
     * Confirm Docker is running.
@@ -22,6 +22,8 @@ Quicksprint packages are built nightly and on tagged releases. We recommend down
 ## Distributing a Sprint Package
 
 There are several ways to distribute your package such as through a peer-to-peer tool such as ResilioSync, USB flash drives or downloading from the releases page. This will depend on the size of your sprint.
+
+You must provide both the contents of the `drupal_sprint_package` *and* the `installs` tarball. (The installs package grew too big for github releases.)
 
 Method      | Sprint Size | Bandwidth | Other Considerations
 ----------  | ----------- | --------- | ----------------------
