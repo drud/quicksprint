@@ -102,10 +102,10 @@ if [ ! -z "$TARBALL" ] ; then
         BINOWNER=$(ls -ld ${DDEV_INSTALL_DIR:-} | awk '{print $3}')
 
         if [[ "$BINOWNER" == "$USER" ]]; then
-            mv -f /tmp/ddev ${DDEV_INSTALL_DIR:-}
+            mv -f /tmp/ddev /tmp/mkcert ${DDEV_INSTALL_DIR:-}
         else
             printf "${YELLOW}Running \"sudo mv /tmp/ddev $DDEV_INSTALL_DIR\" Please enter your password if prompted.${RESET}\n"
-            sudo mv /tmp/ddev ${DDEV_INSTALL_DIR:-}
+            sudo mv /tmp/ddev /tmp/mkcert ${DDEV_INSTALL_DIR:-}
         fi
     fi
 fi
@@ -130,6 +130,7 @@ ${GREEN}
 #
 # IN A NEW WINDOW:
 #
+# ${YELLOW}mkcert -install${GREEN}
 # ${YELLOW}cd ~/sprint${GREEN}
 # ${YELLOW}./start_sprint.sh${GREEN}
 #
