@@ -137,6 +137,14 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
 composer install --quiet
+# The next line is a temporary workaround prevents the failures described in
+# https://github.com/drud/quicksprint/issues/151 and
+# https://www.drupal.org/project/drupal/issues/3082866
+# It should be resolved when the upstream drupal issue is resolved.
+# But in the meantime the `composer install` is done over again during
+# sprint startup. rfay 20190926
+rm -f vendor/bin/composer vendor/composer/composer/bin/composer
+
 popd >/dev/null
 
 # Copy licenses and COPYING notice.
