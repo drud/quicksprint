@@ -155,7 +155,8 @@ cd ${STAGING_DIR}
 
 echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
-pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
+# Use --dereference to NOT use symlinks and not break windows tar.
+pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz --dereference . && popd >/dev/null
 if [ -f ${STAGING_DIR}/sprint} ] ; then chmod -R u+w ${STAGING_DIR}/sprint; fi
 rm -rf ${STAGING_DIR}/sprint
 
