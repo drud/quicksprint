@@ -137,6 +137,14 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
 composer install --quiet
+# The next line is a temporary workaround prevents the failures described in
+# https://github.com/drud/quicksprint/issues/151 and
+# https://www.drupal.org/project/drupal/issues/3082866
+# It should be resolved when the upstream drupal issue is resolved.
+# But in the meantime the `composer install` is done over again during
+# sprint startup. rfay 20190926
+rm -f vendor/bin/composer vendor/composer/composer/bin/composer
+
 popd >/dev/null
 
 # Copy licenses and COPYING notice.
@@ -147,7 +155,8 @@ cd ${STAGING_DIR}
 
 echo "Creating sprint.tar.xz..."
 # Create tar.xz archive using xz command, so we can work on all platforms
-pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz . && popd >/dev/null
+# Use --dereference to NOT use symlinks and not break windows tar.
+pushd sprint >/dev/null && tar -cJf ../sprint.tar.xz --dereference . && popd >/dev/null
 if [ -f ${STAGING_DIR}/sprint} ] ; then chmod -R u+w ${STAGING_DIR}/sprint; fi
 rm -rf ${STAGING_DIR}/sprint
 
