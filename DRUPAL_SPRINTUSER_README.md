@@ -65,14 +65,10 @@ Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "d
 
 **⚠️All users:** Now start the Docker app you installed. Docker may ask you to create a DockerHub user account, and you may ignore this prompt safely and continue on below.
 
-#### 3.2 ddev
-
-**⚠️ Windows users**: Find the ddev_windows_installer.RELEASE.exe underneath the **ddev_tarballs** directory. Run it to install ddev at this time.
-
 <a name="open-terminal"></a>
 ### 4. Open Terminal
 
-Open your Terminal application:
+Open your Terminal application. If you already had a window open, close it and open another one.
 
 Operating System | Docker Version | Program
 ---------------- | -------------- | ----------------
