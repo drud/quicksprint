@@ -34,7 +34,7 @@ fi
 cd "${SPRINTNAME}/drupal8"
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-ddev config --docroot . --project-type drupal8 --php-version=7.2 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
+ddev config --docroot . --project-type drupal8 --php-version=7.3 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
 
 ddev config global --instrumentation-opt-in=false >/dev/null
 printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"

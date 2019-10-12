@@ -19,3 +19,7 @@ ddev help
 For full ddev documentation see https://ddev.readthedocs.io/
 And support on Stack Overflow: https://stackoverflow.com/tags/ddev
 
+If you need to switch Drupal branches, for example to 9.0.x you can
+use the utility switch_branch.sh:
+./switch_branch.sh 9.0.x
+./switch_branch.sh 8.8.x
