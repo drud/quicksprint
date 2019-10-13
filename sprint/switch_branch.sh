@@ -20,8 +20,7 @@ set -x
 ddev exec "git stash && git reset --hard && git checkout ${target_branch} && git pull && git stash pop"
 ddev composer require drush/drush:^10
 ddev composer install
-ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time
-'
+ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name=\'Drupal Contribution Time\'
 set +x
 popd
 
