@@ -17,8 +17,10 @@ target_branch=$1
 
 pushd drupal8
 set -x
-ddev exec "git stash && git reset --hard && git checkout ${target_branch} && git pull && git stash pop"
+ddev start
+ddev exec "git stash save && git reset --hard && git checkout origin/${target_branch} && git fetch && git stash apply"
 ddev composer require drush/drush:^10
+ddev git checkout composer.json composer.lock
 ddev composer install
 ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name=\'Drupal Contribution Time\'
 set +x
