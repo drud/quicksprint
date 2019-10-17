@@ -6,7 +6,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-SPRINT_BRANCH=8.9.x
+SPRINT_BRANCH=9.0.x
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -44,6 +44,9 @@ printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.$
 ddev exec "(git fetch && git reset --hard 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git reset failed' && exit 102)"
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
 ddev composer install
+ddev composer require drush/drush:^10
+ddev exec git checkout /var/www/html/composer.*
+
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
 ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
 printf "${RESET}"

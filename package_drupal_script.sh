@@ -5,7 +5,7 @@ set -o pipefail
 set -o nounset
 
 # Base checkout should be of the 8.7.x branch
-SPRINT_BRANCH=8.9.x
+SPRINT_BRANCH=9.0.x
 
 # This makes git-bash actually try to create symlinks.
 # Use developer mode in Windows 10 so this doesn't require admin privs.
@@ -137,6 +137,9 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 echo "Running composer install --quiet"
 composer install --quiet
+composer require drush/drush:^10
+git checkout composer.json composer.lock
+
 # The next line is a temporary workaround prevents the failures described in
 # https://github.com/drud/quicksprint/issues/151 and
 # https://www.drupal.org/project/drupal/issues/3082866
