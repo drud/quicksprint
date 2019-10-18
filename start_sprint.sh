@@ -40,8 +40,8 @@ ddev config global --instrumentation-opt-in=false >/dev/null
 printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
 printf "${YELLOW}Running ddev start...YOU MAY BE ASKED for your sudo password to add a hostname to /etc/hosts${RESET}\n"
 ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
-printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
-ddev exec "(git fetch && git reset --hard 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git reset failed' && exit 102)"
+printf "${YELLOW}Running git fetch && git checkout origin/${SPRINT_BRANCH}.${RESET}...\n"
+ddev exec "(git fetch && git checkout 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git checkout failed' && exit 102)"
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
 ddev composer install
 ddev composer require drush/drush:^10
