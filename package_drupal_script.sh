@@ -135,10 +135,10 @@ git clone --config core.autocrlf=false --config core.eol=lf --config core.filemo
 pushd ${STAGING_DIR}/sprint/drupal8 >/dev/null
 cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
-echo "Running composer install --quiet"
+set -x
 composer install --quiet
 composer require drush/drush:^10
-git checkout composer.json composer.lock
+set +x
 
 # The next line is a temporary workaround prevents the failures described in
 # https://github.com/drud/quicksprint/issues/151 and
