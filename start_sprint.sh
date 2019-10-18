@@ -43,8 +43,8 @@ ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
 printf "${YELLOW}Running git fetch && git checkout origin/${SPRINT_BRANCH}.${RESET}...\n"
 ddev exec "(git fetch && git checkout 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git checkout failed' && exit 102)"
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
-ddev composer install
 ddev composer require drush/drush:^10
+ddev composer install
 ddev exec git checkout /var/www/html/composer.*
 
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
