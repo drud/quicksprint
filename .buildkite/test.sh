@@ -13,7 +13,7 @@ bash $(dirname $0)/testbot_maintenance.sh
 
 echo "--- package.sh"
 rm -f ~/tmp/quicksprint_thirdparty*gz ~/tmp/drupal_sprint_package*gz ~/tmp/drupal_sprint_package*zip
-echo "n" | ./package.sh
+echo ./package.sh -d
 echo "--- test_drupal_quicksprint.sh"
 tests/test_drupal_quicksprint.sh
 echo "--- cleanup"
