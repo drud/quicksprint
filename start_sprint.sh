@@ -6,7 +6,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-SPRINT_BRANCH=8.8.x
+SPRINT_BRANCH=9.0.x
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -34,16 +34,18 @@ fi
 cd "${SPRINTNAME}/drupal8"
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-ddev config --docroot . --project-type drupal8 --php-version=7.2 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
+ddev config --docroot . --project-type drupal8 --php-version=7.3 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
 
 ddev config global --instrumentation-opt-in=false >/dev/null
 printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
 printf "${YELLOW}Running ddev start...YOU MAY BE ASKED for your sudo password to add a hostname to /etc/hosts${RESET}\n"
 ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
-printf "${YELLOW}Running git fetch && git reset --hard origin/${SPRINT_BRANCH}.${RESET}...\n"
-ddev exec "(git fetch && git reset --hard 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git reset failed' && exit 102)"
+printf "${YELLOW}Running git fetch && git checkout origin/${SPRINT_BRANCH}.${RESET}...\n"
+ddev exec "(git fetch && git checkout 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git checkout failed' && exit 102)"
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
 ddev composer install
+ddev exec "git checkout /var/www/html/composer.*"
+
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
 ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
 printf "${RESET}"
