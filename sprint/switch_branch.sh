@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script allows switching drupal branch, for example, from 9.0.x to 8.9.x
+# This script allows switching drupal branch, for example, from 8.9.x to 9.0.x
 # or back
 
 set -o errexit
@@ -18,12 +18,13 @@ target_branch=$1
 pushd drupal8
 set -x
 ddev start
-ddev exec  "git fetch && git checkout origin/${target_branch}"
+ddev exec  "git fetch && git stash save && git checkout origin/${target_branch}"
 ddev composer install
-if [ "${target_branch}" '>' "9." ]; then ddev composer require drush/drush:^10; fi
+#if [ "${target_branch}" '>' "9." ]; then ddev composer require drush/drush:^10; fi
 # Make sure that composer.json/lock don't show up in patches
-ddev exec "git checkout /var/www/html/composer.*"
-ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name=\'Drupal Contribution Time\'
+ddev exec "git stash apply && git checkout /var/www/html/composer.*"
+#ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name=\'Drupal Contribution Time\'
 set +x
 popd
-echo "Switched to ${target_branch}"
+echo "Switched to ${target_branch}; you can now install via the web installer"
+ddev list
