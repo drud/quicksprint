@@ -22,8 +22,7 @@ ddev exec  "git fetch && git stash save && git checkout origin/${target_branch}"
 ddev composer install
 #if [ "${target_branch}" '>' "9." ]; then ddev composer require drush/drush:^10; fi
 # Make sure that composer.json/lock don't show up in patches
-ddev exec "git stash apply && git checkout /var/www/html/composer.*"
-#ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name=\'Drupal Contribution Time\'
+ddev exec "( git stash apply || true )"
 set +x
 popd
 echo "Switched to ${target_branch}; you can now install via the web installer"
