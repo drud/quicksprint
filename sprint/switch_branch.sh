@@ -20,10 +20,8 @@ set -x
 ddev start
 ddev exec  "git fetch && git stash save && git checkout origin/${target_branch}"
 ddev composer install
-#if [ "${target_branch}" '>' "9." ]; then ddev composer require drush/drush:^10; fi
-# Make sure that composer.json/lock don't show up in patches
 ddev exec "( git stash apply || true )"
-ddev exec drush sql-drop -y
+echo "DROP DATABASE db; CREATE DATABASE db; " | ddev mysql -uroot -proot
 set +x
 popd
 echo "Switched to ${target_branch}; you can now install via the web installer"
