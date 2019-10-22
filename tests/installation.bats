@@ -58,12 +58,13 @@ function teardown {
     NAME=$(echo ${DESCRIBE} | jq -r ".raw.name")
     HTTP_PORT=$(echo ${DESCRIBE} | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"
-    CURL="curl --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL"
+    CURL="curl -lL -s --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL"
     echo "# curl: $CURL" >&3
     ${CURL}
 
     echo "# Testing switch_branch.sh"
     cd ..
     ./switch_branch.sh 9.0.x
+    echo "# curl: $CURL" >&3
     ${CURL}
 }
