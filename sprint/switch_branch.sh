@@ -23,6 +23,7 @@ ddev composer install
 #if [ "${target_branch}" '>' "9." ]; then ddev composer require drush/drush:^10; fi
 # Make sure that composer.json/lock don't show up in patches
 ddev exec "( git stash apply || true )"
+ddev exec drush sql-drop -y
 set +x
 popd
 echo "Switched to ${target_branch}; you can now install via the web installer"

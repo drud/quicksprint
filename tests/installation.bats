@@ -54,7 +54,7 @@ function teardown {
     STATUS=$(echo ${DESCRIBE} | jq -r ".raw.status")
     [ "$STATUS" = "running" ]
 
-    echo "# Testing curl reachability" >&3
+    echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
     NAME=$(echo ${DESCRIBE} | jq -r ".raw.name")
     HTTP_PORT=$(echo ${DESCRIBE} | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"
@@ -65,6 +65,7 @@ function teardown {
     echo "# Testing switch_branch.sh"
     cd ..
     ./switch_branch.sh 9.0.x
+    echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
     echo "# curl: $CURL" >&3
     ${CURL}
 }
