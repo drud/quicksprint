@@ -31,7 +31,7 @@ trap cleanup EXIT
 (mkdir -p "${SPRINTDIR}" && chmod -R ugo+w "${SPRINTDIR}" && rm -rf  ${SPRINTDIR}/sprint-2* ) || true
 rm -rf "$UNTARRED_PACKAGE"
 
-echo n | ./package.sh || ( echo "package.sh failed" && exit 2 )
+./package.sh || ( echo "package.sh failed" && exit 2 )
 # SOURCE_TARBALL_LOCATION isn't valid until package script has run.
 SOURCE_TARBALL_LOCATION=~/tmp/drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
 
