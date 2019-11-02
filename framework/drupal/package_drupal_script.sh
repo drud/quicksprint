@@ -31,7 +31,6 @@ cp ${REPO_DIR}/example.gitignore ${STAGING_DIR}/sprint/drupal8/.gitignore
 
 set -x
 composer install --quiet
-composer require drush/drush:^10
 set +x
 
 # The next line is a temporary workaround prevents the failures described in

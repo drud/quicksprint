@@ -5,7 +5,7 @@
 
 function setup {
     echo "# setup beginning" >&3
-    export SPRINT_BRANCH=9.0.x
+    export SPRINT_BRANCH=8.9.x
 
     export SPRINTDIR=~/sprint
     # DRUD_NONINTERACTIVE causes ddev not to try to use sudo and add the hostname
@@ -54,16 +54,18 @@ function teardown {
     STATUS=$(echo ${DESCRIBE} | jq -r ".raw.status")
     [ "$STATUS" = "running" ]
 
-    echo "# Testing curl reachability" >&3
+    echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
     NAME=$(echo ${DESCRIBE} | jq -r ".raw.name")
     HTTP_PORT=$(echo ${DESCRIBE} | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"
-    CURL="curl --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL"
+    CURL="curl -lL -s --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL"
     echo "# curl: $CURL" >&3
     ${CURL}
 
     echo "# Testing switch_branch.sh"
     cd ..
-    ./switch_branch.sh 8.9.x
+    ./switch_branch.sh 9.0.x
+    echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
+    echo "# curl: $CURL" >&3
     ${CURL}
 }
