@@ -44,7 +44,10 @@ ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
 printf "${YELLOW}Running git fetch && git checkout origin/${SPRINT_BRANCH}.${RESET}...\n"
 ddev exec "(git fetch && git checkout 'origin/${SPRINT_BRANCH}') || (echo 'ddev exec...git checkout failed' && exit 102)"
 printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
-ddev exec "COMPOSER_DISCARD_CHANGES=1 composer install -n"
+# Works around drupal/coder causing uncommitted changes prompts to composer.
+ddev composer config discard-changes true
+ddev composer install -n
+ddev composer config discard-changes --unset
 ddev exec "git checkout /var/www/html/composer.*"
 
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
