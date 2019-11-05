@@ -51,6 +51,7 @@ cd ${STAGING_DIR}
 cp ${REPO_DIR}/framework/drupal/start_sprint.sh ${STAGING_DIR}
 cp ${REPO_DIR}/framework/drupal/SPRINTUSER_README.md ${STAGING_DIR}
 cp ${REPO_DIR}/framework/drupal/sprint_readme.txt ${STAGING_DIR}/sprint/Readme.txt
+cp ${REPO_DIR}/framework/drupal/switch_branch.sh ${STAGING_DIR}/sprint/switch_branch.sh
 
 exit 0
 
