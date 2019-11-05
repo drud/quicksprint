@@ -190,7 +190,7 @@ if [ ${INSTALL_DOCKER} = true ] ; then
 fi
 if [ -f ${STAGING_DIR_NAME}/installs ]; then chmod -R u+w ${STAGING_DIR_NAME}/installs; fi
 rm -rf ${STAGING_DIR_NAME}/installs
-echo "Creating sprint package..."
+printf "Creating ${GREEN}${FRAMEWORK}${RESET} sprint package..."
 tar -cf - ${STAGING_DIR_NAME} | gzip -9 > drupal_sprint_package.${QUICKSPRINT_RELEASE}.tar.gz
 zip -9 -r -q drupal_sprint_package.${QUICKSPRINT_RELEASE}.zip ${STAGING_DIR_NAME}
 

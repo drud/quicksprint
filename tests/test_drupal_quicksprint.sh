@@ -44,7 +44,7 @@ if [ ! -f "$UNTARRED_PACKAGE/SPRINTUSER_README.md" -o ! -f "$UNTARRED_PACKAGE/CO
 fi
 
 # Run install.sh
-(cd "$UNTARRED_PACKAGE" && printf 'y\ny\n' | ./install.sh) || ( echo "Failed to install.sh" && exit 4 )
+(cd "$UNTARRED_PACKAGE" && ./install.sh) || ( echo "Failed to install.sh" && exit 4 )
 
 # Stop any running ddev instances
 ddev poweroff
