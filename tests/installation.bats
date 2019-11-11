@@ -15,6 +15,14 @@ function setup {
     # Extract the IP address we need from DOCKER_HOST, which is formatted like tcp://192.168.99.100:2376
     if [ ! -z "${DOCKER_HOST:-}" ]; then DHOST="$(echo ${DOCKER_HOST} | perl -p -e 's/(tcp:\/\/|:[0-9]+$)//g')"; fi
     cd ${SPRINTDIR} && ./start_sprint.sh
+    # Temporarily add some debugging if something goes wrong.
+    if [ $? -ne 0 ]; then
+      SPRINT_NAME=$(cat "${SPRINTDIR}/.test_sprint_name.txt")
+      if [ -d ${SPRINTDIR}/${SPRINT_NAME}/drupal8 ]; then
+        cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
+        ddev logs -s web
+      fi
+    fi
     export SPRINT_NAME=$(cat "${SPRINTDIR}/.test_sprint_name.txt")
     echo "# setup complete" >&3
 }
