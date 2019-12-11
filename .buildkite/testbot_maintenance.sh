@@ -14,7 +14,9 @@ darwin)
 
     ;;
 windows)
-    choco upgrade -y mkcert ddev composer php
+    # Prevent choco from getting php 7.4 at this point.
+    choco upgrade -y --version 7.3.12 php
+    choco upgrade -y mkcert ddev composer
     composer self-update
     ;;
 esac
