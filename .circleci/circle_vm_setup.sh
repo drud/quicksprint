@@ -5,10 +5,8 @@ set -x
 
 # Basic tools
 
-v=php7.2
-sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update -qq
-sudo apt-get install -y -qq jq realpath zip ${v} ${v}-bcmath ${v}-curl ${v}-cgi ${v}-cli ${v}-common ${v}-fpm ${v}-gd ${v}-intl ${v}-json ${v}-mysql ${v}-mbstring  ${v}-opcache ${v}-soap ${v}-readline ${v}-xdebug ${v}-xml ${v}-xmlrpc ${v}-zip;
+sudo apt-get install -y -qq jq realpath zip
 
 # Remove any existing docker
 sudo apt-get remove docker docker-engine docker.io
@@ -34,9 +32,7 @@ echo "export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH" >>~/.bashrc
 . ~/.bashrc
 
 brew update && brew tap drud/ddev
-for item in mkcert ddev composer php docker-compose; do
-    brew install $item || /home/linuxbrew/.linuxbrew/bin/brew upgrade $item
-done
+brew install mkcert ddev composer php docker-compose
 
 # install recent bats bash testing framework
 BATS_TAG=v1.1.0
