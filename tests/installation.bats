@@ -64,7 +64,7 @@ function teardown {
 
     echo "# Testing switch_branch.sh"
     cd ..
-    ./switch_branch.sh 9.1.x
+    ./switch_branch.sh 8.9.x
     echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
     echo "# curl: $CURL" >&3
     ${CURL}

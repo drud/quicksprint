@@ -3,9 +3,7 @@
 # This script allows switching drupal branch, for example, from 9.0.x to 8.9.x
 # or back
 
-set -o errexit
-set -o pipefail
-set -o nounset
+set -o errexit pipefail nounset
 
 if [[ $# != 1 ]]; then
   echo "Please provide a branch to switch to. For example 'switch_branch.sh 8.9.x'"
