@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script allows switching drupal branch, for example, from 8.9.x to 9.0.x
+# This script allows switching drupal branch, for example, from 9.0.x to 8.9.x
 # or back
 
 set -o errexit
