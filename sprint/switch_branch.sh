@@ -15,7 +15,7 @@ fi
 
 target_branch=$1
 
-pushd drupal8
+pushd drupal
 set -x
 ddev start
 ddev exec  "git fetch && git stash save && git checkout origin/${target_branch}"

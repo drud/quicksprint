@@ -31,14 +31,14 @@ function teardown {
 }
 
 @test "check git configuration" {
-    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
+    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal
     [ "$(git config core.eol)" = "lf" ]
     [ "$(git config core.autocrlf)" = "false" ]
     git log -n 1 --pretty=%d HEAD | grep "origin/${SPRINT_BRANCH}"
 }
 
 @test "check ddev project status and router status, check http status" {
-    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
+    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal
     DESCRIBE=$(ddev describe -j)
 
     ROUTER_STATUS=$(echo "${DESCRIBE}" | jq -r ".raw.router_status" )
