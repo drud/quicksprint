@@ -5,7 +5,7 @@
 
 function setup {
     echo "# setup beginning" >&3
-    export SPRINT_BRANCH=8.9.x
+    export SPRINT_BRANCH=9.0.x
 
     export SPRINTDIR=~/sprint
     # DRUD_NONINTERACTIVE causes ddev not to try to use sudo and add the hostname
@@ -31,14 +31,14 @@ function teardown {
 }
 
 @test "check git configuration" {
-    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
+    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal
     [ "$(git config core.eol)" = "lf" ]
     [ "$(git config core.autocrlf)" = "false" ]
     git log -n 1 --pretty=%d HEAD | grep "origin/${SPRINT_BRANCH}"
 }
 
 @test "check ddev project status and router status, check http status" {
-    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal8
+    cd ${SPRINTDIR}/${SPRINT_NAME}/drupal
     DESCRIBE=$(ddev describe -j)
 
     ROUTER_STATUS=$(echo "${DESCRIBE}" | jq -r ".raw.router_status" )
@@ -64,7 +64,7 @@ function teardown {
 
     echo "# Testing switch_branch.sh"
     cd ..
-    ./switch_branch.sh 9.0.x
+    ./switch_branch.sh "8.9.x"
     echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
     echo "# curl: $CURL" >&3
     ${CURL}
