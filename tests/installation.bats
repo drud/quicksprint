@@ -21,6 +21,7 @@ function setup {
 
 function teardown {
     echo "# teardown beginning" >&3
+    export SPRINT_NAME=$(cat "${SPRINTDIR}/.test_sprint_name.txt")
 
     ddev delete -O -y ${SPRINT_NAME}
     if [ ! -z "${SPRINTDIR}" -a ! -z "${SPRINT_NAME}" -a -d ${SPRINTDIR}/${SPRINT_NAME} ] ; then
@@ -31,6 +32,7 @@ function teardown {
 }
 
 @test "check git configuration" {
+    export SPRINT_NAME=$(cat "${SPRINTDIR}/.test_sprint_name.txt")
     cd ${SPRINTDIR}/${SPRINT_NAME}/drupal
     [ "$(git config core.eol)" = "lf" ]
     [ "$(git config core.autocrlf)" = "false" ]
@@ -38,6 +40,7 @@ function teardown {
 }
 
 @test "check ddev project status and router status, check http status" {
+    export SPRINT_NAME=$(cat "${SPRINTDIR}/.test_sprint_name.txt")
     cd ${SPRINTDIR}/${SPRINT_NAME}/drupal
     DESCRIBE=$(ddev describe -j)
 
