@@ -14,12 +14,16 @@ fi
 target_branch=$1
 
 pushd drupal
+STASHNAME=switch-branch-${RANDOM}
 set -x
 ddev start
-ddev exec  "git fetch && git stash save && git checkout origin/${target_branch}"
-ddev composer install
-ddev exec "( git stash apply || true )"
-echo "DROP DATABASE db; CREATE DATABASE db; " | ddev mysql -uroot -proot
+ddev exec  "git fetch && git stash save ${STASHNAME} && git checkout origin/${target_branch}"
+# Silly coder always breaks composer install if there's contents in it, because
+# the package uses git instead of a zipball. Temporarily change composer.json to
+# ignore, gets turned back by checkout of composer.json below.
+ddev composer config discard-changes true
+ddev composer install --no-interaction
+ddev exec "( git checkout composer.json && (git stash show ${STASHNAME} 2>/dev/null && git stash apply ${STASHNAME} || true) )"
 ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
 set +x
 popd >/dev/null
