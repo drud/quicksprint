@@ -7,7 +7,7 @@ There are two parts to this project:
 1. A build of the tarball that a contribution event attendee needs (done by a maintainer using Linux or Mac OS, who should be reading this right now). The maintainer uses `package_drupal_script.sh` to create a tarball/zipball for sprint attendees to use.
 2. A released tarball/zipball that has everything ready for an ordinary contributor to get set up fast. It includes a DRUPAL_SPRINTUSER_README.md to help them know what to do.
 
-Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal8 repository to provide the tools to get people going quickly at a contribution event.
+Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal repository to provide the tools to get people going quickly at a contribution event.
 
 ## Creating a Sprint Package
 

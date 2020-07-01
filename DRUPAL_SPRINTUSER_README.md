@@ -1,8 +1,8 @@
-# Drupal 8 Contribution Package
+# Drupal Contribution Package
 
-This directory contains tools to get you started contributing to Drupal 8:
+This directory contains tools to get you started contributing to Drupal:
 
-* Drupal 8, already cloned with git
+* Drupal, already cloned with git
 * Docker CE
 * DDEV-Local (ddev) development environment
 * Additional tools including git for Windows

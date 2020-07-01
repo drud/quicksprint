@@ -6,7 +6,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-SPRINT_BRANCH=9.0.x
+SPRINT_BRANCH=9.1.x
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -17,7 +17,7 @@ TIMESTAMP=$(date +"%Y%m%d-%H%M")
 SPRINTNAME="sprint-${TIMESTAMP}"
 echo ${SPRINTNAME} > .test_sprint_name.txt
 
-# Extract a new ddev D8 core instance to $CWD/sprint-$TIMESTAMP
+# Extract a new ddev D9 core instance to $CWD/sprint-$TIMESTAMP
 mkdir -p ${SPRINTNAME}
 echo "Untarring sprint.tar.xz" >&2
 tar -xpf sprint.tar.xz -C ${SPRINTNAME}
@@ -34,10 +34,10 @@ fi
 cd "${SPRINTNAME}/drupal"
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-ddev config --docroot . --project-type drupal8 --php-version=7.3 --mariadb-version=10.3 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
+ddev config --docroot . --project-type drupal9 --php-version=7.3 --mariadb-version=10.3 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
 
 ddev config global --instrumentation-opt-in=false >/dev/null
-printf "${YELLOW}Configuring your fresh Drupal8 instance. This takes a few minutes.${RESET}\n"
+printf "${YELLOW}Configuring your fresh Drupal instance. This takes a few minutes.${RESET}\n"
 printf "${YELLOW}Running ddev start...YOU MAY BE ASKED for your sudo password to add a hostname to /etc/hosts${RESET}\n"
 ddev start || (printf "${RED}ddev start failed.${RESET}" && exit 101)
 printf "${YELLOW}Running git fetch && git checkout origin/${SPRINT_BRANCH}.${RESET}...\n"
