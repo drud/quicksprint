@@ -4,8 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-# Base checkout should be of the 8.7.x branch
-SPRINT_BRANCH=9.0.x
+# Base checkout should be latest major-minor version branch
+SPRINT_BRANCH=9.1.x
 
 # This makes git-bash actually try to create symlinks.
 # Use developer mode in Windows 10 so this doesn't require admin privs.
