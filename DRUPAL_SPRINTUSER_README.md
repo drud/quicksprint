@@ -28,22 +28,25 @@ This directory contains tools to get you started contributing to Drupal:
 
 Use one of the options below to get the files.
 
-* USB Drive - Copy drupal_sprint_package-RELEASE.zip and Docker installer for your Operating System from the USB drive to your Desktop.
+* USB Drive - Copy drupal_sprint_package.RELEASE.zip and Docker installer for your Operating System from the USB drive to your Desktop.
 * ResilioSync - Find the folder/directory that was downloaded and copy its contents to your Desktop.
-* GitHub - Download drupal_sprint_package-RELEASE.zip from https://github.com/drud/quicksprint/releases.
+* GitHub - Download drupal_sprint_package.RELEASE.zip from https://github.com/drud/quicksprint/releases. Also download quicksprint_thirdparty_installs.RELEASE.zip if you need Docker and/or Git.
+
 
 <a name="extract-files"></a>
 ### 2. drupal_sprint_package directory
 
-Extract the drupal_sprint_package-RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
+Extract the drupal_sprint_package.RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
+
+Extract the quicksprint_thirdparty_installs.RELEASE.zip if downloaded, and open or browse to the extracted directory (also called "drupal_sprint_package" or "drupal_sprint_package 2")
 
 <a name="install"></a>
 ### 3. Install Docker and Other Requirements
 
 #### 3.1 Docker CE or Docker Toolbox
 
-* **Windows users install git:** First, install Git For Windows from the **installs** directory. The version here is newer than you might have on your computer if you already have it, so install if you don't have Git for Windows or have a version less than 2.21.0.
-* **All users:** Find the Docker installer for your Operating System underneath the **installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
+* **Windows users install git:** First, install Git For Windows from the **third party installs** directory. The version here is newer than you might have on your computer if you already have it, so install if you don't have Git for Windows or have a version less than 2.21.0.
+* **All users:** Find the Docker installer for your Operating System underneath the **third party installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
 
  Operating System | Docker Version | Installer
  ---------------- | -------------- | -----------------
