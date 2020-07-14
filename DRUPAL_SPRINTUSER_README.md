@@ -36,9 +36,9 @@ Use one of the options below to get the files.
 <a name="extract-files"></a>
 ### 2. drupal_sprint_package directory
 
-Extract the drupal_sprint_package.RELEASE.zip file, and open or browse to the "drupal_sprint_package" directory.
+Extract the drupal_sprint_package.RELEASE.zip file, and open or browse the contents. This is the sprint package directory.
 
-Extract the quicksprint_thirdparty_installs.RELEASE.zip if downloaded, and open or browse to the extracted directory (also called "drupal_sprint_package" or "drupal_sprint_package 2")
+Extract the quicksprint_thirdparty_installs.RELEASE.zip if downloaded, and open or browse the contents and find the /installs folder. This is the third party installs directory.
 
 <a name="install"></a>
 ### 3. Install Docker and Other Requirements
