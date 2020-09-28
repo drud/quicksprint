@@ -10,7 +10,7 @@ This package contains tools to get you started contributing to Drupal:
 ## Prerequisites
 
 * A computer with 6gb memory or greater.
-* Windows 7 or higher, MacOS High Sierra or higher or a recent/stable Linux distribution.
+* Windows 10 or higher (with WSL2 and/or Hyper-V support), MacOS High Sierra or higher or a recent/stable Linux distribution.
 * A robust code editor such as Visual Studio Code, Atom, PhpStorm or Netbeans (this may be provided as part of this package).
 
 **⚠️ If your computer does not match a requirement, try the [Drupal quick-start](https://www.drupal.org/docs/8/install/quick-start-launch-a-local-demo-version-of-drupal-8-using-4-brief-steps)**! Now skip the steps below.
@@ -43,48 +43,40 @@ Extract the `quicksprint_thirdparty_installs.<RELEASE>.zip` if downloaded, and o
 <a name="install"></a>
 ### 3. Install Docker and Other Requirements
 
-#### 3.1 Docker Desktop or Docker Toolbox
+#### 3.1 Docker Desktop
 
 * **Windows users install git:** First, install Git For Windows from the **third party installs** directory. The version here is newer than you might have on your computer if you already have it, so install if you don't have Git for Windows or have a version less than 2.21.0.
 * **All users:** Find the Docker installer for your Operating System underneath the **third party installs** directory. It is important to install the version of Docker provided for compatibility with the tools.
 
- Operating System | Docker Version | Installer
- ---------------- | -------------- | -----------------
- Windows 10 Pro, Enterprise (HyperV enabled) | Docker CE | "Docker for Windows Installer.exe"
- Windows 10 Home | Docker Toolbox | DockerToolbox-VERSION.exe
- Windows 7 (or no HyperV enabled)| Docker Toolbox | DockerToolbox-VERSION.exe
- MacOS | Docker CE | Docker.dmg
- Linux | Docker CE, docker-compose | See [Linux instructions](https://docs.docker.com/install/#docker-ce)
+ Operating System | Docker Version             | Installer
+ ---------------- | -------------------------- | -----------------
+ Windows 10       | Docker Desktop for Windows | "Docker for Windows Installer.exe"
+ MacOS            | Docker Desktop for Mac     | Docker.dmg
+ Linux            | Docker CE, docker-compose  | See [Linux instructions](https://docs.docker.com/engine/install/#server)
 
-**⚠️Docker Toolbox Users:** Run "Docker Quickstart Terminal" to start docker running.
-
-**⚠️Docker Desktop for Windows and Docker Desktop for Mac** Start the docker application
-
-**⚠️Docker Desktop for Windows**: You *must* share the C: drive (preferably all drives, or any other drive your home directory may be on) under Docker->Settings->Shared Drives.
+**⚠️Docker Desktop for Windows**: Docker Desktop prompts you to enable WSL 2 during installation.
 
 **⚠️All users** Additional Docker **installation** troubleshooting and installation documentation is available at [ddev docker instructions](https://ddev.readthedocs.io/en/stable/users/docker_installation/).
 
 -**⚠️Linux users:** You'll probably need the [ddev docker instructions](https://ddev.readthedocs.io/en/stable/users/docker_installation/) to confirm your versions of docker ce and docker-compose to get docker properly setup.
 
-**⚠️All users:** Now start the Docker app you installed. Docker may ask you to create a DockerHub user account, and you may ignore this prompt safely and continue on below.
+**⚠️All users:** Now start the Docker application you installed. Docker may ask you to create a DockerHub user account, and you may ignore this prompt safely and continue on below.
 
 <a name="open-terminal"></a>
 ### 4. Open Terminal
 
-Open your Terminal application. If you already had a window open, close it and open another one.
+Open your Terminal application. If you already had a window open, **close it and open another one**.
 
-Operating System | Docker Version | Program
----------------- | -------------- | ----------------
-Windows 10 Pro, Enterprise (HyperV enabled) | Docker Desktop | Git Bash
-Windows 10 Home | Docker Toolbox | Docker Quickstart Terminal
-Windows 7  | Docker Toolbox | Docker Quickstart Terminal
-MacOS | Docker Desktop | Terminal.app or your preferred terminal application
-Linux | Docker-ce | Your preferred terminal application
+Operating System | Docker Version             | Program
+---------------- | -------------------------- | ----------------
+Windows 10       | Docker Desktop             | Git Bash
+MacOS            | Docker Desktop             | Terminal.app or your preferred terminal application
+Linux            | Docker CE, docker-compose  | Your preferred terminal application
 
 <a name="install-tools"></a>
 ### 5. Install Contribution Tools
 
-1. Change directory to the drupal_sprint_package directory using the `cd` command:
+1. Change directory to the `drupal_sprint_package` directory using the `cd` command:
    * Example: Run `cd ~/Desktop/drupal_sprint_package`
 2. Run the `install.sh` command and follow the prompts.
    * Example: `./install.sh`
@@ -92,3 +84,4 @@ Linux | Docker-ce | Your preferred terminal application
    * Example: `cd ~/sprint` and `./start_sprint.sh`.
 
 This may take a few minutes and will provide you with a set of URLs and further instructions for using your contribution environment.
+
