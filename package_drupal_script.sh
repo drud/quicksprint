@@ -113,7 +113,7 @@ done
 
 pushd ${ddev_tarballs} >/dev/null
 # Download the ddev tarballs if necessary; check to make sure they all have correct sha256.
-for tarball in ddev_macos.$LATEST_VERSION.tar.gz ddev_linux.$LATEST_VERSION.tar.gz ddev_windows.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
+for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_VERSION.tar.gz ddev_windows-amd64.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
     shafile="${tarball}.sha256.txt"
 
     if ! [ -f "${tarball}" -a -f "${shafile}" ] ; then
