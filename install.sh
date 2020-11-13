@@ -71,7 +71,7 @@ case "$OS/$ARCH" in
         # Assume if DDEV_INSTALL_DIR is set that we *do* need ddev on Windows, install it.
         # Otherwise, we'll do the install using the installer below.
         if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
-            TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
+            TARBALL=ddev_tarballs/ddev_windows-amd64.${DDEV_VERSION}.tar.gz
         fi
         ;;
     *)
