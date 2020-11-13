@@ -61,7 +61,7 @@ function teardown {
     NAME=$(echo ${DESCRIBE} | jq -r ".raw.name")
     HTTP_PORT=$(echo ${DESCRIBE} | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"
-    CURL="curl -lL -s --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL"
+    CURL="curl -lL -s --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL || (rv=$? && ( curl -I -H 'Host: ${NAME}.ddev.site' $URL; exit $rv ))"
     echo "# curl: $CURL" >&3
     ${CURL}
 
