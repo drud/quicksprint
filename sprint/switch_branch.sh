@@ -17,6 +17,7 @@ pushd drupal
 STASHNAME=switch-branch-${RANDOM}
 set -x
 ddev start
+ddev exec sudo curl -o /usr/local/bin/drush -s -lL https://github.com/drush-ops/drush-launcher/releases/download/0.7.4/drush.phar
 ddev exec  "git fetch && git stash save ${STASHNAME} && git checkout origin/${target_branch}"
 # Silly coder always breaks composer install if there's contents in it, because
 # the package uses git instead of a zipball. Temporarily change composer.json to
@@ -24,7 +25,7 @@ ddev exec  "git fetch && git stash save ${STASHNAME} && git checkout origin/${ta
 ddev composer config discard-changes true
 ddev composer install --no-interaction
 ddev exec "( git checkout composer.json && (git stash show ${STASHNAME} 2>/dev/null && git stash apply ${STASHNAME} || true) )"
-ddev exec drush8 si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
+ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
 set +x
 popd >/dev/null
 echo "Switched to ${target_branch}"

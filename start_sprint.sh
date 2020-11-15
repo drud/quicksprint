@@ -46,8 +46,11 @@ printf "${YELLOW}Running 'ddev composer install'${RESET}...\n"
 ddev composer install
 ddev exec "git checkout /var/www/html/composer.*"
 
-printf "${YELLOW}Running 'drush8 si' to install drupal.${RESET}...\n"
-ddev exec "drush8 si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time'"
+ddev exec sudo curl -o /usr/local/bin/drush -s -lL https://github.com/drush-ops/drush-launcher/releases/download/0.7.4/drush.phar
+
+printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
+ddev exec drush --version
+ddev exec "drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time'"
 printf "${RESET}"
 ddev describe
 
