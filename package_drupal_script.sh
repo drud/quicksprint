@@ -25,8 +25,9 @@ QUICKSPRINT_RELEASE=$(git describe --tags --always --dirty)
 
 echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 
-GIT_LATEST_RELEASE="$(curl -L -s -H 'Accept: application/json' https://github.com/git-for-windows/git/releases/latest | jq -r .tag_name | sed 's/^v//; s/\.windows\.1//;')"
-GIT_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/v${GIT_LATEST_RELEASE}.windows.1/Git-${GIT_LATEST_RELEASE}-64-bit.exe"
+GIT_TAG_NAME=$(curl -L -s -H 'Accept: application/json' https://github.com/git-for-windows/git/releases/latest | jq -r .tag_name)
+GIT_LATEST_RELEASE="$(echo $GIT_TAG_NAME | sed 's/^v//; s/\.windows//')"
+GIT_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/${GIT_TAG_NAME}/Git-${GIT_LATEST_RELEASE}-64-bit.exe"
 
 DOWNLOAD_URLS="https://download.docker.com/mac/stable/Docker.dmg https://download.docker.com/win/stable/42716/Docker%20Desktop%20Installer.exe ${GIT_DOWNLOAD_URL}"
 
@@ -113,7 +114,7 @@ done
 
 pushd ${ddev_tarballs} >/dev/null
 # Download the ddev tarballs if necessary; check to make sure they all have correct sha256.
-for tarball in ddev_macos.$LATEST_VERSION.tar.gz ddev_linux.$LATEST_VERSION.tar.gz ddev_windows.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
+for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_VERSION.tar.gz ddev_windows-amd64.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
     shafile="${tarball}.sha256.txt"
 
     if ! [ -f "${tarball}" -a -f "${shafile}" ] ; then

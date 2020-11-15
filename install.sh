@@ -10,6 +10,7 @@ GREEN='\033[32m'
 YELLOW='\033[33m'
 RESET='\033[0m'
 OS=$(uname)
+ARCH=$(arch)
 USER=$(whoami)
 SHACMD=""
 FILEBASE=""
@@ -58,19 +59,19 @@ if [ -z "${QUICKSPRINT_SKIP_IMAGE_INSTALL:-}" ]; then
 fi
 
 TARBALL=""
-case "$OS" in
-    Linux)
-        TARBALL=ddev_tarballs/ddev_linux.${DDEV_VERSION}.tar.gz
+case "$OS/$ARCH" in
+    Linux/x86_64)
+        TARBALL=ddev_tarballs/ddev_linux-amd64.${DDEV_VERSION}.tar.gz
         ;;
-    Darwin)
-        TARBALL=ddev_tarballs/ddev_macos.${DDEV_VERSION}.tar.gz
+    Darwin/i386)
+        TARBALL=ddev_tarballs/ddev_macos-amd64.${DDEV_VERSION}.tar.gz
         ;;
     MINGW64_NT*)
         echo ""
         # Assume if DDEV_INSTALL_DIR is set that we *do* need ddev on Windows, install it.
         # Otherwise, we'll do the install using the installer below.
         if [ ! -z "${DDEV_INSTALL_DIR:-}" ]; then
-            TARBALL=ddev_tarballs/ddev_windows.${DDEV_VERSION}.tar.gz
+            TARBALL=ddev_tarballs/ddev_windows-amd64.${DDEV_VERSION}.tar.gz
         fi
         ;;
     *)

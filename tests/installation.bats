@@ -61,14 +61,12 @@ function teardown {
     NAME=$(echo ${DESCRIBE} | jq -r ".raw.name")
     HTTP_PORT=$(echo ${DESCRIBE} | jq -r ".raw.router_http_port")
     URL="http://${DHOST}:${HTTP_PORT}"
-    CURL="curl -lL -s --fail -H 'Host: ${NAME}.ddev.site' --silent --output /dev/null --url $URL"
-    echo "# curl: $CURL" >&3
-    ${CURL}
+    curl -I -H "Host: ${NAME}.ddev.site" http://127.0.0.1:8080 | tee /tmp/quicksprint_test_base_curl.out | grep 'HTTP/1.1 200'
 
     echo "# Testing switch_branch.sh"
-    cd ..
+    cd ${SPRINTDIR}/${SPRINT_NAME}
     ./switch_branch.sh "8.9.x"
-    echo "# Testing curl reachability for ${NAME}.ddev.site" >&3
-    echo "# curl: $CURL" >&3
-    ${CURL}
+    echo "# Testing curl reachability for switch_branch ${NAME}.ddev.site" >&3
+    curl -I -H "Host: ${NAME}.ddev.site" http://127.0.0.1:8080 | tee /tmp/quicksprint_test_switch_branch_curl.out | grep 'HTTP/1.1 200'
+
 }
