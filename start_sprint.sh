@@ -47,7 +47,7 @@ ddev composer install
 ddev exec "git checkout /var/www/html/composer.*"
 
 printf "${YELLOW}Running 'drush si' to install drupal.${RESET}...\n"
-ddev exec "drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time'"
+ddev exec "drush si -vvv --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time'"
 printf "${RESET}"
 ddev describe
 

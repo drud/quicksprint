@@ -24,7 +24,7 @@ ddev exec  "git fetch && git stash save ${STASHNAME} && git checkout origin/${ta
 ddev composer config discard-changes true
 ddev composer install --no-interaction
 ddev exec "( git checkout composer.json && (git stash show ${STASHNAME} 2>/dev/null && git stash apply ${STASHNAME} || true) )"
-ddev exec drush si --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
+ddev exec drush si -vvv --yes standard --account-pass=admin --db-url=mysql://db:db@db/db --site-name='Drupal Contribution Time!'
 set +x
 popd >/dev/null
 echo "Switched to ${target_branch}"
