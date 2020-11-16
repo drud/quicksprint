@@ -34,7 +34,7 @@ fi
 cd "${SPRINTNAME}/drupal"
 echo "Using ddev version $(ddev version| awk '/^cli/ { print $2}') from $(which ddev)"
 
-ddev config --docroot . --project-type drupal9 --php-version=7.3 --mariadb-version=10.3 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
+ddev config --docroot . --project-type drupal9 --php-version=7.4 --composer-version=2 --mariadb-version=10.3 --http-port=8080 --https-port=8443 --project-name="sprint-${TIMESTAMP}"
 
 ddev config global --instrumentation-opt-in=false >/dev/null
 printf "${YELLOW}Configuring your fresh Drupal instance. This takes a few minutes.${RESET}\n"
