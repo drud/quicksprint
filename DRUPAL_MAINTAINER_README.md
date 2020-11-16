@@ -5,19 +5,8 @@ Quicksprint is a basic toolkit to get people started with ddev and a Drupal code
 There are two parts to this project:
 
 1. A build of the tarball that a contribution event attendee needs (done by a maintainer using Linux or Mac OS, who should be reading this right now). The maintainer uses `package_drupal_script.sh` to create a tarball/zipball for sprint attendees to use.
-2. A released tarball/zipball that has everything ready for an ordinary contributor to get set up fast. It includes a DRUPAL_SPRINTUSER_README.md to help them know what to do.
+2. A released tarball/zipball that has everything ready for an ordinary contributor to get set up fast. It includes a README.md to help them know what to do.
 
-Quicksprint uses [DDEV-Local](https://github.com/drud/ddev), docker, and a cloned Drupal repository to provide the tools to get people going quickly at a contribution event.
-
-## Creating a Sprint Package
-
-Quicksprint packages are built nightly and on tagged releases. Please download a tagged release from the GitHub [Releases page](https://github.com/drud/quicksprint/releases) rather than bothering to build it yourself. But of course, you could create a custom build using this source repository.
-
-* To create a package you will need to
-    * Confirm Docker is running.
-    * Confirm docker-compose is available.
-    * Make sure you have these packages on your build machine: curl jq zcat composer perl zip bats. You can run the tests/sanetestbot.sh script to test.
-    * Then run the script `package_drupal_script.sh`
 
 ## Distributing a Sprint Package
 
@@ -51,6 +40,6 @@ There are some better tools to automate USB flash drive imaging, but your mileag
 
 ### Using your Sprint Package
 
-* Your users will then download and unarchive the tarball or zipball.
+* Your users will download and unarchive the tarball or zipball.
 * Run install.sh from the unarchived directory; (Windows users must work in git-bash).
 * After installation, users can start up an instance by cd-ing to ~/sprint and running ./start_sprint.sh. 
