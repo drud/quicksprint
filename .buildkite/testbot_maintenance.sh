@@ -14,7 +14,7 @@ darwin)
 
     ;;
 windows)
-    choco upgrade -y mkcert ddev composer php
+    choco upgrade -y mkcert ddev
     composer self-update
     ;;
 esac
