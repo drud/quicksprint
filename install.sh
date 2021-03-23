@@ -59,7 +59,7 @@ if [ -z "${QUICKSPRINT_SKIP_IMAGE_INSTALL:-}" ]; then
 fi
 
 TARBALL=""
-case "$OS/$ARCH" in
+case "${OS}/${ARCH}" in
     Linux/x86_64)
         TARBALL=ddev_tarballs/ddev_linux-amd64.${DDEV_VERSION}.tar.gz
         ;;
@@ -75,7 +75,7 @@ case "$OS/$ARCH" in
         fi
         ;;
     *)
-        printf "${RED}No ddev binary is available for ${OS}${RESET}\n"
+        printf "${RED}No ddev binary is available for ${OS}/${ARCH}${RESET}\n"
         exit 2
         ;;
 
