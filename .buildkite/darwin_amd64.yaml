@@ -1,0 +1,6 @@
+steps:
+- command: ".buildkite/test.sh"
+  label: "package and test"
+  agents:
+  - "os=macos"
+  - "architecture=amd64"
