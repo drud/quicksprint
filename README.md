@@ -85,3 +85,15 @@ Linux            | Docker CE, docker-compose  | Your preferred terminal applicat
 
 This may take a few minutes and will provide you with a set of URLs and further instructions for using your contribution environment.
 
+#### Optional configuration
+
+To add Nightwatch to your local environment,
+
+1. Open the `examples/commands/web/` directory.
+2. Copy the `nightwatch` and `phpunit` files into the .ddev/commands/web directory of your local instance.
+3. Copy the `docker-compose.testing.yaml` file into the .ddev/ directory of your local instance.
+4. Open a terminal in the drupal directory of your local instance.
+5. Run `ddev restart` if your local instance is running or `ddev start` to start your local instance.
+6. Run `ddev exec yarn install` or change directory into drupal/core and run `yarn install`
+7. Run `ddev exec nightwatch --tags=core` to run all core Nightwatch tests!
+
