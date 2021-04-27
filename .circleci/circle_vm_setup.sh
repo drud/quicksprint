@@ -5,30 +5,14 @@ set -x
 
 # Basic tools
 
-v=php7.3
+v=php7.4
 sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update -qq
-sudo apt-get install -y -qq jq realpath zip ${v} ${v}-bcmath ${v}-curl ${v}-cgi ${v}-cli ${v}-common ${v}-fpm ${v}-gd ${v}-intl ${v}-json ${v}-mysql ${v}-mbstring  ${v}-opcache ${v}-soap ${v}-readline ${v}-xdebug ${v}-xml ${v}-xmlrpc ${v}-zip;
-
-# Remove any existing docker
-sudo apt-get remove docker docker-engine docker.io
-sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-sudo apt-get update -qq
-sudo apt-get install -qq docker-ce
+sudo apt-get install -y -qq coreutils jq zip ${v} ${v}-bcmath ${v}-curl ${v}-cgi ${v}-cli ${v}-common ${v}-fpm ${v}-gd ${v}-intl ${v}-json ${v}-mysql ${v}-mbstring  ${v}-opcache ${v}-soap ${v}-readline ${v}-xdebug ${v}-xml ${v}-xmlrpc ${v}-zip;
 
 sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo php -r "unlink('composer-setup.php');"
-
 
 if [ ! -d /home/linuxbrew/.linuxbrew/bin ] ; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
@@ -38,8 +22,8 @@ echo "export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH" >>~/.bashrc
 
 . ~/.bashrc
 
-brew update && brew tap drud/ddev
-brew install mkcert ddev docker-compose
+brew update
+brew install mkcert drud/ddev/ddev
 
 # install recent bats bash testing framework
 BATS_TAG=v1.1.0
