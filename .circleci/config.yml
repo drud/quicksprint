@@ -3,7 +3,7 @@ version: 2.0
 jobs:
   "package_build":
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202101-01
     working_directory: ~/quicksprint
     environment:
       TERM: vt100
@@ -24,7 +24,7 @@ jobs:
         - tmp
   "test_package":
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202101-01
     working_directory: ~/quicksprint
     environment:
       TERM: vt100
@@ -40,7 +40,7 @@ jobs:
 
   "artifacts":
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202101-01
     working_directory: ~/quicksprint
     environment:
       ARTIFACTS: /home/circleci/artifacts
