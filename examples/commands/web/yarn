@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Description: Run Yarn inside Drupal Core
+## Usage: yarn <command>
+## Example: "ddev yarn install"
+
+yarn --cwd /var/www/html/core $@

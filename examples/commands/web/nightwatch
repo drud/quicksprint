@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Description: Run Nightwatch
+## Usage: nightwatch [flags] [args]
+## Example: "ddev nightwatch" or "ddev nightwatch --tag core"
+
+yarn --cwd /var/www/html/core test:nightwatch $@

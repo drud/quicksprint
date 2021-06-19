@@ -142,6 +142,9 @@ popd >/dev/null
 cp -r ${REPO_DIR}/licenses ${REPO_DIR}/COPYING "$STAGING_DIR/"
 cp ${REPO_DIR}/.quicksprint_release.txt $REPO_DIR/.ddev_version.txt "$STAGING_DIR/sprint"
 
+# Copy ddev optional commands and configuration.
+cp -r ${REPO_DIR}/examples "${STAGING_DIR}/"
+
 cd ${STAGING_DIR}
 
 echo "Creating sprint.tar.xz..."
