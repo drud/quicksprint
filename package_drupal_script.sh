@@ -5,7 +5,7 @@ set -o pipefail
 set -o nounset
 
 # Base checkout should be latest major-minor version branch
-SPRINT_BRANCH=9.2.x
+SPRINT_BRANCH=9.3.x
 
 # This makes git-bash actually try to create symlinks.
 # Use developer mode in Windows 10 so this doesn't require admin privs.
