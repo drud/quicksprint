@@ -28,8 +28,7 @@ echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 GIT_TAG_NAME=$(curl -L -s -H 'Accept: application/json' https://github.com/git-for-windows/git/releases/latest | jq -r .tag_name)
 GIT_LATEST_RELEASE="$(echo $GIT_TAG_NAME | sed 's/^v//; s/\.windows//')"
 GIT_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/${GIT_TAG_NAME}/Git-${GIT_LATEST_RELEASE}-64-bit.exe"
-
-DOWNLOAD_URLS="https://desktop.docker.com/mac/stable/Docker.dmg https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe ${GIT_DOWNLOAD_URL}"
+DOWNLOAD_URLS="${GIT_DOWNLOAD_URL}"
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -98,9 +97,15 @@ while true; do
                 mkdir -p installs
                 pushd installs >/dev/null
                 for download_url in ${DOWNLOAD_URLS}; do
-                    echo "Downloading ${download_url##*/} from ${download_url}"
+                    echo "Downloading ${download_url##*/} from ${download_url}..."
                     curl -sSL -O ${download_url}
                 done
+                for arch in amd64 arm64; do
+                  echo "Downloading Docker desktop (macOS ${arch})..."
+                  curl -sSL -o docker_desktop_${arch}.dmg https://desktop.docker.com/mac/main/${arch}/Docker.dmg
+                done
+                echo "Downloading Docker desktop (Windows)..."
+                curl -sSL -O https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe
                 popd >/dev/null
                 break;;
 
