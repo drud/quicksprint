@@ -62,7 +62,7 @@ ddev_tarballs="${STAGING_DIR}/ddev_tarballs"
 mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
-# Chmod as on WIndows read-only stuff is often unremoveable
+# Chmod as on Windows read-only stuff is often unremoveable
 chmod -R u+w ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh} 2>/dev/null || true
 rm -rf ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}
 # Remove anything in ddev_tarballs that is not the latest version
@@ -114,7 +114,7 @@ done
 
 pushd ${ddev_tarballs} >/dev/null
 # Download the ddev tarballs if necessary; check to make sure they all have correct sha256.
-for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_VERSION.tar.gz ddev_windows-amd64.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
+for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_macos-arm64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_VERSION.tar.gz ddev_linux-arm64.$LATEST_VERSION.tar.gz ddev_windows-amd64.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.arm64.$LATEST_VERSION.tar.xz ddev_docker_images.amd64.$LATEST_VERSION.tar.xz; do
     shafile="${tarball}.sha256.txt"
 
     if ! [ -f "${tarball}" -a -f "${shafile}" ] ; then
@@ -126,7 +126,7 @@ for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_
 done
 popd >/dev/null
 
-# clone or refresh d8 clone
+# clone or refresh drupal clone
 mkdir -p sprint
 git clone --config core.autocrlf=false --config core.eol=lf --config core.filemode=false --quiet https://git.drupalcode.org/project/drupal.git ${STAGING_DIR}/sprint/drupal -b ${SPRINT_BRANCH}
 pushd ${STAGING_DIR}/sprint/drupal >/dev/null
