@@ -70,3 +70,37 @@ function teardown {
     curl -I -H "Host: ${NAME}.ddev.site" http://127.0.0.1:8080 | tee /tmp/quicksprint_test_switch_branch_curl.out | grep 'HTTP/1.1 200'
 
 }
+
+@test "verify correct architecture for macOS ddev binary" {
+  if [ "$(uname -s)" != "Darwin" ]; then skip "Skipping because not on macOS"; fi
+
+  arch=$(arch)
+  case ${arch} in
+  arm64)
+    file $(which ddev) | grep arm64
+    ;;
+  i386)
+    file $(which ddev) | grep x86_64
+    ;;
+  default)
+    false
+  esac
+}
+
+@test "verify correct architecture for macOS pulled images" {
+  if [ "$(uname -s)" != "Darwin" ]; then skip "Skipping because not on macOS"; fi
+
+  webimage="$(ddev version | awk '/ddev-webserver/ { print $2}')"
+  image_arch="$(docker image inspect --format "{{json .Architecture }}" ${webimage})"
+  arch=$(arch)
+  case ${arch} in
+  arm64)
+    [ ${image_arch} = '"arm64"' ]
+    ;;
+  i386)
+    [ ${image_arch} = '"amd64"' ]
+    ;;
+  default)
+    false
+  esac
+}
