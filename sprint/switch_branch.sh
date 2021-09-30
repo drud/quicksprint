@@ -6,7 +6,7 @@
 set -o errexit -o pipefail -o nounset
 
 if [[ $# != 1 ]]; then
-  echo "Please provide a branch to switch to. For example './switch_branch.sh 8.9.x'"
+  echo "Please provide a branch to switch to. For example './switch_branch.sh 9.2.x'"
   exit 1
 fi
 
