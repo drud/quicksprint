@@ -104,5 +104,6 @@ function teardown {
     ;;
   default)
     false
+    ;;
   esac
 }
