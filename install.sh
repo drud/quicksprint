@@ -63,8 +63,14 @@ case "${OS}/${ARCH}" in
     Linux/x86_64)
         TARBALL=ddev_tarballs/ddev_linux-amd64.${DDEV_VERSION}.tar.gz
         ;;
+    Linux/arm64)
+        TARBALL=ddev_tarballs/ddev_linux-arm64.${DDEV_VERSION}.tar.gz
+        ;;
     Darwin/i386)
         TARBALL=ddev_tarballs/ddev_macos-amd64.${DDEV_VERSION}.tar.gz
+        ;;
+    Darwin/arm64)
+        TARBALL=ddev_tarballs/ddev_macos-arm64.${DDEV_VERSION}.tar.gz
         ;;
     MINGW64_NT*)
         echo ""

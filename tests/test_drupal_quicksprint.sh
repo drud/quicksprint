@@ -21,6 +21,7 @@ export PATH="$PATH:/usr/local/bin"
 tests/sanetestbot.sh || ( echo "sanetestbot.sh failed, test machine is not ready for duty" && exit 1 )
 
 function cleanup {
+    ddev poweroff
     rm -rf /tmp/drupal_sprint_package "$DDEV_INSTALL_DIR"
     if [ ! -z "${SOURCE_TARBALL_LOCATION:-}" ] ; then rm -f ${SOURCE_TARBALL_LOCATION:-nopedontrm}; fi
 }
@@ -45,9 +46,6 @@ fi
 
 # Run install.sh
 (cd "$UNTARRED_PACKAGE" && printf 'y\ny\n' | ./install.sh) || ( echo "Failed to install.sh" && exit 4 )
-
-# Stop any running ddev instances
-ddev poweroff
 
 # /usr/local/bin is added for git-bash, where it may not be in the $PATH.
 export PATH="/usr/local/bin:$PATH"

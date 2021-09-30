@@ -7,6 +7,8 @@ function setup {
     echo "# setup beginning" >&3
     export SPRINT_BRANCH=9.3.x
 
+    ddev poweroff
+
     export SPRINTDIR=~/sprint
     # DRUD_NONINTERACTIVE causes ddev not to try to use sudo and add the hostname
     export DRUD_NONINTERACTIVE=true
