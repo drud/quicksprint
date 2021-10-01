@@ -1,6 +1,6 @@
 steps:
 - command: ".buildkite/test.sh"
-  label: "package and test amd64"
+  label: "package and test arm64"
   agents:
   - "os=macos"
-  - "architecture=amd64"
+  - "architecture=arm64"

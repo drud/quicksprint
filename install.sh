@@ -11,6 +11,7 @@ YELLOW='\033[33m'
 RESET='\033[0m'
 OS=$(uname)
 ARCH=$(arch)
+if [ ${ARCH} = "i386" ] || [ ${ARCH} = "x86_64" ]; then ARCH=amd64; fi
 USER=$(whoami)
 SHACMD=""
 FILEBASE=""
@@ -50,9 +51,9 @@ printf "Installing docker images for ddev to use...\n"
 # Allow faster turnaround on testing by export QUICKSPRINT_SKIP_IMAGE_INSTALL=true
 if [ -z "${QUICKSPRINT_SKIP_IMAGE_INSTALL:-}" ]; then
     if command -v xzcat >/dev/null; then
-        xzcat ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+        xzcat ddev_tarballs/ddev_docker_images.${ARCH}.*.tar.xz | docker load
     elif [[ "$OS" == "Darwin" ]]; then
-        gzip -dc ddev_tarballs/ddev_docker_images*.tar.xz | docker load
+        gzip -dc ddev_tarballs/ddev_docker_images.${ARCH}.*.tar.xz | docker load
     else
         printf "${YELLOW}Unable to load ddev_docker_images. They will load at first 'ddev start'.${RESET}\n"
     fi
@@ -60,11 +61,17 @@ fi
 
 TARBALL=""
 case "${OS}/${ARCH}" in
-    Linux/x86_64)
+    Linux/amd64)
         TARBALL=ddev_tarballs/ddev_linux-amd64.${DDEV_VERSION}.tar.gz
         ;;
-    Darwin/i386)
+    Linux/arm64)
+        TARBALL=ddev_tarballs/ddev_linux-arm64.${DDEV_VERSION}.tar.gz
+        ;;
+    Darwin/amd64)
         TARBALL=ddev_tarballs/ddev_macos-amd64.${DDEV_VERSION}.tar.gz
+        ;;
+    Darwin/arm64)
+        TARBALL=ddev_tarballs/ddev_macos-arm64.${DDEV_VERSION}.tar.gz
         ;;
     MINGW64_NT*)
         echo ""

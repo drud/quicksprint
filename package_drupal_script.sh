@@ -28,8 +28,7 @@ echo "$QUICKSPRINT_RELEASE" >.quicksprint_release.txt
 GIT_TAG_NAME=$(curl -L -s -H 'Accept: application/json' https://github.com/git-for-windows/git/releases/latest | jq -r .tag_name)
 GIT_LATEST_RELEASE="$(echo $GIT_TAG_NAME | sed 's/^v//; s/\.windows//')"
 GIT_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/${GIT_TAG_NAME}/Git-${GIT_LATEST_RELEASE}-64-bit.exe"
-
-DOWNLOAD_URLS="https://desktop.docker.com/mac/stable/Docker.dmg https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe ${GIT_DOWNLOAD_URL}"
+DOWNLOAD_URLS="${GIT_DOWNLOAD_URL}"
 
 RED='\033[31m'
 GREEN='\033[32m'
@@ -62,7 +61,7 @@ ddev_tarballs="${STAGING_DIR}/ddev_tarballs"
 mkdir -p ${ddev_tarballs}
 
 # Remove anything in staging directory except ddev_tarballs.
-# Chmod as on WIndows read-only stuff is often unremoveable
+# Chmod as on Windows read-only stuff is often unremoveable
 chmod -R u+w ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh} 2>/dev/null || true
 rm -rf ${STAGING_DIR}/{*.md,install.sh,sprint,start_sprint.sh}
 # Remove anything in ddev_tarballs that is not the latest version
@@ -98,9 +97,15 @@ while true; do
                 mkdir -p installs
                 pushd installs >/dev/null
                 for download_url in ${DOWNLOAD_URLS}; do
-                    echo "Downloading ${download_url##*/} from ${download_url}"
+                    echo "Downloading ${download_url##*/} from ${download_url}..."
                     curl -sSL -O ${download_url}
                 done
+                for arch in amd64 arm64; do
+                  echo "Downloading Docker desktop (macOS ${arch})..."
+                  curl -sSL -o docker_desktop_${arch}.dmg https://desktop.docker.com/mac/main/${arch}/Docker.dmg
+                done
+                echo "Downloading Docker desktop (Windows)..."
+                curl -sSL -O https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe
                 popd >/dev/null
                 break;;
 
@@ -114,7 +119,7 @@ done
 
 pushd ${ddev_tarballs} >/dev/null
 # Download the ddev tarballs if necessary; check to make sure they all have correct sha256.
-for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_VERSION.tar.gz ddev_windows-amd64.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.$LATEST_VERSION.tar.xz; do
+for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_macos-arm64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_VERSION.tar.gz ddev_linux-arm64.$LATEST_VERSION.tar.gz ddev_windows-amd64.$LATEST_VERSION.tar.gz ddev_windows_installer.$LATEST_VERSION.exe ddev_docker_images.arm64.$LATEST_VERSION.tar.xz ddev_docker_images.amd64.$LATEST_VERSION.tar.xz; do
     shafile="${tarball}.sha256.txt"
 
     if ! [ -f "${tarball}" -a -f "${shafile}" ] ; then
@@ -126,7 +131,7 @@ for tarball in ddev_macos-amd64.$LATEST_VERSION.tar.gz ddev_linux-amd64.$LATEST_
 done
 popd >/dev/null
 
-# clone or refresh d8 clone
+# clone or refresh drupal clone
 mkdir -p sprint
 git clone --config core.autocrlf=false --config core.eol=lf --config core.filemode=false --quiet https://git.drupalcode.org/project/drupal.git ${STAGING_DIR}/sprint/drupal -b ${SPRINT_BRANCH}
 pushd ${STAGING_DIR}/sprint/drupal >/dev/null
