@@ -1,3 +1,9 @@
+# Archived! 
+
+2022-03-10: This project is not currently under active development, because Drupal events are typically using [DrupalPod](https://github.com/shaal/DrupalPod) instead.
+
+If it's needed, it can be resurrected.
+
 # Drupal Contribution Package
 
 This package contains tools to get you started contributing to Drupal:
